@@ -1,9 +1,12 @@
 <script>
 	import InfoDialog from "./InfoDialog.svelte";
+	import LoginDialog from "./LoginDialog.svelte";
 	let InfoDialogComponent;
+	let LoginDialogComponent;
 </script>
 
 <InfoDialog bind:this={InfoDialogComponent} />
+<LoginDialog bind:this={LoginDialogComponent} />
 
 <header>
 	<a class="title" href="/">Казкар</a>
@@ -12,7 +15,7 @@
 		<a href="/maisternia">Писати</a>
 		<a href="/reitynh">Рейтинг</a>
 		<button on:click={InfoDialogComponent.toggleInfoDialog}>Що тут коїться?</button>
-		<button>Увійти</button>
+		<button on:click={LoginDialogComponent.toggleLoginDialog}>Увійти</button>
 	</nav>
 </header>
 

@@ -14,9 +14,9 @@
 </script>
 
 <dialog bind:this={info}>
+	<button class="close-button" on:click={toggleInfoDialog}>×</button>
 	<p>Казкар — це проект створення казок на кшталт гри “Нісенітниця” на аркуші паперу, 
 		де кожна фраза загортається і він передається далі.</p>
-	<button class="close-button" on:click={toggleInfoDialog}>×</button>
 </dialog>
 
 <style>
