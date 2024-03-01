@@ -13,7 +13,7 @@
 	<nav>
 		<a href="/chytaty">Читати</a>
 		<a href="/maisternia">Писати</a>
-		<a href="/reitynh">Рейтинг</a>
+		<a href="/rating">Рейтинг</a>
 		<button on:click={InfoDialogComponent.toggleInfoDialog}>Що тут коїться?</button>
 		<button on:click={LoginDialogComponent.toggleLoginDialog}>Увійти</button>
 	</nav>
