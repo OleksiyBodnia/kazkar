@@ -39,13 +39,13 @@
 		font-weight: bold;
 		text-decoration: none;
 		/* add gradient */
-		background-image: linear-gradient(120deg, #78009d 34%, #0087bc 100%);
-		background-clip: text;
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
+		/* background-image: linear-gradient(120deg, #78009d 34%, #0087bc 100%); */
+		/* background-clip: text; */
+		/* -webkit-background-clip: text; */
+		/* -webkit-text-fill-color: transparent; */
 	}
 	.title:hover {
-		background-image: linear-gradient(120deg, #9757aa 34%, #51889e 100%);
+		/* background-image: linear-gradient(120deg, #9757aa 34%, #51889e 100%); */
 	}
 
 	nav a,nav button {
@@ -54,7 +54,6 @@
 	}
 
 	nav button {
-		background: none;
         border: none;
         cursor: pointer;
         padding: 0;
@@ -63,6 +62,6 @@
 	}
 
 	nav a:hover,nav button:hover {
-		text-decoration: underline;
+		/* text-decoration: underline; */
 	}
 </style>
