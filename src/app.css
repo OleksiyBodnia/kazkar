@@ -16,7 +16,9 @@ button {
     border: 2px solid;
 	border-radius: 8px;
     cursor: pointer;   
+	padding: 2px 8px;
 }
+
 
 button:hover {
 	background-image: linear-gradient(120deg, #78009d 34%, #0087bc 100%);
@@ -30,5 +32,9 @@ a:hover {
 	background-clip: text;
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
+}
+
+p{
+	font-weight: 400;
 }
 

@@ -23,8 +23,12 @@
     dialog {
 		/* треба адекватно стилізувати діалогове вікно */
 		padding: 2em;
-		width: 50%;
+		width: 40%;
 		border-radius: 20px;
+	}
+
+	dialog p{
+		text-align: start;
 	}
 	dialog::backdrop {
         backdrop-filter: blur(5px);

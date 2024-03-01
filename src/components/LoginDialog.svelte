@@ -35,61 +35,56 @@
 	}
 </script>
 
-<dialog bind:this={login}>
+<dialog class="login" bind:this={login}>
     <button class="close-button" on:click={toggleLoginDialog}>×</button>
 	<p>Лише автентифіковані користувачі можуть брати участь у написанні казок!</p>
-    <button on:click={toggleAuthDialog}>Увійти</button>
-    <button on:click={toggleCreateAccDialog}>Створити аккаунт</button>
+    
+    <div class="action-btn-div">
+        <button class="action-btn" on:click={toggleAuthDialog}>Увійти</button>
+        <button class="action-btn" on:click={toggleCreateAccDialog}>Створити аккаунт</button>
+    </div>
+    
 </dialog>
 
 <dialog bind:this={auth}>
     <button class="close-button" on:click={toggleAuthDialog}>×</button>
-    <form action="">
-        <p>
+    <form action="" class="auth-form">
             <label>Пошта/Нікнейм
                 <br>
                 <input type="text" name="email_or_nick">
             </label>
-        </p>
-        <p>
+        
             <label>Пароль
                 <br>
-                <input type="text" name="password">
+                <input type="text" name="password" >
             </label>
-        </p>
+        <button class="auth-btn" on:click={toggleAuthDialog}>Увійти</button>
     </form>
-    <button on:click={toggleAuthDialog}>Увійти</button>
+    
 </dialog>
 
 <dialog bind:this={create_acc}>
     <button class="close-button" on:click={toggleCreateAccDialog}>×</button>
-    <form action="">
-        <p>
-            <label>Нікнейм
-                <br>
-                <input type="text" name="nickname">
-            </label>
-        </p>
-        <p>
-            <label>Пошта
-                <br>
-                <input type="text" name="email">
-            </label>
-        </p>
-        <p>
-            <label>Пароль
-                <br>
-                <input type="text" name="password">
-            </label>
-        </p>
-        <p>
-            <label>Підтвердження паролю
-                <br>
-                <input type="text" name="password-confirm">
-            </label>
-        </p>
+    <form action="" class="create-acc-form">
+        <label>Нікнейм
+            <br>
+            <input type="text" name="nickname">
+        </label>
+        <label>Пошта
+            <br>
+            <input type="text" name="email">
+        </label>
+        <label>Пароль
+            <br>
+            <input type="text" name="password">
+        </label>
+        <label>Підтвердження паролю
+            <br>
+            <input type="text" name="password-confirm">
+        </label>
+        <button on:click={toggleCreateAccDialog}>Створити аккаунт</button>
     </form> 
-    <button on:click={toggleCreateAccDialog}>Створити аккаунт</button>
+    
 </dialog>
 
 <style>
@@ -102,6 +97,14 @@
         backdrop-filter: blur(5px);
         background-color: rgba(0, 0, 0, 0.5);
     }
+
+    .action-btn-div{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 70px;
+    }
+
 
     .close-button {
     position: absolute;
@@ -116,4 +119,25 @@
 	.close-button:hover {
 		color: red;
 	}
+
+    .auth-form{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+    input{
+        height: 35px;
+        border-radius: 6px;
+        padding: 5px 10px;
+    }
+    label{
+        margin-bottom: 30px;
+    }
+    .create-acc-form{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
 </style>
