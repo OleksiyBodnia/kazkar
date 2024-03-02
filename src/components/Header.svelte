@@ -9,7 +9,7 @@
 <LoginDialog bind:this={LoginDialogComponent} />
 
 <header>
-	<a class="title" href="/" onclick="window.location.href = '/';">Казкар</a> <!-- сумніваюся що правильно, але наче працює -->
+	<a class="title" href="/" onclick="window.location.href = '/';">Казкар</a> <!-- сумніваюся що правильно, але наче працює, може треба зробити кнопкою? -->
 	<nav>
 		<a href="/chytaty">Читати</a>
 		<a href="/maisternia">Писати</a>
@@ -31,7 +31,7 @@
 		justify-content: space-between;
 		align-items: center;
 		padding: 1em;
-		/* background-color: #f3f3f3; */
+		background-color: white;
 	}
 
 	.title {
