@@ -7,7 +7,7 @@
 <article>
 	<h2>{title}</h2>
 	<p>{content}</p>
-	<span>{time_stamp}</span>
+	<!-- <span>{time_stamp}</span> -->
 </article>
 
 <style>

@@ -1,13 +1,15 @@
 * {
 	box-sizing: border-box;
 	font-family: "Comic Sans MS", cursive;
-	color: #000;
+	color: #212121;
+	/* background-color: #fbfbfb; */
 }
 
 body {
 	/* font-family: "Comic Sans MS", cursive;	does it needs to be here? */
 	margin: 0;
 	/* padding: 4rem 2rem 2rem 2rem;	moved to main sytles */
+
 }
 
 main {

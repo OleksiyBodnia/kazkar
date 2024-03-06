@@ -12,12 +12,12 @@
 
 {#if visible}
 <div class="main-page-div">
-    <div class="write-encourage" transition:fly={{y: -160, duration: 1000}}>
-        <button>Написати казку</button>
+    <div class="write-encourage" in:fly={{y: -160, duration: 1000}}>
+        <button onclick="window.location.href = '/maisternia'">Написати казку</button>
         <p>Створюй нову неймовірну казку разом із Казкарем!</p>
     </div>
     
-    <div class="read-finished" transition:fly={{y: -120, duration: 1000, delay: 200}}>
+    <div class="read-finished" in:fly={{y: -120, duration: 1000, delay: 200}}>
         <h1>Читай завершені казки</h1>
             <div class="finished-samples">
                 <p>За дев’ятьма селами і дев’ятьма лісами є одне особливе поле. 
@@ -33,7 +33,7 @@
                     Там ростуть красиві, жовті квіти, які можуть повертатися за сонцем. 
                     Це поле соняшників ....</p>
             </div>
-        <button>Більше</button>
+        <button onclick="window.location.href = '/chytaty'">Більше</button>
     </div>
 </div>
 {/if}
@@ -81,7 +81,7 @@
     }
     .finished-samples p{
         width: 500px;
-    }
+        }
 
 
     .finished-samples :hover {
@@ -90,4 +90,4 @@
         transition: all 0.5s ease;
         cursor: pointer;
     }
-</style>
+     </style>

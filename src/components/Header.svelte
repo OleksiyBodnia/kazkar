@@ -9,7 +9,7 @@
 <LoginDialog bind:this={LoginDialogComponent} />
 
 <header>
-	<a class="title" href="/" onclick="window.location.href = '/';">Казкар</a> <!-- сумніваюся що правильно, але наче працює, може треба зробити кнопкою? -->
+	<a class="title" href="/" onclick="window.location.href = '/'">Казкар</a> <!-- сумніваюся що правильно, але наче працює, може треба зробити кнопкою? -->
 	<nav>
 		<a href="/chytaty">Читати</a>
 		<a href="/maisternia">Писати</a>

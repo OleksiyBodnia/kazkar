@@ -11,7 +11,7 @@
 </script>
 
 {#if show_info}
-	<div class="backdrop" transition:fade on:click|self={() => { if (outer_close)  toggleModal()}}>
+	<div class="backdrop" transition:fade on:click|self={() => { if (outer_close) toggleModal()}}>
 		<div class="modal" transition:scale>
 			<button class="close-button" on:click={toggleModal}>×</button>
 			<slot />
@@ -29,7 +29,7 @@
         justify-content: center;
         align-items: center;
         background: rgba(0,0,0,0.2);
-		backdrop-filter: blur(5px);
+		backdrop-filter: blur(3px);
     }
 
     .modal {
