@@ -1,13 +1,17 @@
-body {
-	font-family: "Comic Sans MS", cursive;
-	margin: 0;
-	padding: 4rem 2rem 2rem 2rem;
-}
-
 * {
 	box-sizing: border-box;
 	font-family: "Comic Sans MS", cursive;
 	color: #000;
+}
+
+body {
+	/* font-family: "Comic Sans MS", cursive;	does it needs to be here? */
+	margin: 0;
+	/* padding: 4rem 2rem 2rem 2rem;	moved to main sytles */
+}
+
+main {
+	padding: 4rem 2rem 2rem 2rem;
 }
 
 button {

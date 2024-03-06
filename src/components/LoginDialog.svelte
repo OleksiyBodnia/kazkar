@@ -1,70 +1,37 @@
 <script>
-    let login;
-	let login_is_open = false;
-    let auth;
-    let auth_is_open = false;
-    let create_acc;
-    let create_acc_is_open = false;
+    import Modal from "./Modal.svelte";
 
-	export function toggleLoginDialog() {
-		if (login_is_open) {
-			login.close();
-			login_is_open = false;
-		} else {
-			login.showModal();
-			login_is_open = true;
-		}
-	}
-    function toggleAuthDialog() {
-		if (auth_is_open) {
-			auth.close();
-			auth_is_open = false;
-		} else {
-			auth.showModal();
-			auth_is_open = true;
-		}
-	}
-    function toggleCreateAccDialog() {
-		if (create_acc_is_open) {
-			create_acc.close();
-			create_acc_is_open = false;
-		} else {
-			create_acc.showModal();
-			create_acc_is_open = true;
-		}
-	}
+    let LoginModal, AuthModal, CreateAccModal;
+
+    export function toggleLoginDialog() {
+        LoginModal.toggleModal();
+    }
 </script>
 
-<dialog class="login" bind:this={login}>
-    <button class="close-button" on:click={toggleLoginDialog}>×</button>
+<Modal bind:this={LoginModal}>
 	<p>Лише автентифіковані користувачі можуть брати участь у написанні казок!</p>
-    
     <div class="action-btn-div">
-        <button class="action-btn" on:click={toggleAuthDialog}>Увійти</button>
-        <button class="action-btn" on:click={toggleCreateAccDialog}>Створити аккаунт</button>
+        <button class="action-btn" on:click={() => {AuthModal.toggleModal(); LoginModal.toggleModal()}}>Увійти</button>
+        <button class="action-btn" on:click={() => {CreateAccModal.toggleModal(); LoginModal.toggleModal()}}>Створити аккаунт</button>
     </div>
-    
-</dialog>
+</Modal>
 
-<dialog bind:this={auth}>
-    <button class="close-button" on:click={toggleAuthDialog}>×</button>
+<Modal outer_close={false} bind:this={AuthModal}>
     <form action="" class="auth-form">
-            <label>Пошта/Нікнейм
-                <br>
-                <input type="text" name="email_or_nick">
-            </label>
-        
-            <label>Пароль
-                <br>
-                <input type="text" name="password" >
-            </label>
-        <button class="auth-btn" on:click={toggleAuthDialog}>Увійти</button>
-    </form>
+        <label>Пошта/Нікнейм
+            <br>
+            <input type="text" name="email_or_nick">
+        </label>
     
-</dialog>
+        <label>Пароль
+            <br>
+            <input type="text" name="password" >
+        </label>
+        <button class="auth-btn" on:click={AuthModal.toggleModal}>Увійти</button>
+    </form>
+</Modal>
 
-<dialog bind:this={create_acc}>
-    <button class="close-button" on:click={toggleCreateAccDialog}>×</button>
+<Modal outer_close={false} bind:this={CreateAccModal}>
     <form action="" class="create-acc-form">
         <label>Нікнейм
             <br>
@@ -82,22 +49,11 @@
             <br>
             <input type="text" name="password-confirm">
         </label>
-        <button on:click={toggleCreateAccDialog}>Створити аккаунт</button>
+        <button on:click={CreateAccModal.toggleModal}>Створити аккаунт</button>
     </form> 
-    
-</dialog>
+</Modal>
 
 <style>
-    dialog {
-		/* треба адекватно стилізувати діалогове вікно */
-		padding: 2em;
-		border-radius: 20px;
-	}
-	dialog::backdrop {
-        backdrop-filter: blur(5px);
-        background-color: rgba(0, 0, 0, 0.5);
-    }
-
     .action-btn-div{
         display: flex;
         align-items: center;
@@ -105,39 +61,29 @@
         gap: 70px;
     }
 
-
-    .close-button {
-    position: absolute;
-    top: 0.2em;
-    right: 0.5em;
-    background-color: transparent;
-    border: none;
-    font-size: 2em;
-    cursor: pointer;
-	}
-
-	.close-button:hover {
-		color: red;
-	}
-
     .auth-form{
+        margin-top: 10px;
         display: flex;
         align-items: center;
         justify-content: center;
         flex-direction: column;
     }
+    
+    .create-acc-form{
+        margin-top: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
     input{
         height: 35px;
         border-radius: 6px;
         padding: 5px 10px;
     }
+
     label{
         margin-bottom: 30px;
-    }
-    .create-acc-form{
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
     }
 </style>
