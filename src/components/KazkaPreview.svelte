@@ -28,6 +28,7 @@
         width: 500px;
 		/* some padding should be here */
 		border-radius: 20px;
+		padding: 1px 10px 10px 10px;
     }
 
     article:hover {

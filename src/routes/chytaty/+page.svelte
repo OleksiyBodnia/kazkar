@@ -13,24 +13,26 @@
 
 <div class="read-page-div">
 	<div class="page-description">
-		<h1>Завершені казки</h1>
+		<h1>Бібліотека завершених казкок</h1>
 		<p>Тут ви можете знайти безліч завершених казок - читайте, досліджуйте, надихайтеся, смійтеся (крінж опис треба поміняти)</p>
 	</div>
 
 	<div class="find-tools">
-		<label>Пошук
-			<input type="text">
-		</label>
-		
-		<label>Фільтр
-			<select bind:value={filter_selected} on:change={whenSelected}>
-				{#each filters as filter}
-					<option value={filter}>
-						{filter}
-					</option>
-				{/each}
-			</select>
-		</label>
+		<div class="rigth-find-tools">
+			<label>Пошук
+				<input type="text">
+			</label>
+			
+			<label>Фільтр
+				<select bind:value={filter_selected} on:change={whenSelected}>
+					{#each filters as filter}
+						<option value={filter}>
+							{filter}
+						</option>
+					{/each}
+				</select>
+			</label>
+		</div>
 		<button>Випадкова казка</button>
 	</div>
 
@@ -53,7 +55,7 @@
 	}
 
 	.finished-samples {
-        width: 80%;
+		margin: 0 auto;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -63,6 +65,20 @@
         margin-bottom: 40px;
 
     }
+
+	.find-tools{
+		padding: 0 30px;
+		margin-top: 30px;
+		margin-bottom: 30px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+	.rigth-find-tools{
+		display: flex;
+		align-items: center;
+		gap: 40px;
+	}
 
 /* на майбутнє: треба гатрно силізувати input, поки не шарю як */
 	input {

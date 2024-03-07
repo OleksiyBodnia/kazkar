@@ -18,20 +18,25 @@
 	</div>
 
 	<div class="find-tools">
-		<label>Пошук
-			<input type="text">
-		</label>
-		
-		<label>Фільтр
-			<select bind:value={filter_selected} on:change={whenSelected}>
-				{#each filters as filter}
-					<option value={filter}>
-						{filter}
-					</option>
-				{/each}
-			</select>
-		</label>
-		<button>Випадкова казка</button>
+		<div class="rigth-find-tools">
+			<label>Пошук
+				<input type="text">
+			</label>
+			
+			<label>Фільтр
+				<select bind:value={filter_selected} on:change={whenSelected}>
+					{#each filters as filter}
+						<option value={filter}>
+							{filter}
+						</option>
+					{/each}
+				</select>
+			</label>
+		</div>
+		<div class="left-find-tools">
+			<button>Випадкова казка</button>
+			<button>Розпочати нову казку</button>
+		</div>
 	</div>
 
 	<div class="finished-samples">
@@ -53,7 +58,7 @@
 	}
 
 	.finished-samples {
-        width: 80%;
+		margin: 0 auto;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -63,6 +68,24 @@
         margin-bottom: 40px;
 
     }
+	.find-tools{
+		padding: 0 30px;
+		margin-top: 30px;
+		margin-bottom: 30px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+	.rigth-find-tools{
+		display: flex;
+		align-items: center;
+		gap: 40px;
+	}
+	.left-find-tools{
+		display: flex;
+		align-items: center;
+		gap: 25px;
+	}
 
 /* на майбутнє: треба гатрно силізувати input, поки не шарю як */
 	input {
