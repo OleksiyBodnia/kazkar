@@ -1,5 +1,7 @@
 <script>
-    //import Kazka from '../components/Kazka.svelte';
+    /** @type {import('./$types').PageData} */
+	export let data;
+	import KazkaPreview from '../components/KazkaPreview.svelte';
     import { onMount } from 'svelte';
     import { fade, fly } from 'svelte/transition';
 
@@ -20,18 +22,11 @@
     <div class="read-finished" in:fly={{y: -120, duration: 1000, delay: 200}}>
         <h1>Читай завершені казки</h1>
             <div class="finished-samples">
-                <p>За дев’ятьма селами і дев’ятьма лісами є одне особливе поле. 
-                    Там ростуть красиві, жовті квіти, які можуть повертатися за сонцем. 
-                    Це поле соняшників ....</p>
-                <p>За дев’ятьма селами і дев’ятьма лісами є одне особливе поле. 
-                    Там ростуть красиві, жовті квіти, які можуть повертатися за сонцем. 
-                    Це поле соняшників ....</p>
-                <p>За дев’ятьма селами і дев’ятьма лісами є одне особливе поле. 
-                    Там ростуть красиві, жовті квіти, які можуть повертатися за сонцем. 
-                    Це поле соняшників ....</p>
-                <p>За дев’ятьма селами і дев’ятьма лісами є одне особливе поле. 
-                    Там ростуть красиві, жовті квіти, які можуть повертатися за сонцем. 
-                    Це поле соняшників ....</p>
+                {#each data.kazky as kazka}
+                    <div class="sample">
+                        <KazkaPreview title={kazka.title} content={kazka.content} time_stamp={kazka.completed_at} />
+                    </div>
+			    {/each}
             </div>
         <button onclick="window.location.href = '/chytaty'">Більше</button>
     </div>
@@ -79,15 +74,4 @@
         margin-bottom: 40px;
 
     }
-    .finished-samples p{
-        width: 500px;
-        }
-
-
-    .finished-samples :hover {
-        border-radius: 20px;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-        transition: all 0.5s ease;
-        cursor: pointer;
-    }
-     </style>
+</style>

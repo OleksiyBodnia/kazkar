@@ -9,7 +9,7 @@
 <LoginDialog bind:this={LoginDialogComponent} />
 
 <header>
-	<a class="title" href="/" onclick="window.location.href = '/'">Казкар</a> <!-- сумніваюся що правильно, але наче працює, може треба зробити кнопкою? -->
+	<a class="title" href="/">Казкар</a> <!-- треба зробит так, щоб при натисканні головна строрінка оновлювалася навіть коли вона є поточною -->
 	<nav>
 		<a href="/chytaty">Читати</a>
 		<a href="/maisternia">Писати</a>
