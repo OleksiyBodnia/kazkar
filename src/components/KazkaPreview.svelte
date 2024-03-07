@@ -1,7 +1,6 @@
 <script>
 	export let title;
 	export let content;
-	export let time_stamp;
 
 	// потрібна щоб обрізати текст для прев'ю казки
 	function truncateText(text, maxLength) {		// потребує шліфування, зараз працює не завжди коректно
@@ -20,7 +19,6 @@
 <article>
 	<h4>{title}</h4>
 	<p>{truncateText(content, 160)}</p>
-	<!-- <span>{time_stamp}</span> -->
 </article>
 
 <style>

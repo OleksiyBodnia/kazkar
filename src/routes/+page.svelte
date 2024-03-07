@@ -68,7 +68,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        row-gap: 40px;
+        row-gap: 10px;
         column-gap: 90px;
         flex-wrap: wrap;
         margin-bottom: 40px;

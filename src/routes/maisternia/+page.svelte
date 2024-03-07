@@ -42,7 +42,7 @@
 	<div class="finished-samples">
 		{#each data.kazky as kazka}
 			<div class="sample">
-				<KazkaPreview title={kazka.title} content={kazka.content} time_stamp={kazka.completed_at} />
+				<KazkaPreview title={kazka.title} content={kazka.content} />
 			</div>			
 		{/each}
 	</div>
@@ -62,7 +62,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        row-gap: 40px;
+        row-gap: 10px;
         column-gap: 90px;
         flex-wrap: wrap;
         margin-bottom: 40px;
