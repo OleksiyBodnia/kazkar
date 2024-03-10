@@ -47,7 +47,7 @@
         <h1>Хто тут ліпший казкар?</h1>
         <p>Найактивніший казкар</p>
         <div class="best-kazkar">
-            <img src="/src/img/shiba.jpg" alt="kazkar" class="best-kazkar-img">
+            <img src="/img/shiba.jpg" alt="kazkar" class="best-kazkar-img">
             <p>Nickname 0</p>
         </div>
         <div class="user-stat-bars">
