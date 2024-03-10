@@ -42,7 +42,6 @@
 
 	nav a,nav button {
 		margin-left: 1em;
-		text-decoration: none;
 	}
 
 	nav button {

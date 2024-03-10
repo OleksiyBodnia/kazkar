@@ -6,7 +6,7 @@
 	let filter_selected;
 	let filters = ["Найновіші", "Найстаріші", "Популярні", "Непопулярні"]
 
-	function whenSelected () {
+	function whenFilterSelected () {
 
 	}
 </script>
@@ -24,7 +24,7 @@
 			</label>
 			
 			<label>Фільтр
-				<select bind:value={filter_selected} on:change={whenSelected}>
+				<select bind:value={filter_selected} on:change={whenFilterSelected}>
 					{#each filters as filter}
 						<option value={filter}>
 							{filter}
@@ -89,6 +89,6 @@
 	}
 
 	input:focus {
-		border-bottom: 2px solid black; /* Increase the thickness of the underline on focus if desired */
+		border-bottom: 2px solid black;
 	}
 </style>
