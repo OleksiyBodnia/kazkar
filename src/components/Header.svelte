@@ -1,16 +1,28 @@
+<script>
+	import InfoDialog from "./InfoDialog.svelte";
+	import LoginDialog from "./LoginDialog.svelte";
+	let InfoDialogComponent;
+	let LoginDialogComponent;
+</script>
+
+<InfoDialog bind:this={InfoDialogComponent} />
+<LoginDialog bind:this={LoginDialogComponent} />
+
 <header>
-	<a class="title" href="/">Казкар</a>
+	<a class="title" href="/">Казкар</a> <!-- треба зробит так, щоб при натисканні головна строрінка оновлювалася навіть коли вона є поточною -->
 	<nav>
 		<a href="/chytaty">Читати</a>
 		<a href="/maisternia">Писати</a>
-		<a href="/reitynh">Рейтинг</a>
+		<a href="/rating">Рейтинг</a>
+		<button on:click={InfoDialogComponent.toggleInfoDialog}>Що тут коїться?</button>
+		<button on:click={LoginDialogComponent.toggleLoginDialog}>Увійти</button>
 	</nav>
 </header>
 
 <style>
 	header {
 		position: fixed;
-		z-index: 1000;
+		z-index: 100;
 		width: 100%;
 		height: 4rem;
 		top: 0;
@@ -19,29 +31,24 @@
 		justify-content: space-between;
 		align-items: center;
 		padding: 1em;
-		background-color: #f3f3f3;
+		background-color: white;
 	}
 
 	.title {
 		font-size: 1.7rem;
 		font-weight: bold;
 		text-decoration: none;
-		/* add gradient */
-		background-image: linear-gradient(120deg, #78009d 34%, #0087bc 100%);
-		background-clip: text;
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-	}
-	.title:hover {
-		background-image: linear-gradient(120deg, #9757aa 34%, #51889e 100%);
 	}
 
-	nav a {
+	nav a,nav button {
 		margin-left: 1em;
-		text-decoration: none;
 	}
 
-	nav a:hover {
-		text-decoration: underline;
+	nav button {
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        font: inherit;
+        outline: inherit;
 	}
 </style>
