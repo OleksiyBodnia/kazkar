@@ -7,7 +7,7 @@ dotenv.config();
 
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
 
-export async function getKazky(state = 'all') {
+export async function getKazky(state = 'all', limit = 10) {
 	let query = supabase.from('kazky').select('*');
 
 	if (state === 'completed') {
@@ -18,12 +18,22 @@ export async function getKazky(state = 'all') {
 		query = query.filter('is_completed', 'eq', false);
 	}
 
+	query = query.limit(limit);
+
 	const { data, error } = await query;
 
 	if (error) {
 		throw error;
 	}
 
+	return data;
+}
+
+export async function getKazka(id) {
+	const { data, error } = await supabase.from('kazky').select('*').eq('id', id).single();
+	if (error) {
+		throw error;
+	}
 	return data;
 }
 
