@@ -1,19 +1,21 @@
 <script>
-    import Modal from "./Modal.svelte";
+	import Modal from './Modal.svelte';
 
-    let ModalComponent;
-    export function toggleInfoDialog() {
-        ModalComponent.toggleModal(); 
-    }
+	let ModalComponent;
+	export function toggleInfoDialog() {
+		ModalComponent.toggleModal();
+	}
 </script>
 
 <Modal bind:this={ModalComponent}>
-    <p>Казкар — це проект створення казок на кшталт гри “Нісенітниця” на аркуші паперу, 
-        де кожна фраза загортається і він передається далі.</p>
+	<p>
+		Казкар — це проєкт створення казок на кшталт гри “Нісенітниця” на аркуші паперу, де кожна фраза
+		загортається і він передається далі.
+	</p>
 </Modal>
 
 <style>
-    p{
+	p {
 		text-align: start;
 	}
 </style>

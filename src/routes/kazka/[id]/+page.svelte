@@ -3,6 +3,12 @@
 	export let data;
 	import Sidebar from '../../../components/Sidebar.svelte';
 	let SidebarComponent;
+
+	// let kazka_content = '';
+	// data.kazka.rechennia?.forEach((rechennia) => {
+	// 	kazka_content += rechennia.content + ' ';
+	// 	console.log(rechennia.content);
+	// });
 </script>
 
 <!-- 

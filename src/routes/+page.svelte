@@ -21,7 +21,7 @@
 					</div>
 				{/each}
 			</div>
-			<button onclick="window.location.href = '/chytaty'">Більше</button>
+			<a href="/chytaty">Більше</a>
 		</div>
 	</div>
 {/if}
