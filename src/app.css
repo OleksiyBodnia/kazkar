@@ -1,6 +1,6 @@
 * {
 	box-sizing: border-box;
-	font-family: "Comic Sans MS", cursive;
+	font-family: 'Comic Sans MS', cursive;
 	color: #212121;
 	/* background-color: #fbfbfb; */
 }
@@ -9,14 +9,13 @@ body {
 	/* font-family: "Comic Sans MS", cursive;	does it needs to be here? */
 	margin: 0;
 	/* padding: 4rem 2rem 2rem 2rem;	moved to main sytles */
-
 }
 
 main {
 	padding: 4rem 2rem 2rem 2rem;
 }
 
-p{
+p {
 	font-weight: 400;
 }
 
@@ -31,16 +30,14 @@ a:hover {
 	-webkit-text-fill-color: transparent;
 }
 
-
 button {
-	background-color: white; 
+	background-color: white;
 	text-align: center;
-    border: 2px solid;
+	border: 2px solid;
 	border-radius: 8px;
-    cursor: pointer;   
+	cursor: pointer;
 	padding: 2px 8px;
 }
-
 
 button:hover {
 	background-image: linear-gradient(120deg, #78009d 34%, #0087bc 100%);
@@ -50,14 +47,14 @@ button:hover {
 }
 
 select {
-	background-color: white; 
+	background-color: white;
 	border: 2px solid;
 	border-radius: 8px;
-	cursor: pointer;   
+	cursor: pointer;
 	padding: 2px 8px;
 	outline: none;
-  }
-  
+}
+
 select:hover {
 	background-image: linear-gradient(120deg, #78009d 34%, #0087bc 100%);
 	background-clip: text;
