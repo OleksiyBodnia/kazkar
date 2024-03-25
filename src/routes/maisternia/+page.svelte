@@ -2,6 +2,7 @@
 	/** @type {import('./$types').PageData} */
 	export let data;
 	import KazkaCard from '../../components/KazkaCard.svelte';
+	import { combineRechennia } from '$lib/utils';
 
 	let filter_selected;
 	let filters = ['Найновіші', 'Найстаріші', 'Популярні', 'Непопулярні'];
@@ -42,7 +43,7 @@
 	<div class="finished-samples">
 		{#each data.kazky as kazka}
 			<div class="sample">
-				<KazkaCard id={kazka.id} title={kazka.title} content={kazka.content} />
+				<KazkaCard id={kazka.id} title={kazka.title} content={combineRechennia(kazka.rechennia)} />
 			</div>
 		{/each}
 	</div>
