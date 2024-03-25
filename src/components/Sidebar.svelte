@@ -9,6 +9,7 @@
     
 </script>
 
+<!-- можливо перемістити перехід у код сторінки? -->
 {#if show_sidebar}
     <aside transition:slide={{duration: 900, axis: 'x'}}>
         <p>some text just to check sidebar</p>

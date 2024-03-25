@@ -4,9 +4,15 @@
 	import KazkaCard from '../components/KazkaCard.svelte';
 	import { fly } from 'svelte/transition';
 	import { combineRechennia } from '$lib/utils';
+	import { onMount } from 'svelte';
+
+	let content_visible = false;
+	onMount(() => {
+        content_visible = true;
+    });
 </script>
 
-{#if data}
+{#if content_visible}
 	<div class="main-page-div">
 		<div class="write-encourage" in:fly={{ y: -160, duration: 1000 }}>
 			<button onclick="window.location.href = '/maisternia'">Написати казку</button>

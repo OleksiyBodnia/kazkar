@@ -23,16 +23,17 @@
 </article>
 
 <style>
-	a {
+	article {
 		width: 500px;
 		/* some padding should be here */
 		border-radius: 24px;
 		padding: 1px 10px 10px 10px;
 	}
 
-	a:hover {
+	article:hover {
 		box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
 		transition: all 0.5s ease;
+		cursor: pointer;
 	}
 
 	h4 {
