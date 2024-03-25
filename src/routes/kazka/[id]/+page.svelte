@@ -2,28 +2,25 @@
 	/** @type {import('./$types').PageData} */
 	export let data;
 	import Sidebar from '../../../components/Sidebar.svelte';
+	import { combineRechennia } from '$lib/utils';
 	let SidebarComponent;
-
-	// let kazka_content = '';
-	// data.kazka.rechennia?.forEach((rechennia) => {
-	// 	kazka_content += rechennia.content + ' ';
-	// 	console.log(rechennia.content);
-	// });
 </script>
-
-<!-- 
-{#if kazka_id}
-    <p>success {kazka_id}</p>
-{/if}
- -->
 
 <div class="individual-kazka-div">
 	<div class="kazka-and-sidebar">
 		<article class="kazka-itself">
 			<h2>{data.kazka.title}</h2>
 			<p>
-				{data.kazka.content}
+				{combineRechennia(data.kazka.rechennia)}
 			</p>
+			<h3>data.kazka.rechennia:</h3>
+			<pre>
+				{JSON.stringify(data.kazka.rechennia, null, 4)}
+			</pre>
+			<h3>data.users:</h3>
+			<pre>
+				{JSON.stringify(data.users, null, 4)}
+			</pre>
 		</article>
 
 		<div class="sidebar-container">
@@ -62,5 +59,11 @@
 		position: absolute;
 		top: 90px;
 		right: 20px;
+	}
+
+	pre {
+		white-space: pre-wrap;
+		font-size: 1em;
+		font-family: monospace;
 	}
 </style>

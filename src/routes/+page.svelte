@@ -2,7 +2,8 @@
 	/** @type {import('./$types').PageData} */
 	export let data;
 	import KazkaCard from '../components/KazkaCard.svelte';
-	import { fade, fly } from 'svelte/transition';
+	import { fly } from 'svelte/transition';
+	import { combineRechennia } from '$lib/utils';
 </script>
 
 {#if data}
@@ -17,7 +18,11 @@
 			<div class="finished-samples">
 				{#each data.kazky as kazka}
 					<div class="sample">
-						<KazkaCard id={kazka.id} title={kazka.title} content={kazka.content} />
+						<KazkaCard
+							id={kazka.id}
+							title={kazka.title}
+							content={combineRechennia(kazka.rechennia)}
+						/>
 					</div>
 				{/each}
 			</div>
