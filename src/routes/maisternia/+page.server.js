@@ -1,4 +1,4 @@
-import { getKazky } from '$lib';
+import { getKazky } from '$lib/db';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load() {

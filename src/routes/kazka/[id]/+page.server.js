@@ -1,7 +1,11 @@
-import { getKazka } from '$lib';
+import * as db from '$lib/db';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ params }) {
 	const { id } = params;
-	return { kazka: await getKazka(id) };
+	const kazka = await db.getKazka(id);
+	const users = await Promise.all(
+		kazka.rechennia.map((rechennia) => db.getUser(rechennia.user_id))
+	);
+	return { kazka, users };
 }
