@@ -14,7 +14,7 @@
 >
 	{#each data.kazky as kazka}
 		<div class="sample">
-			<KazkaCard id={kazka.id} title={kazka.title} content={combineRechennia(kazka.rechennia)} />
+			<KazkaCard id={kazka.id} state={"completed"} title={kazka.title} content={combineRechennia(kazka.rechennia)} />
 		</div>
 	{/each}
 </ReadWriteTemplate>

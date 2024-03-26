@@ -2,7 +2,7 @@
 	/** @type {import('./$types').PageData} */
 	export let data;
 	import KazkaCard from '../../components/KazkaCard.svelte';
-	import { combineRechennia } from '$lib/utils';
+	import { lastRechennia } from '$lib/utils';
 	import ReadWriteTemplate from '../../components/ReadWriteTemplate.svelte';
 
 </script>
@@ -13,7 +13,7 @@
 >
 	{#each data.kazky as kazka}
 		<div class="sample">
-			<KazkaCard id={kazka.id} title={kazka.title} content={combineRechennia(kazka.rechennia)} />
+			<KazkaCard id={kazka.id} state={"incompleted"} title={kazka.title} content={lastRechennia(kazka.rechennia)} />
 		</div>
 	{/each}
 </ReadWriteTemplate>

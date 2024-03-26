@@ -26,6 +26,7 @@
 					<div class="sample">
 						<KazkaCard
 							id={kazka.id}
+							state={"completed"}
 							title={kazka.title}
 							content={combineRechennia(kazka.rechennia)}
 						/>

@@ -3,7 +3,7 @@
 
 	let ModalComponent;
 	export function toggleInfoDialog() {
-		ModalComponent.toggleModal();
+		ModalComponent.toggle();
 	}
 </script>
 

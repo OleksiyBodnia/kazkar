@@ -4,7 +4,7 @@
 	let LoginModal, AuthModal, CreateAccModal;
 
 	export function toggleLoginDialog() {
-		LoginModal.toggleModal();
+		LoginModal.toggle();
 	}
 </script>
 
@@ -14,15 +14,15 @@
 		<button
 			class="action-btn"
 			on:click={() => {
-				AuthModal.toggleModal();
-				LoginModal.toggleModal();
+				AuthModal.toggle();
+				LoginModal.toggle();
 			}}>Увійти</button
 		>
 		<button
 			class="action-btn"
 			on:click={() => {
-				CreateAccModal.toggleModal();
-				LoginModal.toggleModal();
+				CreateAccModal.toggle();
+				LoginModal.toggle();
 			}}>Створити акаунт</button
 		>
 	</div>
@@ -41,7 +41,7 @@
 			<br />
 			<input type="text" name="password" />
 		</label>
-		<button class="auth-btn" on:click={AuthModal.toggleModal}>Увійти</button>
+		<button class="auth-btn" on:click={AuthModal.toggle}>Увійти</button>
 	</form>
 </Modal>
 
@@ -67,7 +67,7 @@
 			<br />
 			<input type="text" name="password-confirm" />
 		</label>
-		<button on:click={CreateAccModal.toggleModal}>Створити акаунт</button>
+		<button on:click={CreateAccModal.toggle}>Створити акаунт</button>
 	</form>
 </Modal>
 
