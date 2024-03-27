@@ -2,8 +2,10 @@
 	/** @type {import('./$types').PageData} */
 	export let data;
 	import Sidebar from '../../../components/Sidebar.svelte';
-	import { combineRechennia } from '$lib/utils';
+	import { tooltip } from '$lib/utils/tooltip.js';
+
 	let SidebarComponent;
+
 </script>
 
 <div class="individual-kazka-div">
@@ -11,16 +13,12 @@
 		<article class="kazka-itself">
 			<h2>{data.kazka.title}</h2>
 			<p>
-				{combineRechennia(data.kazka.rechennia)}
+				{#each data.kazka.rechennia as rechennia, i}
+					<span use:tooltip={{placement: 'left', theme: 'light-border',}} 
+							title={"автор речення: " + data.users[i].username}
+							>{rechennia.content + " "}</span>
+				{/each}
 			</p>
-			<h3>data.kazka.rechennia:</h3>
-			<pre>
-				{JSON.stringify(data.kazka.rechennia, null, 4)}
-			</pre>
-			<h3>data.users:</h3>
-			<pre>
-				{JSON.stringify(data.users, null, 4)}
-			</pre>
 		</article>
 
 		<div class="sidebar-container">
@@ -65,5 +63,10 @@
 		white-space: pre-wrap;
 		font-size: 1em;
 		font-family: monospace;
+	}
+
+	span:hover {
+		cursor: pointer;
+		text-decoration: underline;
 	}
 </style>

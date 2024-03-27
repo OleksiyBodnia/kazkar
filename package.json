@@ -25,6 +25,7 @@
 	"type": "module",
 	"dependencies": {
 		"@supabase/supabase-js": "^2.39.7",
-		"dotenv": "^16.4.5"
+		"dotenv": "^16.4.5",
+		"tippy.js": "^6.3.7"
 	}
 }
