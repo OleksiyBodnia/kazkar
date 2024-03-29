@@ -10,12 +10,13 @@
 <ReadWriteTemplate
 	header={"Майстерня Казкаря"}
 	description={"Тут ви можете взяти участь у написанні казок! Правила, та та та і тому подібне"}
+	{data}
+	let:kazka={kazka}
 >
-	{#each data.kazky as kazka}
-		<div class="sample">
-			<KazkaCard id={kazka.id} state={"incompleted"} title={kazka.title} content={lastRechennia(kazka.rechennia)} />
-		</div>
-	{/each}
+
+	<KazkaCard id={kazka.id} state={"incompleted"} title={kazka.title} 
+				content={lastRechennia(kazka.rechennia)} />
+
 </ReadWriteTemplate>
 
 

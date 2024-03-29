@@ -1,20 +1,15 @@
 <script>
-    import { slide, fly } from 'svelte/transition';
-
-	let show_sidebar = true;
-
-    export function toggleSidebar() {
-        show_sidebar = !show_sidebar;
-    }
-    
+    export let data;
 </script>
 
-<!-- можливо перемістити перехід у код сторінки? -->
-{#if show_sidebar}
-    <aside transition:slide={{duration: 900, axis: 'x'}}>
-        <p>some text just to check sidebar</p>
-    </aside>
-{/if}
+<aside>
+    <p>Інформація про казку</p>
+    <p>
+        {#each data.users as user}
+           <!-- <span>{user.username}</span> -->
+        {/each}
+    </p>
+</aside>
 
 <style>
     aside {
@@ -26,7 +21,7 @@
         border: 2px solid black;
         border-radius: 20px;
 
-        overflow: hidden;
+        overflow: visible;
 		white-space: nowrap;
 		text-overflow: ellipsis;
     }

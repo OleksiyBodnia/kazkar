@@ -1,12 +1,19 @@
 <script>
-	// import KazkaCard from '../../components/KazkaCard.svelte';
-	// import { combineRechennia } from '$lib/utils';
+	//import { getRandomKazka } from '$lib/db/';
+	import { scale } from 'svelte/transition';
+	import { onMount } from 'svelte';
 
     export let header = "Заголовок";
     export let description = "Опис сторінки";
+	export let data;
 
 	let filter_selected;
 	let filters = ['Найновіші', 'Найстаріші', 'Популярні', 'Непопулярні'];
+
+	let content_visible = false;
+	onMount(() => {
+		content_visible = true;
+	});
 
 	function whenFilterSelected() {}
 </script>
@@ -19,13 +26,11 @@
 
 	<div class="find-tools">
 		<div class="rigth-find-tools">
-			<label
-				>Пошук
+			<label>Пошук
 				<input type="text" />
 			</label>
 
-			<label
-				>Фільтр
+			<label>Фільтр
 				<select bind:value={filter_selected} on:change={whenFilterSelected}>
 					{#each filters as filter}
 						<option value={filter}>
@@ -42,7 +47,14 @@
 	</div>
 
 	<div class="finished-samples">
-        <slot />
+		{#each data.kazky as kazka,i}
+		{#if content_visible}
+			<div class="sample" in:scale={{ delay:  160*i, duration: 700, start: 0.7 }}>
+				<slot {kazka}/>
+			</div>
+		{/if}
+	{/each}
+        
 	</div>
 </div>
 

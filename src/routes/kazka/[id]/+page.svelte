@@ -3,9 +3,14 @@
 	export let data;
 	import Sidebar from '../../../components/Sidebar.svelte';
 	import { tooltip } from '$lib/utils/tooltip.js';
+	import { slide, fly } from 'svelte/transition';
 
 	let SidebarComponent;
-
+	
+	let show_sidebar = true;
+    function toggleSidebar() {
+        show_sidebar = !show_sidebar;
+    }
 </script>
 
 <div class="individual-kazka-div">
@@ -20,13 +25,14 @@
 				{/each}
 			</p>
 		</article>
-
-		<div class="sidebar-container">
-			<Sidebar bind:this={SidebarComponent} />
-		</div>
+		{#if show_sidebar}
+			<div class="sidebar-container" transition:slide={{duration: 900, axis: 'x'}}>
+				<Sidebar bind:this={SidebarComponent} {data}/>
+			</div>
+		{/if}
 	</div>
 
-	<button class="show-sidebar-btn" on:click={SidebarComponent.toggleSidebar}>sidebar</button>
+	<button class="show-sidebar-btn" on:click={toggleSidebar}>sidebar</button>
 </div>
 
 <!-- дуже-дуже демо версія, погане вирівнювання, треба правити -->
@@ -42,7 +48,7 @@
 	.kazka-and-sidebar {
 		display: flex;
 		align-items: center;
-		justify-content: center;
+		justify-content: right;
 	}
 
 	article {
@@ -50,7 +56,9 @@
 	}
 
 	.sidebar-container {
-		margin-left: 10%;
+		/* margin-left: 10%; */
+		padding-left: 5%;
+		max-width: 30%;
 	}
 
 	.show-sidebar-btn {
@@ -59,11 +67,11 @@
 		right: 20px;
 	}
 
-	pre {
+	/* pre {
 		white-space: pre-wrap;
 		font-size: 1em;
 		font-family: monospace;
-	}
+	} */
 
 	span:hover {
 		cursor: pointer;
