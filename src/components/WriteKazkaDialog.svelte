@@ -19,7 +19,7 @@
         <h4>{title}</h4>
         <p>{content}</p>
         <textarea bind:value={new_sentence} placeholder="продовження..." autofocus></textarea>
-        <button>btn</button>
+        <button>Додати речення</button>
     </div>
 </Modal>
 <style>
@@ -33,6 +33,7 @@
 
 	h4 {
 		text-align: center;
+        margin-bottom: 0;
 	}
 
 	p {
@@ -40,8 +41,16 @@
 	}
 
     textarea {
-		flex: 1;
-		resize: none;
-        width: 90%;
+        outline: none;
+        resize:none;
+        min-height: 100px;
+        width: 100%;
+        border-radius: 4px;
+        padding: 8px;
+        margin-bottom: 25px;
+        border: 2px solid rgb(177, 177, 177);
 	}
+    textarea:focus{
+        border: 2px solid  black;
+    }
 </style>

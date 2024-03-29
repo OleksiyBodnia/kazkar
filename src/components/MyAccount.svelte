@@ -18,7 +18,7 @@
 <style>
     .myaccount-tab {
         /* width: 700px; */
-        max-width: 700px;
+        width: 800px;
         text-align: center;
         border: 2px solid black;
         border-radius: 10px;

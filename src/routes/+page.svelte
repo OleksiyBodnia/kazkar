@@ -15,7 +15,7 @@
 {#if content_visible}
 	<div class="main-page-div">
 		<div class="write-encourage" in:fly={{ y: -160, duration: 1000 }}>
-			<button onclick="window.location.href = '/maisternia'">Написати казку</button>
+			<a href="/maisternia" class="main-page-link" style="font-size: 24px;">Написати казку</a>
 			<p>Створюй нову неймовірну казку разом із Казкарем!</p>
 		</div>
 
@@ -33,7 +33,7 @@
 					</div>
 				{/each}
 			</div>
-			<a href="/chytaty">Більше</a>
+			<a href="/chytaty" class="main-page-link">Більше</a>
 		</div>
 	</div>
 {/if}
@@ -78,4 +78,19 @@
 		flex-wrap: wrap;
 		margin-bottom: 40px;
 	}
+	.main-page-link {
+	background-color: white;
+	text-align: center;
+	border: 2px solid;
+	border-radius: 8px;
+	cursor: pointer;
+	padding: 2px 8px;
+}
+
+.main-page-link:hover {
+	background-image: linear-gradient(120deg, #78009d 34%, #0087bc 100%);
+	background-clip: text;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
 </style>

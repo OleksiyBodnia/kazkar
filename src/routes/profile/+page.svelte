@@ -86,7 +86,6 @@
 		background-clip: text;
 		-webkit-background-clip: text;
 		-webkit-text-fill-color: transparent;
-		border-bottom: 2px solid #78009d;
-		padding-bottom: 8px;
+		/* border-bottom: 2px solid #78009d; */
 	}
 </style>
