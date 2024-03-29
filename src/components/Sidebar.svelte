@@ -21,7 +21,7 @@
         border: 2px solid black;
         border-radius: 20px;
 
-        overflow: visible;
+        overflow: hidden;
 		white-space: nowrap;
 		text-overflow: ellipsis;
     }
