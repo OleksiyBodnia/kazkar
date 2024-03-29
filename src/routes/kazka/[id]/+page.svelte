@@ -3,26 +3,34 @@
 	export let data;
 	import Sidebar from '../../../components/Sidebar.svelte';
 	import { tooltip } from '$lib/utils/tooltip.js';
-	import { slide, fly } from 'svelte/transition';
+	import { slide, scale } from 'svelte/transition';
+	import { tweened } from 'svelte/motion';
+	import { cubicOut } from 'svelte/easing';
 
 	let SidebarComponent;
-	let sidebar;
-	let opened = true;
-	let kazkaAndSidebar;
-	let opened2 = true;
-	// let show_sidebar = true;
-    function toggleSidebar() {
-        // show_sidebar = !show_sidebar;
 
-		// sidebar.classList.toggle('open');
-		opened = !opened;
-		opened2 =! opened2;
+	const sp_width = tweened(4, {
+		duration: 900,
+		easing: cubicOut
+	});
+
+	let show_sidebar = true;
+	let show_spacer = false;
+
+    function toggleSidebar() {
+        show_sidebar = !show_sidebar;
+		show_spacer = !show_spacer;
+		if (show_spacer) {
+			sp_width.set(16);
+		} else {
+			sp_width.set(4);
+		}		
     }
 </script>
 
 <div class="individual-kazka-div">
-	<div class="kazka-and-sidebar {opened2 ? 'open2' : ' '}" bind:this={kazkaAndSidebar}>
-		<article class="kazka-itself">
+	<div class="kazka-and-sidebar">
+		<article class="kazka-itself" style="margin-right: {$sp_width}%;">
 			<h2>{data.kazka.title}</h2>
 			<p>
 				{#each data.kazka.rechennia as rechennia, i}
@@ -32,17 +40,20 @@
 				{/each}
 			</p>
 		</article>
-		<!-- {#if show_sidebar} -->
-			<div class="sidebar-container {opened ? 'open' : ' '}" bind:this={sidebar}>
+
+		{#if show_sidebar}
+			<div class="sidebar-container" transition:slide={{duration: 900, axis: 'x'}}>
 				<Sidebar bind:this={SidebarComponent} {data}/>
 			</div>
-		<!-- {/if} -->
+		{/if}
 	</div>
 
-	<button class="show-sidebar-btn" on:click={toggleSidebar}>sidebar</button>
+	<button class="show-sidebar-btn arrow {show_sidebar ? 'rotate0' : 'rotate180'}" on:click={toggleSidebar}>
+		<i class="gg-arrow-right"></i>
+	</button>
+	<!-- <img src="/img/arrow.png" alt="arrow" type="button" class="arrow show-sidebar-btn {show_sidebar ? 'rotate180' : 'rotate0'}" on:click={toggleSidebar}/> -->
 </div>
 
-<!-- дуже-дуже демо версія, погане вирівнювання, треба правити -->
 <style>
 	.individual-kazka-div {
 		padding: 40px;
@@ -50,52 +61,81 @@
 		align-items: center;
 		justify-content: center;
 		flex-direction: column;
-		width: 100%;
 	}
 
 	.kazka-and-sidebar {
-		position: relative;
 		display: flex;
 		align-items: center;
-		justify-content: center;
-		overflow: hidden;
-	}
-	.kazka-and-sidebar.open2{
-		justify-content: space-between;
+		justify-content: right;
 	}
 
 	article {
-		max-width: 70%;
+		max-width: 66%;
 	}
 
 	.sidebar-container {
-		/* margin-left: 10%; */
-		/* padding-left: 5%; */
+
+		padding-left: 5%;
 		max-width: 30%;
-		position: absolute;
-		right: 0;
-		transform: translateX(100%);
-		transition: transform 0.3s ease-in-out, position 0.6s ease-in-out; 
-	}
-	.sidebar-container.open{
-		position: relative;
-		transform: translateX(0%);
 	}
 
 	.show-sidebar-btn {
+		all: unset;
 		position: absolute;
 		top: 90px;
 		right: 20px;
 	}
 
-	/* pre {
-		white-space: pre-wrap;
-		font-size: 1em;
-		font-family: monospace;
-	} */
+	.show-sidebar-btn:hover {
+		cursor: pointer;
+	}
 
 	span:hover {
 		cursor: pointer;
 		text-decoration: underline;
 	}
+
+	.rotate180 {
+    	transform: rotateY(180deg);
+		transition: 0.3s ease-in-out;
+  	}
+	.rotate0 {
+    	transform: rotateY(0deg);
+		transition: 0.3s ease-in-out;
+  	}
+
+
+	.gg-arrow-right {
+		box-sizing: border-box;
+		position: relative;
+		display: block;
+		transform: scale(var(--ggs,1));
+		width: 22px;
+		height: 22px
+	}
+
+	.gg-arrow-right::after,
+	.gg-arrow-right::before {
+		content: "";
+		display: block;
+		box-sizing: border-box;
+		position: absolute;
+		right: 3px
+	}
+
+	.gg-arrow-right::after {
+		width: 8px;
+		height: 8px;
+		border-top: 2px solid;
+		border-right: 2px solid;
+		transform: rotate(45deg);
+		bottom: 7px
+	}
+
+	.gg-arrow-right::before {
+		width: 16px;
+		height: 2px;
+		bottom: 10px;
+		background: currentColor
+	} 
 </style>
