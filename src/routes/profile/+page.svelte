@@ -4,12 +4,15 @@
 	import MyAccount from '../../components/MyAccount.svelte';
 	import MyKazky from '../../components/MyKazky.svelte';
 	import MyAchievements from '../../components/MyAchievements.svelte';
+	import { fade } from 'svelte/transition';
 
 	let username = 'Nickname0';
 	let items = ['Мій акаунт', 'Мої казки', 'Особисті досягнення'];
 	let active_item = items[0];
+	let previous_item = items[0];
 
 	function tabChange(item) {
+		previous_item = active_item;
 		active_item = item;
 	}
 </script>
@@ -33,11 +36,21 @@
 	</div>
 
 	{#if active_item === items[0]}
-		<MyAccount />
+		<div in:fade={{ x: -200, duration: 700 }}>
+			<MyAccount />
+		</div>
 	{:else if active_item === items[1]}
-		<MyKazky />
+		<div in:fade={{ x: 200, duration: 700 }}>
+			<MyKazky />
+		</div>
+	<!-- {:else if active_item === items[1] && previous_item === items[2]}
+		<div in:fly={{ x: -200, duration: 700 }}>
+			<MyKazky />
+		</div> -->
 	{:else if active_item === items[2]}
-		<MyAchievements />
+		<div in:fade={{ x: 200, duration: 700 }}>
+			<MyAchievements />
+		</div>
 	{/if}
 </div>
 
@@ -86,7 +99,6 @@
 		background-clip: text;
 		-webkit-background-clip: text;
 		-webkit-text-fill-color: transparent;
-		border-bottom: 2px solid #78009d;
-		padding-bottom: 8px;
+		/* border-bottom: 2px solid #78009d; */
 	}
 </style>

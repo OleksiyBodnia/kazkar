@@ -1,19 +1,34 @@
 <script>
-    import { slide, fly } from 'svelte/transition';
+    import { lastRechennia } from '$lib/utils';
+    export let data;
 
-	let show_sidebar = true;
+    function niceTime(rech) {
+        const date = new Date(rech.created_at);
 
-    export function toggleSidebar() {
-        show_sidebar = !show_sidebar;
+        const year = date.getFullYear();
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const day = date.getDate().toString().padStart(2, '0');
+        const hours = date.getHours().toString().padStart(2, '0');
+        const minutes = date.getMinutes().toString().padStart(2, '0');
+
+        return `${year}-${month}-${day} ${hours}:${minutes}`;
+            
     }
-    
 </script>
 
-{#if show_sidebar}
-    <aside transition:slide={{duration: 900, axis: 'x'}}>
-        <p>some text just to check sidebar</p>
-    </aside>
-{/if}
+<aside>
+    <p>Інформація про казку</p>
+    <p>Час написання<br>
+        від {niceTime(data.kazka.rechennia[0])}<br>
+        до {niceTime(lastRechennia(data.kazka.rechennia))}</p>
+    <p> Автори
+        {#each data.users as user}
+           <!-- <span>{user.username}</span> -->
+        {/each}
+    </p>
+    <p>Перегляди</p>
+    <p>Уподобайки</p>
+</aside>
 
 <style>
     aside {

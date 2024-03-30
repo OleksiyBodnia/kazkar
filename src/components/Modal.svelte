@@ -5,15 +5,15 @@
 	let show_info = false;
     export let outer_close = true;
 
-	export function toggleModal() {
+	export function toggle() {
 		show_info = !show_info;
 	}
 </script>
 
 {#if show_info}
-	<div class="backdrop" transition:fade on:click|self={() => { if (outer_close) toggleModal()}}>
+	<div class="backdrop" transition:fade on:click|self={() => { if (outer_close) toggle()}}>
 		<div class="modal" transition:scale>
-			<button class="close-button" on:click={toggleModal}>×</button>
+			<button class="close-button" on:click={toggle}>×</button>
 			<slot />
 		</div>
 	</div>
@@ -22,6 +22,8 @@
 <style>
 	.backdrop {
 		position: fixed;
+		top: 0;
+		left: 0;
 		z-index: 101;
         width: 100%;
         height: 100%;
