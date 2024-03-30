@@ -47,8 +47,10 @@
 			</div>
 		{/if}
 	</div>
-
-	<button class="show-sidebar-btn arrow {show_sidebar ? 'rotate0' : 'rotate180'}" on:click={toggleSidebar} id='show-sidebar-btn-id'>
+	<pre>
+		
+	</pre>
+	<button class="show-sidebar-btn arrow {show_sidebar ? 'rotate180' : 'rotate0'}" on:click={toggleSidebar} id='show-sidebar-btn-id'>
 		<svg class="show-sidebar-btn-arrow2" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
 			<path d="M26.6667 16H5.33342" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 			<path d="M13.3333 24L5.33325 16L13.3333 8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -69,8 +71,8 @@
 
 	.kazka-and-sidebar {
 		display: flex;
-		align-items: center;
 		justify-content: right;
+		align-items: flex-start;
 	}
 
 	article {
@@ -78,9 +80,9 @@
 	}
 
 	.sidebar-container {
-
-		padding-left: 5%;
-		max-width: 30%;
+		margin-left: 5%;
+		margin-top: 60px;
+		max-width: 25%;
 	}
 
 	.show-sidebar-btn {
@@ -104,17 +106,17 @@
     	transform: rotateY(180deg);
 		transition: 0.3s ease-in-out;
   	}
+
 	.rotate0 {
     	transform: rotateY(0deg);
 		transition: 0.3s ease-in-out;
   	}
 	
-	.show-sidebar-btn-arrow2{
+	.show-sidebar-btn-arrow2 {
 		stroke: black;
 	}
-	.show-sidebar-btn-arrow2:hover{
+
+	.show-sidebar-btn-arrow2:hover {
 		stroke: #78009d;
 	}
-
-	 
 </style>

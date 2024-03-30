@@ -15,7 +15,7 @@
 >
 
 	<KazkaCard id={kazka.id} state={"incompleted"} title={kazka.title} 
-				content={lastRechennia(kazka.rechennia)} />
+				content={lastRechennia(kazka.rechennia).content} />
 
 </ReadWriteTemplate>
 

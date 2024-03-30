@@ -3,7 +3,7 @@ export function combineRechennia(arr) {
 }
 
 export function lastRechennia(arr) { 
-    return arr[arr.length - 1].content;
+    return arr[arr.length - 1];
 }
 
 export function truncateText(text, maxLength) {
