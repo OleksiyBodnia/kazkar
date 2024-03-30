@@ -1,11 +1,11 @@
 <script>
-    import KazkaPreview from "./KazkaPreview.svelte"
+    import KazkaCard from "./KazkaCard.svelte"
 
 </script>
 
 <div class="">
-    <KazkaPreview title={"Назва"} content={"Одного разу в країні бітів та байтів жив байтовий маніак на ім'я Біттон. Він був відомий усім своїм неймовірним бажанням економити байти. Його життя оберталося лише навколо цифр і кодування."} />
-    <KazkaPreview title={"Назва"} content={"Одного разу в країні бітів та байтів жив байтовий маніак на ім'я Біттон. Він був відомий усім своїм неймовірним бажанням економити байти. Його життя оберталося лише навколо цифр і кодування."} />
+    <!-- <KazkaCard id={kazka.id} state={"completed"} title={kazka.title} 
+				content={combineRechennia(kazka.rechennia)} /> -->
 </div>
 
 
@@ -20,6 +20,6 @@
         border: 2px solid black;
         border-radius: 10px;
         padding: 20px;
-        max-width: 1200px;
+        width: 800px;
     }
 </style>

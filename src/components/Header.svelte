@@ -11,9 +11,9 @@
 <header>
 	<a class="title" href="/">Казкар</a> <!-- треба зробит так, щоб при натисканні головна строрінка оновлювалася навіть коли вона є поточною -->
 	<nav>
-		<a href="/chytaty">Читати</a>
-		<a href="/maisternia">Писати</a>
-		<a href="/rating">Рейтинг</a>
+		<a href="/chytaty" class="header-link">Читати</a>
+		<a href="/maisternia" class="header-link">Писати</a>
+		<a href="/rating" class="header-link">Рейтинг</a>
 		<button on:click={InfoDialogComponent.toggleInfoDialog}>Що тут коїться?</button>
 		<button on:click={LoginDialogComponent.toggleLoginDialog}>Увійти</button>
 	</nav>
@@ -50,5 +50,12 @@
         padding: 0;
         font: inherit;
         outline: inherit;
+	}
+	.header-link:hover,
+	.header-link:focus{
+		background-image: linear-gradient(120deg, #78009d 34%, #0087bc 100%);
+		background-clip: text;
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
 	}
 </style>

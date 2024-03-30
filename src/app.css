@@ -23,12 +23,14 @@ a {
 	text-decoration: none;
 }
 
-a:hover {
+/* a:hover {
 	background-image: linear-gradient(120deg, #78009d 34%, #0087bc 100%);
 	background-clip: text;
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
-}
+} */
+
+/* просто посилання і посиллання кнопка мусять мати різне оформлення */
 
 button {
 	background-color: white;
