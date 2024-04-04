@@ -7,7 +7,7 @@ dotenv.config();
 
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
 
-export async function getKazky(state = 'all', limit = 10) {
+export async function getKazky(state = 'all', limit = 10, sort = 'asc', offset = 0) {
 	let query = supabase.from('kazky').select('*');
 
 	if (state === 'completed') {
@@ -18,7 +18,15 @@ export async function getKazky(state = 'all', limit = 10) {
 		query = query.filter('is_completed', 'eq', false);
 	}
 
-	query = query.limit(limit);
+	const rangeStart = offset;
+	const rangeEnd = offset + limit - 1;
+	query = query.range(rangeStart, rangeEnd);
+
+	if (sort === 'asc') {
+		query = query.order('created_at', { ascending: true });
+	} else if (sort === 'desc') {
+		query = query.order('created_at', { ascending: false });
+	}
 
 	const { data: kazky, error } = await query;
 
@@ -84,4 +92,25 @@ export async function getUser(id) {
 		throw error;
 	}
 	return user;
+}
+
+// get a number of completed or incompleted kazky
+export async function getKazkyCount(state = 'all') {
+	let query = supabase.from('kazky').select('id');
+
+	if (state === 'completed') {
+		query = query.filter('is_completed', 'eq', true);
+	}
+
+	if (state === 'incompleted') {
+		query = query.filter('is_completed', 'eq', false);
+	}
+
+	const { data: kazky, error } = await query;
+
+	if (error) {
+		throw error;
+	}
+
+	return kazky.length;
 }
