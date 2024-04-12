@@ -1,15 +1,13 @@
 // place files you want to import through the `$lib` alias in this folder. ("$lib/db" for this file)
 
 import { createClient } from '@supabase/supabase-js';
-import dotenv from 'dotenv';
+import { SUPABASE_URL, SUPABASE_ANON_KEY } from '$env/static/private';
 
-dotenv.config();
-
-const supabase_public = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY, {
+const supabase_public = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
 	db: { schema: 'public' }
 });
 
-const supabase_next_auth = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY, {
+const supabase_next_auth = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
 	db: { schema: 'next_auth' }
 });
 
