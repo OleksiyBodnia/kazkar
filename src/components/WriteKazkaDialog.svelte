@@ -1,5 +1,6 @@
 <script>
     import Modal from './Modal.svelte';
+    import { page } from "$app/stores";
 
     let ModalComponent;
     export let id;
@@ -16,10 +17,14 @@
 
 <Modal outer_close={false} bind:this={ModalComponent}>
     <div>
-        <h4>{title}</h4>
-        <p>{content}</p>
-        <textarea bind:value={new_sentence} placeholder="продовження..." autofocus></textarea>
-        <button>Додати речення</button>
+        {#if $page.data.session}
+            <h4>{title}</h4>
+            <p>{content}</p>
+            <textarea bind:value={new_sentence} placeholder="продовження..." autofocus></textarea>
+            <button>Додати речення</button>
+        {:else}
+            <p>Лише автентифіковані користувачі можуть брати участь у написанні казок!</p>
+        {/if}
     </div>
 </Modal>
 <style>
