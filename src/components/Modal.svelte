@@ -2,7 +2,7 @@
 <script>
 	import { fade, scale} from 'svelte/transition';
 
-	let show_info = false;
+	export let show_info = false;
     export let outer_close = true;
 
 	export function toggle() {

@@ -24,6 +24,8 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@auth/core": "^0.29.0",
+		"@auth/sveltekit": "^0.15.0",
 		"@supabase/supabase-js": "^2.39.7",
 		"dotenv": "^16.4.5",
 		"tippy.js": "^6.3.7"
