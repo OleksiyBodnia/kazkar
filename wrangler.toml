@@ -1,0 +1,10 @@
+name = "app"
+account_id = "a5aacbdfec0cade7796784973eb66ebb"
+
+main = "./.cloudflare/worker.js"
+site.bucket = "./.cloudflare/public"
+
+build.command = "npm run build"
+
+compatibility_date = "2024-04-12"
+workers_dev = true

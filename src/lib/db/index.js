@@ -1,11 +1,9 @@
 // place files you want to import through the `$lib` alias in this folder. ("$lib/db" for this file)
 
 import { createClient } from '@supabase/supabase-js';
-import dotenv from 'dotenv';
+import { SUPABASE_URL, SUPABASE_ANON_KEY } from '$env/static/private';
 
-dotenv.config();
-
-const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 export async function getKazky(state = 'all', limit = 10, sort = 'asc', offset = 0) {
 	let query = supabase.from('kazky').select('*');
