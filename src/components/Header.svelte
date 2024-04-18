@@ -3,9 +3,25 @@
 	import LoginDialog from "./LoginDialog.svelte";
 	import { signIn, signOut} from "@auth/sveltekit/client";
 	import { page } from "$app/stores";
+	import {createDBUser} from "$lib/db/index.js";
+
 
 	let InfoDialogComponent;
 	let LoginDialogComponent;
+
+	/*
+	function setUserId(events) {
+		//docs - https://authjs.dev/getting-started/session-management/get-session#:~:text=Then%20you%20can%20access%20the%20session%20on%20the%20%24page.data%20object%20in%20your%20page.
+		// console.log($page.data.session?.user?.id)//.user?.id)
+		localStorage.setItem('userid', $page.data.session?.user?.id);
+
+		// cookies.set('userid', $page.data.session?.user?.id);
+		// cookies.set('visited', 'true', { path: '/' });
+	}
+
+	 */
+
+
 </script>
 
 <InfoDialog bind:this={InfoDialogComponent} />
@@ -20,6 +36,7 @@
 		<button on:click={InfoDialogComponent.toggleInfoDialog}>Що тут коїться?</button>
 		<!-- <button on:click={LoginDialogComponent.toggleLoginDialog}>Увійти</button> -->
 		{#if $page.data.session}
+			<button on:click={() => createDBUser()}>Тест</button>
         	<button on:click={() => signOut()}>Вийти</button>
 		{:else}
 			<button on:click={() => signIn()}>Увійти</button>
