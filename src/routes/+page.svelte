@@ -5,10 +5,10 @@
 	import { fly } from 'svelte/transition';
 	import { combineRechennia } from '$lib/utils';
 	import { onMount } from 'svelte';
-
 	let content_visible = false;
 	onMount(() => {
         content_visible = true;
+
     });
 </script>
 
