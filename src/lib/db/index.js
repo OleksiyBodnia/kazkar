@@ -1,6 +1,6 @@
 // place files you want to import through the `$lib` alias in this folder. ("$lib/db" for this file)
 
-import { page } from "$app/stores";
+import { page } from '$app/stores';
 import { createClient } from '@supabase/supabase-js';
 import { SUPABASE_URL, SUPABASE_ANON_KEY } from '$env/static/private';
 
@@ -114,16 +114,14 @@ export async function getKazkyCount(state = 'all') {
 	return kazky.length;
 }
 
-export async function createDBUser (events)
-{
-	// console.log($page.data.session?.user)
-
-	const { error } = await supabase
-		.from('users')
-		.insert({
-			//id: 1,
-			username: $page.data.session?.user?.name,
-			email: $page.data.session?.user?.email,
-			user_sub: $page.data.session?.user?.id,
-		})
+export async function createDBUser(username, email, user_sub) {
+	const { data, error } = await supabase.from('users').insert({
+		username,
+		email,
+		user_sub
+	});
+	if (error) {
+		throw error;
+	}
+	return data;
 }
