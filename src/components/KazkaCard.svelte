@@ -1,6 +1,8 @@
 <script>
 	import { truncateText } from '$lib/utils';
 	import WriteKazkaDialog from './WriteKazkaDialog.svelte';
+	import AlertDialog from './AlertDialog.svelte';
+	import { page } from "$app/stores";
 	
 	export let id;
 	export let title;
@@ -8,6 +10,7 @@
 	export let state;
 
 	let WriteDialogComponent;
+	let AlertDialogComponent;
 	
 </script>
 
@@ -19,11 +22,18 @@
 		</a>
 	</article>
 {:else if state == "incompleted"}
-	<article on:click={WriteDialogComponent.toggleWrite()}>
+	<article on:click={() => {
+		if ($page.data.session)
+			WriteDialogComponent.toggleWrite();
+		else
+			AlertDialogComponent.toggleAlert();
+	}
+	 }>
 		<h4>{title}</h4>
 		<p>{truncateText(content, 160)}</p>
 	</article>
 	<WriteKazkaDialog bind:this={WriteDialogComponent} {id} {title} {content} />
+	<AlertDialog bind:this={AlertDialogComponent} />
 {/if}
 
 <style>
