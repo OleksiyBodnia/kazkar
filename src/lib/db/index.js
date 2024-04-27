@@ -127,3 +127,14 @@ export async function createDBUser(username, email, user_sub) {
 	}
 	return data;
 }
+
+export async function createDBUserIfNotExists(username, email, user_sub) {
+	const { data: users, error } = await supabase.from('users').select('*').eq('user_sub', user_sub);
+	if (error) {
+		throw error;
+	}
+	if (users.length === 0) {
+		return createDBUser(username, email, user_sub);
+	}
+	return users[0];
+}

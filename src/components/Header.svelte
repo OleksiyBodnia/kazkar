@@ -3,9 +3,34 @@
 	import LoginDialog from './LoginDialog.svelte';
 	import { signIn, signOut } from '@auth/sveltekit/client';
 	import { page } from '$app/stores';
+	import { onMount } from 'svelte';
 
 	let InfoDialogComponent;
 	let LoginDialogComponent;
+
+	onMount(() => {
+		if ($page.data.session) {
+			console.log($page.data.session);
+			fetch('/api/users/new', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					username: $page.data.session.user.name,
+					email: $page.data.session.user.email,
+					user_sub: $page.data.session.user.id
+				})
+			})
+				.then((response) => response.json())
+				.then((data) => {
+					console.log('Success:', data);
+				})
+				.catch((error) => {
+					console.error('Error:', error);
+				});
+		}
+	});
 
 	/*
 	function setUserId(events) {
