@@ -1,10 +1,10 @@
-import { createDBUser } from '$lib/db';
+import { createDBUserIfNotExists } from '$lib/db';
 
 export async function POST(request) {
 	const { username, email, user_sub } = request.body;
 
 	try {
-		const data = await createDBUser(username, email, user_sub);
+		const data = await createDBUserIfNotExists(username, email, user_sub);
 		return {
 			status: 200,
 			body: {
