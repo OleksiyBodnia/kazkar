@@ -28,8 +28,10 @@
 	"type": "module",
 	"dependencies": {
 		"@auth/core": "^0.29.0",
+		"@auth/supabase-adapter": "^1.0.0",
 		"@auth/sveltekit": "^0.15.0",
-		"@supabase/supabase-js": "^2.42.3",
+		"@supabase/supabase-js": "^2.42.7",
+		"dotenv": "^16.4.5",
 		"tippy.js": "^6.3.7"
 	}
 }
