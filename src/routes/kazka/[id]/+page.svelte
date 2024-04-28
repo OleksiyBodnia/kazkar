@@ -17,15 +17,15 @@
 	let show_sidebar = true;
 	let show_spacer = false;
 
-    function toggleSidebar() {
-        show_sidebar = !show_sidebar;
+	function toggleSidebar() {
+		show_sidebar = !show_sidebar;
 		show_spacer = !show_spacer;
 		if (show_spacer) {
 			sp_width.set(16);
 		} else {
 			sp_width.set(4);
-		}		
-    }
+		}
+	}
 </script>
 
 <div class="individual-kazka-div">
@@ -34,26 +34,46 @@
 			<h2>{data.kazka.title}</h2>
 			<p>
 				{#each data.kazka.rechennia as rechennia, i}
-					<span use:tooltip={{placement: 'left', theme: 'light-border',}} 
-							title={"автор речення: " + data.users[i].username}
-							>{rechennia.content + " "}</span>
+					<span
+						use:tooltip={{ placement: 'left', theme: 'light-border' }}
+						title={'автор речення: ' + data.users[i].name}>{rechennia.content + ' '}</span
+					>
 				{/each}
 			</p>
 		</article>
 
 		{#if show_sidebar}
-			<div class="sidebar-container" transition:slide={{duration: 900, axis: 'x'}}>
-				<Sidebar bind:this={SidebarComponent} {data}/>
+			<div class="sidebar-container" transition:slide={{ duration: 900, axis: 'x' }}>
+				<Sidebar bind:this={SidebarComponent} {data} />
 			</div>
 		{/if}
 	</div>
-	<pre>
-		
-	</pre>
-	<button class="show-sidebar-btn arrow {show_sidebar ? 'rotate180' : 'rotate0'}" on:click={toggleSidebar} id='show-sidebar-btn-id'>
-		<svg class="show-sidebar-btn-arrow2" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
-			<path d="M26.6667 16H5.33342" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-			<path d="M13.3333 24L5.33325 16L13.3333 8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+	<pre></pre>
+	<button
+		class="show-sidebar-btn arrow {show_sidebar ? 'rotate180' : 'rotate0'}"
+		on:click={toggleSidebar}
+		id="show-sidebar-btn-id"
+	>
+		<svg
+			class="show-sidebar-btn-arrow2"
+			xmlns="http://www.w3.org/2000/svg"
+			width="32"
+			height="32"
+			viewBox="0 0 32 32"
+			fill="none"
+		>
+			<path
+				d="M26.6667 16H5.33342"
+				stroke-width="2"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+			/>
+			<path
+				d="M13.3333 24L5.33325 16L13.3333 8"
+				stroke-width="2"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+			/>
 		</svg>
 	</button>
 </div>
@@ -96,22 +116,22 @@
 	.show-sidebar-btn:hover {
 		cursor: pointer;
 	}
-	
+
 	span:hover {
 		cursor: pointer;
 		text-decoration: underline;
 	}
 
 	.rotate180 {
-    	transform: rotateY(180deg);
+		transform: rotateY(180deg);
 		transition: 0.3s ease-in-out;
-  	}
+	}
 
 	.rotate0 {
-    	transform: rotateY(0deg);
+		transform: rotateY(0deg);
 		transition: 0.3s ease-in-out;
-  	}
-	
+	}
+
 	.show-sidebar-btn-arrow2 {
 		stroke: black;
 	}

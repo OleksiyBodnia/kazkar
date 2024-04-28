@@ -1,15 +1,20 @@
 // place files you want to import through the `$lib` alias in this folder. ("$lib/db" for this file)
 
-import { page } from '$app/stores';
 import { createClient } from '@supabase/supabase-js';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
-const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
+const supabase_public = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY, {
+	db: { schema: 'public' }
+});
+
+const supabase_next_auth = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY, {
+	db: { schema: 'next_auth' }
+});
 
 export async function getKazky(state = 'all', limit = 10, sort = 'asc', offset = 0) {
-	let query = supabase.from('kazky').select('*');
+	let query = supabase_public.from('kazky').select('*');
 
 	if (state === 'completed') {
 		query = query.filter('is_completed', 'eq', true);
@@ -36,7 +41,7 @@ export async function getKazky(state = 'all', limit = 10, sort = 'asc', offset =
 	}
 
 	for (let kazka of kazky) {
-		const { data: rechennia, error: errorRechennia } = await supabase
+		const { data: rechennia, error: errorRechennia } = await supabase_public
 			.from('rechennia')
 			.select('*')
 			.eq('kazka_id', kazka.id);
@@ -50,11 +55,15 @@ export async function getKazky(state = 'all', limit = 10, sort = 'asc', offset =
 }
 
 export async function getKazka(id) {
-	const { data: kazka, error } = await supabase.from('kazky').select('*').eq('id', id).single();
+	const { data: kazka, error } = await supabase_public
+		.from('kazky')
+		.select('*')
+		.eq('id', id)
+		.single();
 	if (error) {
 		throw error;
 	}
-	const { data: rechennia, error: errorRechennia } = await supabase
+	const { data: rechennia, error: errorRechennia } = await supabase_public
 		.from('rechennia')
 		.select('*')
 		.eq('kazka_id', id);
@@ -66,7 +75,7 @@ export async function getKazka(id) {
 }
 
 export async function getRandomKazka(completed = false) {
-	const { data: kazky, error } = await supabase
+	const { data: kazky, error } = await supabase_public
 		.from('kazky')
 		.select('*')
 		.filter('is_completed', 'eq', completed)
@@ -76,7 +85,7 @@ export async function getRandomKazka(completed = false) {
 		throw error;
 	}
 	const kazka = kazky[0];
-	const { data: rechennia, error: errorRechennia } = await supabase
+	const { data: rechennia, error: errorRechennia } = await supabase_public
 		.from('rechennia')
 		.select('*')
 		.eq('kazka_id', kazka.id);
@@ -88,7 +97,11 @@ export async function getRandomKazka(completed = false) {
 }
 
 export async function getUser(id) {
-	const { data: user, error } = await supabase.from('users').select('*').eq('id', id).single();
+	const { data: user, error } = await supabase_next_auth
+		.from('users')
+		.select('*')
+		.eq('id', id)
+		.single();
 	if (error) {
 		throw error;
 	}
@@ -97,7 +110,7 @@ export async function getUser(id) {
 
 // get a number of completed or incompleted kazky
 export async function getKazkyCount(state = 'all') {
-	let query = supabase.from('kazky').select('id');
+	let query = supabase_public.from('kazky').select('id');
 
 	if (state === 'completed') {
 		query = query.filter('is_completed', 'eq', true);
@@ -114,27 +127,4 @@ export async function getKazkyCount(state = 'all') {
 	}
 
 	return kazky.length;
-}
-
-export async function createDBUser(username, email, user_sub) {
-	const { data, error } = await supabase.from('users').insert({
-		username,
-		email,
-		user_sub
-	});
-	if (error) {
-		throw error;
-	}
-	return data;
-}
-
-export async function createDBUserIfNotExists(username, email, user_sub) {
-	const { data: users, error } = await supabase.from('users').select('*').eq('user_sub', user_sub);
-	if (error) {
-		throw error;
-	}
-	if (users.length === 0) {
-		return createDBUser(username, email, user_sub);
-	}
-	return users[0];
 }
