@@ -1,4 +1,3 @@
-
 <p align="center">
   <img src="static/favicon.png" alt="Логотип Казкаря" title="Казкар" />
 </p>
