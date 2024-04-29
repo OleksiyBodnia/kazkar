@@ -5,8 +5,9 @@
 	import MyKazky from '../../components/MyKazky.svelte';
 	import MyAchievements from '../../components/MyAchievements.svelte';
 	import { fade } from 'svelte/transition';
+	import { page } from '$app/stores';
 
-	let username = 'Nickname0';
+	let username = $page.data.session.user.name;
 	let items = ['Мій акаунт', 'Мої казки', 'Особисті досягнення'];
 	let active_item = items[0];
 	let previous_item = items[0];
@@ -37,13 +38,13 @@
 
 	{#if active_item === items[0]}
 		<div in:fade={{ x: -200, duration: 700 }}>
-			<MyAccount />
+			<MyAccount {data} />
 		</div>
 	{:else if active_item === items[1]}
 		<div in:fade={{ x: 200, duration: 700 }}>
 			<MyKazky />
 		</div>
-	<!-- {:else if active_item === items[1] && previous_item === items[2]}
+		<!-- {:else if active_item === items[1] && previous_item === items[2]}
 		<div in:fly={{ x: -200, duration: 700 }}>
 			<MyKazky />
 		</div> -->

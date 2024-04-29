@@ -12,3 +12,5 @@ vite.config.ts.timestamp-*
 .cloudflare
 .wrangler
 pnpm-lock.yaml
+package-lock.json
+wrangler.toml

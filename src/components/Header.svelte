@@ -1,7 +1,7 @@
 <script>
 	import InfoDialog from './InfoDialog.svelte';
 	import LoginDialog from './LoginDialog.svelte';
-	import { signIn, signOut } from '@auth/sveltekit/client';
+	import { signIn } from '@auth/sveltekit/client';
 	import { page } from '$app/stores';
 
 	let InfoDialogComponent;
@@ -21,7 +21,7 @@
 		<button on:click={InfoDialogComponent.toggleInfoDialog}>Що тут коїться?</button>
 		<!-- <button on:click={LoginDialogComponent.toggleLoginDialog}>Увійти</button> -->
 		{#if $page.data.session}
-			<button on:click={() => signOut()}>Вийти</button>
+			<a href="/profile" class="header-link">Профіль</a>
 		{:else}
 			<button on:click={() => signIn()}>Увійти</button>
 		{/if}
