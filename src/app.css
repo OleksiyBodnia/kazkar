@@ -1,11 +1,65 @@
+* {
+	box-sizing: border-box;
+	font-family: 'Comic Sans MS', cursive;
+	color: #212121;
+	/* background-color: #fbfbfb; */
+}
+
 body {
-	font-family: Arial, sans-serif;
+	/* font-family: "Comic Sans MS", cursive;	does it needs to be here? */
 	margin: 0;
+	/* padding: 4rem 2rem 2rem 2rem;	moved to main sytles */
+}
+
+main {
 	padding: 4rem 2rem 2rem 2rem;
 }
 
-* {
-	box-sizing: border-box;
-	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-	color: #000;
+p {
+	font-weight: 400;
+}
+
+a {
+	text-decoration: none;
+}
+
+/* a:hover {
+	background-image: linear-gradient(120deg, #78009d 34%, #0087bc 100%);
+	background-clip: text;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+} */
+
+/* просто посилання і посиллання кнопка мусять мати різне оформлення */
+
+button {
+	background-color: white;
+	text-align: center;
+	border: 2px solid;
+	border-radius: 8px;
+	cursor: pointer;
+	padding: 2px 8px;
+}
+
+button:hover {
+	background-image: linear-gradient(120deg, #78009d 34%, #0087bc 100%);
+	background-clip: text;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+select {
+	background-color: white;
+	border: 2px solid;
+	border-radius: 8px;
+	cursor: pointer;
+	padding: 2px 8px;
+	outline: none;
+}
+
+select:hover {
+	background-image: linear-gradient(120deg, #78009d 34%, #0087bc 100%);
+	background-clip: text;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 }

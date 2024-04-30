@@ -1,17 +1,25 @@
 <script>
 	/** @type {import('./$types').PageData} */
 	export let data;
-	import Kazka from '../../components/Kazka.svelte';
+	import KazkaCard from '../../components/KazkaCard.svelte';
+	import { lastRechennia } from '$lib/utils';
+	import ReadWriteTemplate from '../../components/ReadWriteTemplate.svelte';
+
 </script>
 
-<h1>Майстерня Казкаря</h1>
+<ReadWriteTemplate
+	header={"Майстерня Казкаря"}
+	description={"Тут ви можете взяти участь у написанні казок! Правила, та та та і тому подібне"}
+	{data}
+	let:kazka={kazka}
+>
 
-{#each data.kazky as kazka}
-	<Kazka title={kazka.title} content={kazka.content} time_stamp={kazka.created_at} />
-{/each}
+	<KazkaCard id={kazka.id} state={"incompleted"} title={kazka.title} 
+				content={lastRechennia(kazka.rechennia).content} />
+
+</ReadWriteTemplate>
+
 
 <style>
-	h1 {
-		text-align: center;
-	}
+	
 </style>
