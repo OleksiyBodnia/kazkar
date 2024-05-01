@@ -14,6 +14,8 @@
 	let:kazka={kazka}
 >
 
+	<button slot="new-kazka">Розпочати нову казку</button>
+
 	<KazkaCard id={kazka.id} state={"incompleted"} title={kazka.title} 
 				content={lastRechennia(kazka.rechennia).content} />
 

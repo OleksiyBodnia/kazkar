@@ -42,7 +42,7 @@
 		</div>
 		<div class="left-find-tools">
 			<button>Випадкова казка</button>
-			<!-- <button>Розпочати нову казку</button> -->
+			<slot name="new-kazka" />
 		</div>
 	</div>
 
