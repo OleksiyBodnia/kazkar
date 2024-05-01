@@ -41,8 +41,8 @@
 			</label>
 		</div>
 		<div class="left-find-tools">
-			<button>Випадкова казка</button>
-			<slot name="new-kazka" />
+			<slot name="rnd-kazka-btn" />
+			<slot name="new-kazka-btn" />
 		</div>
 	</div>
 

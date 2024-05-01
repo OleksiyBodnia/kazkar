@@ -1,39 +1,28 @@
 <script>
-	import { truncateText } from '$lib/utils';
+	import { truncateText, lastRechennia, combineRechennia } from '$lib/utils';
 	import WriteKazkaDialog from './WriteKazkaDialog.svelte';
-	import AlertDialog from './AlertDialog.svelte';
-	import { page } from "$app/stores";
 	
-	export let id;
-	export let title;
-	export let content;
+	export let kazka;
 	export let state;
 
 	let WriteDialogComponent;
-	let AlertDialogComponent;
+
 	
 </script>
 
 {#if state == "completed"}
 	<article>
-		<a href="/kazka/{id}">
-			<h4>{title}</h4>
-			<p>{truncateText(content, 160)}</p>
+		<a href="/kazka/{kazka.id}">
+			<h4>{kazka.title}</h4>
+			<p>{truncateText(combineRechennia(kazka.rechennia), 160)}</p>
 		</a>
 	</article>
 {:else if state == "incompleted"}
-	<article on:click={() => {
-		if ($page.data.session)
-			WriteDialogComponent.toggleWrite();
-		else
-			AlertDialogComponent.toggleAlert();
-	}
-	 }>
-		<h4>{title}</h4>
-		<p>{truncateText(content, 160)}</p>
+	<article on:click={() => WriteDialogComponent.toggleWrite()}>
+		<h4>{kazka.title}</h4>
+		<p>{truncateText(lastRechennia(kazka.rechennia).content, 160)}</p>
 	</article>
-	<WriteKazkaDialog bind:this={WriteDialogComponent} {id} {title} {content} />
-	<AlertDialog bind:this={AlertDialogComponent} />
+	<WriteKazkaDialog bind:this={WriteDialogComponent} type={"present"} {kazka} />
 {/if}
 
 <style>

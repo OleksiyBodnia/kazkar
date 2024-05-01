@@ -149,14 +149,6 @@ export async function addRechennia(kazka_id, rechennia_content, user_id) {
 	if (errorKazky) {
 		throw errorKazky;
 	}
-	if (kazky.length === 0) {
-		const { data: newKazka, error: errorNewKazka } = await supabase_public
-			.from('kazky')
-			.insert([{ id: kazka_id, is_completed: false }]);
-		if (errorNewKazka) {
-			throw errorNewKazka;
-		}
-	}
 
 	const { data: newRechennia, error: errorNewRechennia } = await supabase_public
 		.from('rechennia')
@@ -166,6 +158,24 @@ export async function addRechennia(kazka_id, rechennia_content, user_id) {
 	}
 
 	return newRechennia[0];
+}
+
+export async function newKazka( title, rechennia_content, user_id) {
+	const { data: newKazka, error: errorNewKazka } = await supabase_public
+		.from('kazky')
+		.insert([{ title, is_completed: false }]);
+	if (errorNewKazka) {
+		throw errorNewKazka;
+	}
+
+	const { data: newRechennia, error: errorNewRechennia } = await supabase_public
+		.from('rechennia')
+		.insert([{ kazka_id: newKazka[0].id, content: rechennia_content, user_id }]);
+	if (errorNewRechennia) {
+		throw errorNewRechennia;
+	}
+
+	return newKazka[0];
 }
 
 // change user name
