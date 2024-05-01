@@ -5,6 +5,7 @@
 	import { lastRechennia } from '$lib/utils';
 	import ReadWriteTemplate from '../../components/ReadWriteTemplate.svelte';
 
+	
 </script>
 
 <ReadWriteTemplate

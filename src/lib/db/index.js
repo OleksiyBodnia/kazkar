@@ -14,7 +14,7 @@ const supabase_next_auth = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
 // отримати казки з можливістю фільтрації за станом (виконані, невиконані, всі), за певним користувачем, сортуванням, зміщенням (для пакетного завантаження)
 export async function getKazky(
 	state = 'all',
-	limit = 10,
+	limit = 100,
 	sort = 'asc',
 	offset = 0,
 	user_id = null
@@ -53,7 +53,8 @@ export async function getKazky(
 		const { data: rechennia, error: errorRechennia } = await supabase_public
 			.from('rechennia')
 			.select('*')
-			.eq('kazka_id', kazka.id);
+			.eq('kazka_id', kazka.id)
+			.order('id');
 		if (errorRechennia) {
 			throw errorRechennia;
 		}
@@ -75,7 +76,8 @@ export async function getKazka(id) {
 	const { data: rechennia, error: errorRechennia } = await supabase_public
 		.from('rechennia')
 		.select('*')
-		.eq('kazka_id', id);
+		.eq('kazka_id', id)
+		.order('id');
 	if (errorRechennia) {
 		throw errorRechennia;
 	}
