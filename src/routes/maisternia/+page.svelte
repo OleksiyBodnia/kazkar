@@ -6,6 +6,9 @@
 	import WriteKazkaDialog from '../../components/WriteKazkaDialog.svelte';
 
 	let RandomKazkaDialog;
+	let NewKazkaDialog;
+	
+	let y = 0;
 
 	let rnd_kazka = Math.floor(Math.random() * data.kazky.length);
 	function randomKazka() {
@@ -13,23 +16,10 @@
 		RandomKazkaDialog.toggleWrite();
 	}
 
-	let NewKazkaDialog;
-	async function newKazka() {
-		const response = await fetch('/api/user/new-kazka', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({ 
-				title: 'Нова казка', 
-				rechennia_content: 'Жили-були...', 
-				user_id: data.session.user_id
-			})
-
-		});
-	}
 	
 </script>
+
+<svelte:window bind:scrollY={y} />
 
 <ReadWriteTemplate
 	header={"Майстерня Казкаря"}

@@ -140,42 +140,32 @@ export async function getKazkyCount(state = 'all') {
 	return kazky.length;
 }
 
-// add a new rechennia to a kazka, if given kazka does not exist, create a new one
+// add a new rechennia to a kazka
 export async function addRechennia(kazka_id, rechennia_content, user_id) {
-	const { data: kazky, error: errorKazky } = await supabase_public
-		.from('kazky')
-		.select('*')
-		.eq('id', kazka_id);
-	if (errorKazky) {
-		throw errorKazky;
-	}
-
 	const { data: newRechennia, error: errorNewRechennia } = await supabase_public
 		.from('rechennia')
 		.insert([{ kazka_id, content: rechennia_content, user_id }]);
 	if (errorNewRechennia) {
 		throw errorNewRechennia;
 	}
-
-	return newRechennia[0];
 }
 
-export async function newKazka( title, rechennia_content, user_id) {
+export async function newKazka( title, rechennia_content, user_id ) {
 	const { data: newKazka, error: errorNewKazka } = await supabase_public
 		.from('kazky')
-		.insert([{ title, is_completed: false }]);
+		.upsert([{ title, is_completed: false }])
+		.select();
 	if (errorNewKazka) {
 		throw errorNewKazka;
 	}
 
 	const { data: newRechennia, error: errorNewRechennia } = await supabase_public
 		.from('rechennia')
-		.insert([{ kazka_id: newKazka[0].id, content: rechennia_content, user_id }]);
+		.upsert([{ kazka_id: newKazka[0].id, content: rechennia_content, user_id }])
+		.select();
 	if (errorNewRechennia) {
 		throw errorNewRechennia;
 	}
-
-	return newKazka[0];
 }
 
 // change user name

@@ -3,6 +3,8 @@
     import AlertDialog from './AlertDialog.svelte';
     import { page } from "$app/stores";
     import { lastRechennia } from '$lib/utils';
+    import Timer from './Timer.svelte';
+    import { fade } from 'svelte/transition';
 
     let ModalComponent;
     let AlertDialogComponent;
@@ -10,32 +12,105 @@
     export let kazka;
     export let type;
 
-    let show_popup = false;
-    let new_sentence;
-
+    let title = "";
+    let new_rech = "";
+    let report = "";
+    
     export function toggleWrite() {
-        if ($page.data.session)
+        if ($page.data.session) {
             ModalComponent.toggle();
+        }
         else
             AlertDialogComponent.toggleAlert();
 	}
+	    
+    async function addRechennia() {
+        if (new_rech === "") {
+            report = "Ви не ввели речення!";
+            type = "response";
+            return;
+        }
+        const response = await fetch('/api/kazka/add-rechennia', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ 
+                kazka_id: kazka.id, 
+                rechennia_content: new_rech, 
+                user_id: $page.data.session.user.id
+            })
+        });
 
+        if (response.ok) {
+            new_rech = "";
+            const { message } = await response.json();
+            report = message;
+            type = "response";
+            
+        }
+        else {
+            const { error } = await response.json();
+            report = error;
+            type = "response";
+        }
+    }
 
+    async function newKazka() {
+        const response = await fetch('/api/kazka/new-kazka', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ 
+                title: title, 
+                rechennia_content: new_rech, 
+                user_id: $page.data.session.user.id
+            })
+        });
+
+        if (response.ok) {
+            title = "";
+            new_rech = "";
+            const { message } = await response.json();
+            report = message;
+            type = "response";
+            
+        }
+        else {
+            const { error } = await response.json();
+            report = error;
+            type = "response";
+        }
+	}
 </script>
 
 <Modal outer_close={false} bind:this={ModalComponent}>
     {#if type === "present"}
         <div>
+            <div class="timer">
+                <Timer countdown={5} on:notime={toggleWrite}/>
+            </div>
             <h4>{kazka.title}</h4>
             <p>{lastRechennia(kazka.rechennia).content}</p>
-            <textarea bind:value={new_sentence} placeholder="продовження..." autofocus></textarea>
-            <button>Додати речення</button>
+            <textarea bind:value={new_rech} placeholder="продовження..." autofocus></textarea>
+            <div class="rech-progress">
+                <progress max="10" value={kazka.rechennia.length}></progress>
+                <span>{kazka.rechennia.length}/10 речень</span>
+            </div>
+            
+            <button on:click={addRechennia}>Додати речення</button>
         </div>
     {:else if type === "new"}
         <div>
-            <input type="text" placeholder="Назва казки"/>
-            <textarea bind:value={new_sentence} placeholder="перше речення..."></textarea>
-            <button>Розпочати казку</button>
+            <input type="text" bind:value={title} placeholder="Назва казки"/>
+            <textarea bind:value={new_rech} placeholder="перше речення..."></textarea>
+            <button on:click={newKazka}>Розпочати казку</button>
+        </div>
+    {:else if type === "response"}
+        <div>
+            <!-- <h4>Дякуємо за участь!</h4> -->
+            <p>{report}</p>
         </div>
     {/if}
 </Modal>
@@ -50,6 +125,15 @@
   		/* justify-content: center; */
 		flex-direction: column;
 	}
+
+    .timer {
+        width: 10%;
+        position: absolute;
+        display: flex;
+        left: 2em;
+        align-items: left;
+        flex-direction: row;
+    }
 
 	h4 {
 		text-align: center;
@@ -85,4 +169,14 @@
         text-align: center;
         margin-bottom: 25px;
 	}
+    
+    progress {
+        width: 96%;
+    }
+
+    .rech-progress span {
+        align-self: flex-end;
+        padding-right: 10px;
+
+    }
 </style>

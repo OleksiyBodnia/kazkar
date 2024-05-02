@@ -6,8 +6,6 @@
 	export let state;
 
 	let WriteDialogComponent;
-
-	
 </script>
 
 {#if state == "completed"}
