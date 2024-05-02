@@ -18,6 +18,7 @@
     
     export function toggleWrite() {
         if ($page.data.session) {
+            report = "";
             ModalComponent.toggle();
         }
         else
@@ -26,8 +27,7 @@
 	    
     async function addRechennia() {
         if (new_rech === "") {
-            report = "Ви не ввели речення!";
-            type = "response";
+            report = "Ви не ввели речення. Ай ай ай!";
             return;
         }
         const response = await fetch('/api/kazka/add-rechennia', {
@@ -46,17 +46,18 @@
             new_rech = "";
             const { message } = await response.json();
             report = message;
-            type = "response";
-            
         }
         else {
             const { error } = await response.json();
             report = error;
-            type = "response";
         }
     }
 
     async function newKazka() {
+        if (title === "" || new_rech === "") {
+            report = "Ви не ввели назву або перше речення. Ай ай ай!";
+            return;
+        }
         const response = await fetch('/api/kazka/new-kazka', {
             method: 'POST',
             headers: {
@@ -74,40 +75,39 @@
             new_rech = "";
             const { message } = await response.json();
             report = message;
-            type = "response";
-            
         }
         else {
             const { error } = await response.json();
             report = error;
-            type = "response";
         }
 	}
 </script>
 
 <Modal outer_close={false} bind:this={ModalComponent}>
-    {#if type === "present"}
-        <div>
-            <div class="timer">
-                <Timer countdown={5} on:notime={toggleWrite}/>
+    {#if report === ""}
+        {#if type === "present"}
+            <div>
+                <div class="timer">
+                    <Timer countdown={5} on:notime={toggleWrite}/>
+                </div>
+                <h4>{kazka.title}</h4>
+                <p>{lastRechennia(kazka.rechennia).content}</p>
+                <textarea bind:value={new_rech} placeholder="продовження..." autofocus></textarea>
+                <div class="rech-progress">
+                    <progress max="10" value={kazka.rechennia.length}></progress>
+                    <span>{kazka.rechennia.length}/10 речень</span>
+                </div>
+                
+                <button on:click={addRechennia}>Додати речення</button>
             </div>
-            <h4>{kazka.title}</h4>
-            <p>{lastRechennia(kazka.rechennia).content}</p>
-            <textarea bind:value={new_rech} placeholder="продовження..." autofocus></textarea>
-            <div class="rech-progress">
-                <progress max="10" value={kazka.rechennia.length}></progress>
-                <span>{kazka.rechennia.length}/10 речень</span>
+        {:else if type === "new"}
+            <div>
+                <input type="text" bind:value={title} placeholder="Назва казки"/>
+                <textarea bind:value={new_rech} placeholder="перше речення..."></textarea>
+                <button on:click={newKazka}>Розпочати казку</button>
             </div>
-            
-            <button on:click={addRechennia}>Додати речення</button>
-        </div>
-    {:else if type === "new"}
-        <div>
-            <input type="text" bind:value={title} placeholder="Назва казки"/>
-            <textarea bind:value={new_rech} placeholder="перше речення..."></textarea>
-            <button on:click={newKazka}>Розпочати казку</button>
-        </div>
-    {:else if type === "response"}
+        {/if}
+    {:else}
         <div>
             <!-- <h4>Дякуємо за участь!</h4> -->
             <p>{report}</p>
