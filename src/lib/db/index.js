@@ -14,7 +14,7 @@ const supabase_next_auth = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
 // отримати казки з можливістю фільтрації за станом (виконані, невиконані, всі), за певним користувачем, сортуванням, зміщенням (для пакетного завантаження)
 export async function getKazky(
 	state = 'all',
-	limit = 10,
+	limit = 100,
 	sort = 'asc',
 	offset = 0,
 	user_id = null
@@ -53,7 +53,8 @@ export async function getKazky(
 		const { data: rechennia, error: errorRechennia } = await supabase_public
 			.from('rechennia')
 			.select('*')
-			.eq('kazka_id', kazka.id);
+			.eq('kazka_id', kazka.id)
+			.order('id');
 		if (errorRechennia) {
 			throw errorRechennia;
 		}
@@ -75,7 +76,8 @@ export async function getKazka(id) {
 	const { data: rechennia, error: errorRechennia } = await supabase_public
 		.from('rechennia')
 		.select('*')
-		.eq('kazka_id', id);
+		.eq('kazka_id', id)
+		.order('id');
 	if (errorRechennia) {
 		throw errorRechennia;
 	}
@@ -138,32 +140,32 @@ export async function getKazkyCount(state = 'all') {
 	return kazky.length;
 }
 
-// add a new rechennia to a kazka, if given kazka does not exist, create a new one
+// add a new rechennia to a kazka
 export async function addRechennia(kazka_id, rechennia_content, user_id) {
-	const { data: kazky, error: errorKazky } = await supabase_public
-		.from('kazky')
-		.select('*')
-		.eq('id', kazka_id);
-	if (errorKazky) {
-		throw errorKazky;
-	}
-	if (kazky.length === 0) {
-		const { data: newKazka, error: errorNewKazka } = await supabase_public
-			.from('kazky')
-			.insert([{ id: kazka_id, is_completed: false }]);
-		if (errorNewKazka) {
-			throw errorNewKazka;
-		}
-	}
-
 	const { data: newRechennia, error: errorNewRechennia } = await supabase_public
 		.from('rechennia')
 		.insert([{ kazka_id, content: rechennia_content, user_id }]);
 	if (errorNewRechennia) {
 		throw errorNewRechennia;
 	}
+}
 
-	return newRechennia[0];
+export async function newKazka( title, rechennia_content, user_id ) {
+	const { data: newKazka, error: errorNewKazka } = await supabase_public
+		.from('kazky')
+		.upsert([{ title, is_completed: false }])
+		.select();
+	if (errorNewKazka) {
+		throw errorNewKazka;
+	}
+
+	const { data: newRechennia, error: errorNewRechennia } = await supabase_public
+		.from('rechennia')
+		.upsert([{ kazka_id: newKazka[0].id, content: rechennia_content, user_id }])
+		.select();
+	if (errorNewRechennia) {
+		throw errorNewRechennia;
+	}
 }
 
 // change user name
