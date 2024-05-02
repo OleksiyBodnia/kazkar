@@ -23,12 +23,7 @@
 			<div class="finished-samples">
 				{#each data.kazky as kazka}
 					<div class="sample">
-						<KazkaCard
-							id={kazka.id}
-							state={'completed'}
-							title={kazka.title}
-							content={combineRechennia(kazka.rechennia)}
-						/>
+						<KazkaCard state={"completed"} {kazka}/>
 					</div>
 				{/each}
 			</div>

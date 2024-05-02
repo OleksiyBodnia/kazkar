@@ -5,7 +5,7 @@ export const load = async (events) => {
 	const session = await events.locals.auth();
 
 	if (!session?.user) {
-		redirect(303, '/auth/signin');
+		redirect(303, '/');
 	}
 
 	return {

@@ -10,9 +10,9 @@
 	let filter_selected;
 	let filters = ['Найновіші', 'Найстаріші', 'Популярні', 'Непопулярні'];
 
-	let content_visible = false;
+	let grid_visible = false;
 	onMount(() => {
-		content_visible = true;
+		grid_visible = true;
 	});
 
 	function whenFilterSelected() {}
@@ -41,14 +41,14 @@
 			</label>
 		</div>
 		<div class="left-find-tools">
-			<button>Випадкова казка</button>
-			<!-- <button>Розпочати нову казку</button> -->
+			<slot name="rnd-kazka-btn" />
+			<slot name="new-kazka-btn" />
 		</div>
 	</div>
 
 	<div class="finished-samples">
 		{#each data.kazky as kazka,i}
-		{#if content_visible}
+		{#if grid_visible}
 			<div class="sample" in:scale={{ delay:  160*i, duration: 700, start: 0.7 }}>
 				<slot {kazka}/>
 			</div>
