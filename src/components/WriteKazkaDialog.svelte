@@ -88,7 +88,7 @@
         {#if type === "present"}
             <div>
                 <div class="timer">
-                    <Timer countdown={5} on:notime={toggleWrite}/>
+                    <Timer countdown={180} on:notime={toggleWrite}/>
                 </div>
                 <h4>{kazka.title}</h4>
                 <p>{lastRechennia(kazka.rechennia).content}</p>
