@@ -53,8 +53,7 @@
 				<slot {kazka}/>
 			</div>
 		{/if}
-	{/each}
-        
+	{/each}   
 	</div>
 </div>
 
