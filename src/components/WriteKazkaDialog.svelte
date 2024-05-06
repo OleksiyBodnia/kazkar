@@ -15,6 +15,7 @@
     let title = "";
     let new_rech = "";
     let report = "";
+    let finish = false;
     
     export function toggleWrite() {
         if ($page.data.session) {
@@ -38,7 +39,8 @@
             body: JSON.stringify({ 
                 kazka_id: kazka.id, 
                 rechennia_content: new_rech, 
-                user_id: $page.data.session.user.id
+                user_id: $page.data.session.user.id,
+                finish: finish
             })
         });
 
@@ -98,11 +100,20 @@
                     <span>{kazka.rechennia.length}/10 речень</span>
                 </div>
                 
-                <button on:click={addRechennia}>Додати речення</button>
+                <div class="kazka-controls">
+                    <button on:click={addRechennia}>Додати речення</button>
+                    {#if kazka.rechennia.length >= 10}
+                        <label>
+                            <input type="checkbox" bind:checked={finish}>
+                            завершити казку
+                        </label>
+                    {/if}
+                </div>
+               
             </div>
         {:else if type === "new"}
             <div>
-                <input type="text" bind:value={title} placeholder="Назва казки"/>
+                <input class="kazka-title" type="text" bind:value={title} placeholder="Назва казки"/>
                 <textarea bind:value={new_rech} placeholder="перше речення..."></textarea>
                 <button on:click={newKazka}>Розпочати казку</button>
             </div>
@@ -159,7 +170,7 @@
         border: 2px solid  black;
     }
 
-    input {
+    .kazka-title {
 		border: none;
 		border-bottom: 1px solid black;
 		background-color: transparent;
@@ -178,5 +189,12 @@
         align-self: flex-end;
         padding-right: 10px;
 
+    }
+
+    .kazka-controls {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        gap: 30px;
     }
 </style>

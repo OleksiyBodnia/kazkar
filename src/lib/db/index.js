@@ -141,15 +141,26 @@ export async function getKazkyCount(state = 'all') {
 }
 
 // add a new rechennia to a kazka
-export async function addRechennia(kazka_id, rechennia_content, user_id) {
+export async function addRechennia(kazka_id, rechennia_content, user_id, finish = false) {
 	const { data: newRechennia, error: errorNewRechennia } = await supabase_public
 		.from('rechennia')
 		.insert([{ kazka_id, content: rechennia_content, user_id }]);
 	if (errorNewRechennia) {
 		throw errorNewRechennia;
 	}
+
+	if (finish) {
+		const { data: updatedKazka, error: errorUpdatedKazka } = await supabase_public
+			.from('kazky')
+			.update({ is_completed: true })
+			.eq('id', kazka_id);
+		if (errorUpdatedKazka) {
+			throw errorUpdatedKazka;
+		}
+	}
 }
 
+// create new kazka
 export async function newKazka( title, rechennia_content, user_id ) {
 	const { data: newKazka, error: errorNewKazka } = await supabase_public
 		.from('kazky')
