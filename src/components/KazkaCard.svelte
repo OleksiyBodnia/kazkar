@@ -87,7 +87,7 @@
 	}
 
 	.rech-conteiner {
-		height: 115px;
+		height: 113px;
 		overflow: hidden;
 		display: flex;
 		flex-direction: column;

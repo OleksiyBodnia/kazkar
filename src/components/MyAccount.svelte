@@ -79,69 +79,65 @@
 </script>
 
 <div class="myaccount-tab">
-		<p>Пошта <b>{userEmail}</b></p>
-		<p>Кількість казок, у яких брали участь {data.user_kazky.length}</p>
+		<p>Пошта: <b>{userEmail}</b></p>
+		<p>Кількість казок, у яких брав участь: {data.user_kazky.length}</p>
 		<!-- <div class="theme-toggle-div">
 			<p>Вибір кольру </p>
 			<button on:click={toggleThemeAndAnimation} class="theme-btn"><div class="theme-btn-span"></div></button>
 		</div> -->
-	<form class="profile-change-name-form">
-		<button
-		on:click={() => {
-			changeName();
-		}}>Змінити ім'я</button
-	>
+	<p>
 		<input type="text" bind:this={usernameField} />
-	</form>
-	<button
-		on:click={() => {
-			signOut();
-		}}>Вийти з акаунту</button
-	>
+		<button on:click={() => { changeName(); }}>Змінити ім'я</button>
+	</p>
+	<p>
+		<button on:click={() => { signOut(); }}>Вийти з акаунту</button>
+	</p>
 </div>
 
 <style>
 	.theme-toggle-div {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
 
-.theme-btn {
-  width: 50px;
-  height: 22px;
-  margin-left: 10px;
-  position: relative;
-  border-radius: 11px;
-  overflow: hidden;
-  background-color: rgb(130, 130, 130);
-}
-.theme-btn:hover{
-	background-color: inherit;
-	background-image: inherit;
-	color: inherit;
-}
-.profile-change-name-form{
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	gap: 10px;
-	
-}
+	.theme-btn {
+		width: 50px;
+		height: 22px;
+		margin-left: 10px;
+		position: relative;
+		border-radius: 11px;
+		overflow: hidden;
+		background-color: rgb(130, 130, 130);
+	}
 
-.theme-btn-span {
-  border: 1px solid black;
-  width: 19px;
-  height: 19px;
-  background-color: white;
-  border-radius: 50%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  transition: transform 0.3s ease, background-color 0.3s ease;
-}
-.myaccount-tab {
-		/* width: 700px; */
+	.theme-btn:hover{
+		background-color: inherit;
+		background-image: inherit;
+		color: inherit;
+	}
+
+	.profile-change-name-form{
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 10px;
+		
+	}
+
+	.theme-btn-span {
+		border: 1px solid black;
+		width: 19px;
+		height: 19px;
+		background-color: white;
+		border-radius: 50%;
+		position: absolute;
+		top: 0;
+		left: 0;
+		transition: transform 0.3s ease, background-color 0.3s ease;
+	}
+
+	.myaccount-tab {
 		width: 800px;
 		text-align: center;
 		border: 2px solid black;
@@ -151,9 +147,9 @@
 		align-items: center;
 		justify-content: center;
 		flex-direction: column;
-		gap: 15px;
 	}
+
 	:root.dark {
 		--color-black: rgb(47, 39, 119);
-  }
+	}
 </style>

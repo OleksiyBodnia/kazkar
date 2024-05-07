@@ -26,9 +26,9 @@
 
 	<div class="find-tools">
 		<div class="rigth-find-tools">
-			<!-- <label>Пошук
+			<label>Пошук
 				<input type="text" />
-			</label> -->
+			</label>
 
 			<label>Фільтр
 				<select bind:value={filter_selected} on:change={whenFilterSelected}>
