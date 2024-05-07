@@ -1,9 +1,25 @@
+/* @import 'modern-normalize/modern-normalize.css'; */
 * {
 	box-sizing: border-box;
-	font-family: 'Comic Sans MS', cursive;
-	color: #212121;
+	font-family: 'Comic Neue', cursive;
+	color: var(--color-black);
+	/* color: #212121; */
 	/* background-color: #fbfbfb; */
 }
+@font-face {
+	font-family: 'Patrick Hand';
+	src: url('./fonts/ComicNeue-Regular.ttf');
+}	
+:root {
+  --color-black: #212121;
+  --color-white: #ffffff;
+  --color-purple: #78009d;
+  --color-blue: #0087bc;
+  --color-default-text: black;
+
+  --color-user: #27a8e4;
+}
+
 
 body {
 	/* font-family: "Comic Sans MS", cursive;	does it needs to be here? */
@@ -33,7 +49,7 @@ a {
 /* просто посилання і посиллання кнопка мусять мати різне оформлення */
 
 button {
-	background-color: white;
+	background-color: var(--color-white);
 	text-align: center;
 	border: 2px solid;
 	border-radius: 8px;
@@ -42,14 +58,14 @@ button {
 }
 
 button:hover {
-	background-image: linear-gradient(120deg, #78009d 34%, #0087bc 100%);
+	background-image: linear-gradient(120deg, var(--color-purple) 34%, var(--color-blue) 100%);
 	background-clip: text;
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 }
 
 select {
-	background-color: white;
+	background-color: var(--color-white);
 	border: 2px solid;
 	border-radius: 8px;
 	cursor: pointer;
@@ -58,7 +74,7 @@ select {
 }
 
 select:hover {
-	background-image: linear-gradient(120deg, #78009d 34%, #0087bc 100%);
+	background-image: linear-gradient(120deg, var(--color-purple) 34%, var(--color-blue) 100%);
 	background-clip: text;
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
