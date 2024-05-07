@@ -128,27 +128,6 @@ export async function getUser(id) {
 	return user;
 }
 
-// get a number of completed or incompleted kazky
-export async function getKazkyCount(state = 'all') {
-	let query = supabase_public.from('kazky').select('id');
-
-	if (state === 'completed') {
-		query = query.filter('is_completed', 'eq', true);
-	}
-
-	if (state === 'incompleted') {
-		query = query.filter('is_completed', 'eq', false);
-	}
-
-	const { data: kazky, error } = await query;
-
-	if (error) {
-		throw error;
-	}
-
-	return kazky.length;
-}
-
 // add a new rechennia to a kazka
 export async function addRechennia(kazka_id, rechennia_content, user_id, finish = false) {
 	const { data: newRechennia, error: errorNewRechennia } = await supabase_public
@@ -200,14 +179,35 @@ export async function changeUserName(user_id, new_name) {
 	return user;
 }
 
+// get a number of completed or incompleted kazky
+export async function getKazkyCount(state = 'all') {
+	let query = supabase_public.from('kazky').select('id');
+
+	if (state === 'completed') {
+		query = query.filter('is_completed', 'eq', true);
+	}
+
+	if (state === 'incompleted') {
+		query = query.filter('is_completed', 'eq', false);
+	}
+
+	const { data: kazky, error } = await query;
+
+	if (error) {
+		throw error;
+	}
+
+	return kazky.length;
+}
+
 // отримати 10 найактивніших користувачів із кількістю завершених казок, у яких вони брали участь
-export async function getTopUsers() {
-	// для кожного користувача порахувати кількість речень, які він додав
+export async function getTopUsers(amount = 10, top = true) {
 	const { data: users, error } = await supabase_next_auth.from('users').select('*');
 	if (error) {
 		throw error;
 	}
 
+	// для кожного користувача порахувати кількість речень, які він додав
 	for (let user of users) {
 		const { data: rechennia, error: errorRechennia } = await supabase_public
 			.from('rechennia')
@@ -216,24 +216,16 @@ export async function getTopUsers() {
 		if (errorRechennia) {
 			throw errorRechennia;
 		}
-		user.rechennia_count = rechennia.length;
+		user.rech_count = rechennia.length;
 	}
 
-	users.sort((a, b) => b.rechennia_count - a.rechennia_count);
-
-	// порахувати кількість завершених казок для кожного користувача
-	for (let user of users) {
-		const { data: kazky, error: errorKazky } = await supabase_public
-			.from('kazky')
-			.select('*')
-			.eq('user_id', user.id);
-		if (errorKazky) {
-			throw errorKazky;
-		}
-		user.kazky_count = kazky.length;
+	users.sort((a, b) => b.rech_count - a.rech_count);
+	
+	if (top) {
+		return users.slice(0, amount);
+	} else {
+		return users.slice(-amount).reverse();
 	}
-
-	return users.slice(0, 10);
 }
 
 // ця функція повертає розподіл казок за кількістю речень
