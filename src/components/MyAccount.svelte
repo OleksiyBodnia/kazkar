@@ -79,20 +79,20 @@
 </script>
 
 <div class="myaccount-tab">
-	<div>
 		<p>Пошта <b>{userEmail}</b></p>
-		<p>Кількість казок, у яких брали участь</p>
+		<p>Кількість казок, у яких брали участь {data.user_kazky.length}</p>
 		<!-- <div class="theme-toggle-div">
 			<p>Вибір кольру </p>
 			<button on:click={toggleThemeAndAnimation} class="theme-btn"><div class="theme-btn-span"></div></button>
 		</div> -->
-	</div>
-	<input type="text" bind:this={usernameField} />
-	<button
+	<form class="profile-change-name-form">
+		<button
 		on:click={() => {
 			changeName();
-		}}>Змінити ім'я користувача</button
+		}}>Змінити ім'я</button
 	>
+		<input type="text" bind:this={usernameField} />
+	</form>
 	<button
 		on:click={() => {
 			signOut();
@@ -121,6 +121,13 @@
 	background-image: inherit;
 	color: inherit;
 }
+.profile-change-name-form{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+	
+}
 
 .theme-btn-span {
   border: 1px solid black;
@@ -140,6 +147,11 @@
 		border: 2px solid black;
 		border-radius: 10px;
 		padding: 20px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+		gap: 15px;
 	}
 	:root.dark {
 		--color-black: rgb(47, 39, 119);
