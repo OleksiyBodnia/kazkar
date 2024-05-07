@@ -7,5 +7,6 @@ export async function load({ params }) {
 	const users = await Promise.all(
 		kazka.rechennia.map((rechennia) => db.getUser(rechennia.user_id))
 	);
-	return { kazka, users };
+	const offer = await db.getRandomKazka(true, 2);
+	return { kazka, users, offer };
 }

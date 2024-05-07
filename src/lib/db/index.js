@@ -93,26 +93,27 @@ export async function getKazka(id) {
 	return kazka;
 }
 
-export async function getRandomKazka(completed = false) {
+export async function getRandomKazka(completed = false, count = 1) {
 	const { data: kazky, error } = await supabase_public
-		.from('kazky')
+		.from('random_kazky')
 		.select('*')
 		.filter('is_completed', 'eq', completed)
-		.order('random()')
-		.limit(1);
+		.limit(count);
 	if (error) {
 		throw error;
 	}
-	const kazka = kazky[0];
-	const { data: rechennia, error: errorRechennia } = await supabase_public
-		.from('rechennia')
-		.select('*')
-		.eq('kazka_id', kazka.id);
-	if (errorRechennia) {
-		throw errorRechennia;
+	for (let kazka of kazky) {
+		const { data: rechennia, error: errorRechennia } = await supabase_public
+			.from('rechennia')
+			.select('*')
+			.eq('kazka_id', kazka.id)
+			.order('id');
+		if (errorRechennia) {
+			throw errorRechennia;
+		}
+		kazka.rechennia = rechennia;
 	}
-	kazka.rechennia = rechennia;
-	return kazka;
+	return kazky;
 }
 
 export async function getUser(id) {

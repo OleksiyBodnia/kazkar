@@ -6,6 +6,8 @@
 	import { slide, scale } from 'svelte/transition';
 	import { tweened } from 'svelte/motion';
 	import { cubicOut } from 'svelte/easing';
+	import KazkaCard from '../../../components/KazkaCard.svelte';
+	import { page } from '$app/stores';
 
 	let SidebarComponent;
 
@@ -31,24 +33,37 @@
 <div class="individual-kazka-div">
 	<div class="kazka-and-sidebar">
 		<article class="kazka-itself" style="margin-right: {$sp_width}%;">
-			<h2>{data.kazka.title}</h2>
+			<h2 style="text-align: center;">{data.kazka.title}</h2>
 			<p>
 				{#each data.kazka.rechennia as rechennia, i}
-					<span
+					{#if $page.data.session.user.id == rechennia.user_id}
+						<span
+							use:tooltip={{ placement: 'left', theme: 'light-border' }}
+							title={'автор речення: ' + data.users[i].name}
+							style="color: var(--color-user)"
+							>{rechennia.content + ' '}</span
+						>
+					{:else}
+						<span
+							use:tooltip={{ placement: 'left', theme: 'light-border' }}
+							title={'автор речення: ' + data.users[i].name}
+							>{rechennia.content + ' '}</span
+						>
+					{/if}
+					<!-- <span
 						use:tooltip={{ placement: 'left', theme: 'light-border' }}
 						title={'автор речення: ' + data.users[i].name}>{rechennia.content + ' '}</span
-					>
+					> -->
 				{/each}
 			</p>
 		</article>
-
+		<div style="height: 500px;"></div>
 		{#if show_sidebar}
 			<div class="sidebar-container" transition:slide={{ duration: 900, axis: 'x' }}>
 				<Sidebar bind:this={SidebarComponent} {data} />
 			</div>
 		{/if}
 	</div>
-	<pre></pre>
 	<button
 		class="show-sidebar-btn arrow {show_sidebar ? 'rotate180' : 'rotate0'}"
 		on:click={toggleSidebar}
@@ -76,6 +91,17 @@
 			/>
 		</svg>
 	</button>
+	<div class="delimeter"></div>
+	<div class="offer">
+		<h3 style="text-align: left;">Читайте також</h3>
+		<div class="finished-samples">
+			{#each data.offer as kazka,i}
+				<div class="sample" in:scale={{ delay:  160*i, duration: 700, start: 0.7 }}>
+					<KazkaCard state={"completed"} {kazka} />
+				</div>
+		{/each}   
+		</div>
+	</div>
 </div>
 
 <style>
@@ -95,8 +121,19 @@
 		align-items: flex-start;
 	}
 
-	article {
+	.kazka-itself {
 		max-width: 66%;
+	}
+
+	.finished-samples {
+		margin: 0 auto;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		row-gap: 10px;
+		column-gap: 90px;
+		flex-wrap: wrap;
+		margin-bottom: 40px;
 	}
 
 	.sidebar-container {
@@ -104,6 +141,15 @@
 		margin-top: 60px;
 		max-width: 25%;
 	}
+
+	.delimeter {
+		width: 80%;
+		height: 2px;
+		background-color: #e0e0e0;
+		margin-top: 20px;
+		margin-bottom: 20px;
+	}
+
 
 	.show-sidebar-btn {
 		all: unset;
