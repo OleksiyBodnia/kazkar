@@ -84,3 +84,16 @@ export async function takeKazka(kazka) {
 		})
 	});
 }
+
+export async function isKazkaTaken(kazka, taking_window = 180) {
+	// if kazka.taken_at is null, it is considered not taken
+	if (!kazka.taken_at) {
+		return false;
+	}
+	// if kazka.taken_at is less than 'taking_window' seconds ago, it is considered taken
+	const now = new Date();
+	const taken_at = new Date(kazka.taken_at);
+	const diff = now - taken_at;
+	const diff_seconds = diff / 1000;
+	return diff_seconds < taking_window;
+}
