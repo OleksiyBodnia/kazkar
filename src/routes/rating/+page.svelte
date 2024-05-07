@@ -36,7 +36,7 @@
 		
 		
 		{#if top_users == true}
-		<div in:fade={{ delay: 100, duration: 1000 }}>
+		<div class="top-transitions" in:fade={{ delay: 100, duration: 1000 }}>
 			<p>Найактивніший казкар за кількістю написаних речень!</p>
 			<div class="best-kazkar">
 				<img src={data.best_users[0].image} alt="kazkar" class="best-kazkar-img" />
@@ -53,7 +53,7 @@
 			</div>
 		</div>
 		{:else if top_users == false}
-		<div in:fade={{ delay: 100, duration: 1000 }}>
+		<div class="top-transitions" in:fade={{ delay: 100, duration: 1000 }}>
 			<p>Найменш активний казкар за кількістю написаних речень</p>
 			<div class="best-kazkar">
 				<img src={data.worst_users[0].image} alt="kazkar" class="best-kazkar-img" />
@@ -235,5 +235,12 @@
 		font-size: 18px;
 		cursor: pointer;
 		/* border-bottom: grey 2px solid; */
+	}
+
+	.top-transitions {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
 	}
 </style>
