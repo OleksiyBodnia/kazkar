@@ -143,5 +143,5 @@ function toggleThemeAndAnimation() {
 	}
 	:root.dark {
 		--color-black: rgb(47, 39, 119);
-    }
+  }
 </style>
