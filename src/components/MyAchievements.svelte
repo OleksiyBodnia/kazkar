@@ -1,16 +1,36 @@
 <script>
-    let achievements = ["Написано 1 казку!", "Написано 10 казок!", "Написано 100 казок!", "Написано 1 казку!", "Написано 10 казок!", "Написано 100 казок!"]
+    let achievements = ["Написано 1 казку!", "Написано 10 казок!", "Написано 100 казок!"]
+
+    export let kazky;
 </script>
 
 <div class="personal-achiev-tab">
     <h3>Розблоковані досягнення</h3>
     <div class="achieves">
-        {#each achievements as achiev}
+        <!-- {#each achievements as achiev}
             <div class="achiev-unit">
                 <div class="achiev-icon"></div>
                 <p>{achiev}</p>
             </div>
-        {/each} 
+        {/each}  -->
+        {#if kazky.length > 0}
+            <div class="achiev-unit">
+                <div class="achiev-icon"></div>
+                <p>{achievements[0]}</p>
+            </div>
+        {/if}
+        {#if kazky.length > 9}
+            <div class="achiev-unit">
+                <div class="achiev-icon"></div>
+                <p>{achievements[1]}</p>
+            </div>
+        {/if}
+        {#if kazky.length > 99}
+            <div class="achiev-unit">
+                <div class="achiev-icon"></div>
+                <p>{achievements[2]}</p>
+            </div>
+        {/if}
     </div>
     
 </div>

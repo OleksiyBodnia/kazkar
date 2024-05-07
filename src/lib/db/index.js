@@ -12,13 +12,13 @@ const supabase_next_auth = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
 });
 
 // отримати казки з можливістю фільтрації за станом (виконані, невиконані, всі), за певним користувачем, сортуванням, зміщенням (для пакетного завантаження)
-export async function getKazky({
+export async function getKazky(
 	state = 'all',
 	limit = 100,
 	sort = 'asc',
 	offset = 0,
 	user_id = null
-}) {
+) {
 	let kazky_query = supabase_public.from('kazky').select('*');
 
 	if (state === 'completed') {
