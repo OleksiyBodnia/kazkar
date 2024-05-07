@@ -1,6 +1,16 @@
 <script>
     import { lastRechennia } from '$lib/utils';
+	import { onMount } from 'svelte';
+
     export let data;
+    let unique_users = [];
+    onMount(() => {
+        unique_users = data.users.filter((user, index, self) =>
+        index === self.findIndex((u) => (
+            u.name === user.name
+        ))
+    );
+    });
 
     function niceTime(rech) {
         const date = new Date(rech.created_at);
@@ -11,23 +21,24 @@
         const hours = date.getHours().toString().padStart(2, '0');
         const minutes = date.getMinutes().toString().padStart(2, '0');
 
-        return `${year}-${month}-${day} ${hours}:${minutes}`;
-            
+        return `${year}-${month}-${day} ${hours}:${minutes}`;      
     }
 </script>
 
 <aside>
-    <p>Інформація про казку</p>
-    <p>Час написання<br>
-        від {niceTime(data.kazka.rechennia[0])}<br>
-        до {niceTime(lastRechennia(data.kazka.rechennia))}</p>
-    <p> Автори
-        {#each data.users as user}
-           <!-- <span>{user.username}</span> -->
-        {/each}
+    <h4 class="sb-title">Інформація про казку</h4>
+    <p>Період створення:<br>
+        з {niceTime(data.kazka.rechennia[0])}<br>
+        по {niceTime(lastRechennia(data.kazka.rechennia))}</p>
+    <p>Всього реченнь: {data.kazka.rechennia.length}</p>
+    <p> Унікальних авторів:
+        {unique_users.length}
+        <!-- {#each data.users as user}
+           <span>{user.name}</span>
+        {/each} -->
     </p>
-    <p>Перегляди</p>
-    <p>Уподобайки</p>
+    <p>Переглядів: </p>
+    <p>Уподобайок: </p>
 </aside>
 
 <style>
@@ -43,5 +54,9 @@
         overflow: hidden;
 		white-space: nowrap;
 		text-overflow: ellipsis;
+    }
+    
+    p {
+        text-align: center;
     }
 </style>
