@@ -3,7 +3,6 @@
 	export let data;
 	import KazkaCard from '../components/KazkaCard.svelte';
 	import { fly } from 'svelte/transition';
-	import { combineRechennia } from '$lib/utils';
 	import { onMount } from 'svelte';
 	let content_visible = false;
 	onMount(() => {
@@ -23,7 +22,7 @@
 			<div class="finished-samples">
 				{#each data.kazky as kazka}
 					<div class="sample">
-						<KazkaCard state={"completed"} {kazka}/>
+						<KazkaCard state={'completed'} {kazka} />
 					</div>
 				{/each}
 			</div>
@@ -76,7 +75,7 @@
 	.sample {
 		text-align: start;
 	}
-	
+
 	.main-page-link {
 		background-color: white;
 		text-align: center;

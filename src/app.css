@@ -6,20 +6,15 @@
 	/* color: #212121; */
 	/* background-color: #fbfbfb; */
 }
-@font-face {
-	font-family: 'Patrick Hand';
-	src: url('./fonts/ComicNeue-Regular.ttf');
-}	
 :root {
-  --color-black: #212121;
-  --color-white: #ffffff;
-  --color-purple: #78009d;
-  --color-blue: #0087bc;
-  --color-default-text: black;
+	--color-black: #212121;
+	--color-white: #ffffff;
+	--color-purple: #78009d;
+	--color-blue: #0087bc;
+	--color-default-text: black;
 
-  --color-user: #27a8e4;
+	--color-user: #27a8e4;
 }
-
 
 body {
 	/* font-family: "Comic Sans MS", cursive;	does it needs to be here? */
