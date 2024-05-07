@@ -26,18 +26,19 @@
 </script>
 
 <aside>
-    <p>Інформація про казку</p>
-    <p>Час написання:<br>
+    <h4 class="sb-title">Інформація про казку</h4>
+    <p>Період створення:<br>
         з {niceTime(data.kazka.rechennia[0])}<br>
-        до {niceTime(lastRechennia(data.kazka.rechennia))}</p>
+        по {niceTime(lastRechennia(data.kazka.rechennia))}</p>
+    <p>Всього реченнь: {data.kazka.rechennia.length}</p>
     <p> Унікальних авторів:
         {unique_users.length}
         <!-- {#each data.users as user}
            <span>{user.name}</span>
         {/each} -->
     </p>
-    <p>Перегляди</p>
-    <p>Уподобайки</p>
+    <p>Переглядів: </p>
+    <p>Уподобайок: </p>
 </aside>
 
 <style>
@@ -54,6 +55,7 @@
 		white-space: nowrap;
 		text-overflow: ellipsis;
     }
+    
     p {
         text-align: center;
     }

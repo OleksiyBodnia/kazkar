@@ -60,6 +60,9 @@
 <style>
 	.page-div {
 		padding: 40px 0;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
 	}
 
 	.page-description {
@@ -78,6 +81,7 @@
 	}
 
 	.find-tools {
+		width: 100%;
 		padding: 0 30px;
 		margin-top: 30px;
 		margin-bottom: 30px;
@@ -85,6 +89,7 @@
 		align-items: center;
 		justify-content: space-between;
 	}
+
 	.rigth-find-tools {
 		display: flex;
 		align-items: center;

@@ -7,7 +7,7 @@
 	import { tweened } from 'svelte/motion';
 	import { cubicOut } from 'svelte/easing';
 	import KazkaCard from '../../../components/KazkaCard.svelte';
-	import { onMount } from 'svelte';
+	import { page } from '$app/stores';
 
 	let SidebarComponent;
 
@@ -28,30 +28,36 @@
 			sp_width.set(4);
 		}
 	}
-	let ks_div;
-	let h;
-	onMount(() => {
-		h = ks_div.getBoundingClientRect().height;
-	});
 </script>
 
 <div class="individual-kazka-div">
-	<div bind:this={ks_div} class="kazka-and-sidebar">
-		<div class="kazka-and-offer" style="margin-right: {$sp_width}%;">
-			<article class="kazka-itself">
-				<h2 style="text-align: center;">{data.kazka.title}</h2>
-				<p>
-					{#each data.kazka.rechennia as rechennia, i}
+	<div class="kazka-and-sidebar">
+		<article class="kazka-itself" style="margin-right: {$sp_width}%;">
+			<h2 style="text-align: center;">{data.kazka.title}</h2>
+			<p>
+				{#each data.kazka.rechennia as rechennia, i}
+					{#if $page.data.session.user.id == rechennia.user_id}
 						<span
 							use:tooltip={{ placement: 'left', theme: 'light-border' }}
-							title={'автор речення: ' + data.users[i].name}>{rechennia.content + ' '}</span
+							title={'автор речення: ' + data.users[i].name}
+							style="color: #27a8e4;"
+							>{rechennia.content + ' '}</span
 						>
-					{/each}
-				</p>
-			</article>
-			
-		</div>
-		<div style="height: {h}px;"></div>
+					{:else}
+						<span
+							use:tooltip={{ placement: 'left', theme: 'light-border' }}
+							title={'автор речення: ' + data.users[i].name}
+							>{rechennia.content + ' '}</span
+						>
+					{/if}
+					<!-- <span
+						use:tooltip={{ placement: 'left', theme: 'light-border' }}
+						title={'автор речення: ' + data.users[i].name}>{rechennia.content + ' '}</span
+					> -->
+				{/each}
+			</p>
+		</article>
+		<div style="height: 500px;"></div>
 		{#if show_sidebar}
 			<div class="sidebar-container" transition:slide={{ duration: 900, axis: 'x' }}>
 				<Sidebar bind:this={SidebarComponent} {data} />
@@ -85,7 +91,7 @@
 			/>
 		</svg>
 	</button>
-	<span class="delimeter"></span>
+	<div class="delimeter"></div>
 	<div class="offer">
 		<h3 style="text-align: left;">Читайте також</h3>
 		<div class="finished-samples">
@@ -115,21 +121,9 @@
 		align-items: flex-start;
 	}
 
-	.kazka-and-offer {
+	.kazka-itself {
 		max-width: 66%;
 	}
-
-	.delimeter {
-		width: 80%;
-		height: 2px;
-		background-color: #e0e0e0;
-		margin-top: 70px;
-		margin-bottom: 20px;
-	}
-
-	/* .offer {
-		margin-top: 300px;
-	} */
 
 	.finished-samples {
 		margin: 0 auto;
@@ -147,6 +141,15 @@
 		margin-top: 60px;
 		max-width: 25%;
 	}
+
+	.delimeter {
+		width: 80%;
+		height: 2px;
+		background-color: #e0e0e0;
+		margin-top: 20px;
+		margin-bottom: 20px;
+	}
+
 
 	.show-sidebar-btn {
 		all: unset;
