@@ -183,6 +183,6 @@
 	}
 
 	.show-sidebar-btn-arrow2:hover {
-		stroke: #78009d;
+		stroke: var(--color-purple);
 	}
 </style>

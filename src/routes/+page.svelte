@@ -72,6 +72,11 @@
 		flex-wrap: wrap;
 		margin-bottom: 40px;
 	}
+
+	.sample {
+		text-align: start;
+	}
+	
 	.main-page-link {
 		background-color: white;
 		text-align: center;

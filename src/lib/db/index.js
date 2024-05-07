@@ -19,31 +19,39 @@ export async function getKazky(
 	offset = 0,
 	user_id = null
 ) {
-	let query = supabase_public.from('kazky').select('*');
-
-	if (user_id) {
-		query = query.filter('user_id', 'eq', user_id);
-	}
+	let kazky_query = supabase_public.from('kazky').select('*');
 
 	if (state === 'completed') {
-		query = query.filter('is_completed', 'eq', true);
+		kazky_query = kazky_query.filter('is_completed', 'eq', true);
 	}
 
 	if (state === 'incompleted') {
-		query = query.filter('is_completed', 'eq', false);
+		kazky_query = kazky_query.filter('is_completed', 'eq', false);
+	}
+
+	if (user_id) {
+		const { data: rechennia, error: errorRechennia } = await supabase_public
+			.from('rechennia')
+			.select('kazka_id')
+			.eq('user_id', user_id);
+		if (errorRechennia) {
+			throw errorRechennia;
+		}
+		const kazka_ids = rechennia.map((rec) => rec.kazka_id);
+		kazky_query = kazky_query.in('id', kazka_ids);
 	}
 
 	const rangeStart = offset;
 	const rangeEnd = offset + limit - 1;
-	query = query.range(rangeStart, rangeEnd);
+	kazky_query = kazky_query.range(rangeStart, rangeEnd);
 
 	if (sort === 'asc') {
-		query = query.order('created_at', { ascending: true });
+		kazky_query = kazky_query.order('created_at', { ascending: true });
 	} else if (sort === 'desc') {
-		query = query.order('created_at', { ascending: false });
+		kazky_query = kazky_query.order('created_at', { ascending: false });
 	}
 
-	const { data: kazky, error } = await query;
+	const { data: kazky, error } = await kazky_query;
 
 	if (error) {
 		throw error;
@@ -162,7 +170,7 @@ export async function addRechennia(kazka_id, rechennia_content, user_id, finish 
 }
 
 // create new kazka
-export async function newKazka( title, rechennia_content, user_id ) {
+export async function newKazka(title, rechennia_content, user_id) {
 	const { data: newKazka, error: errorNewKazka } = await supabase_public
 		.from('kazky')
 		.upsert([{ title, is_completed: false }])
@@ -226,4 +234,34 @@ export async function getTopUsers() {
 	}
 
 	return users.slice(0, 10);
+}
+
+// ця функція повертає розподіл казок за кількістю речень
+// приклад об'єкта, що повертається:
+// { 1: 10, 2: 20, 3: 30, 4: 40, 5: 50 }
+// де ключ - кількість речень, значення - кількість казок з такою кількістю речень
+export async function getKazkyDistribution() {
+	const { data: kazky, error } = await supabase_public.from('kazky').select('*');
+	if (error) {
+		throw error;
+	}
+
+	const distribution = {};
+	for (let kazka of kazky) {
+		const { data: rechennia, error: errorRechennia } = await supabase_public
+			.from('rechennia')
+			.select('*')
+			.eq('kazka_id', kazka.id);
+		if (errorRechennia) {
+			throw errorRechennia;
+		}
+		const rechennia_count = rechennia.length;
+		if (distribution[rechennia_count]) {
+			distribution[rechennia_count]++;
+		} else {
+			distribution[rechennia_count] = 1;
+		}
+	}
+
+	return distribution;
 }

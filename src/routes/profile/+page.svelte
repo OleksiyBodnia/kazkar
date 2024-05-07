@@ -42,7 +42,7 @@
 		</div>
 	{:else if active_item === items[1]}
 		<div in:fade={{ x: 200, duration: 700 }}>
-			<MyKazky />
+			<MyKazky kazky={data.user_kazky}/>
 		</div>
 		<!-- {:else if active_item === items[1] && previous_item === items[2]}
 		<div in:fly={{ x: -200, duration: 700 }}>
@@ -50,7 +50,7 @@
 		</div> -->
 	{:else if active_item === items[2]}
 		<div in:fade={{ x: 200, duration: 700 }}>
-			<MyAchievements />
+			<MyAchievements kazky={data.user_kazky}/>
 		</div>
 	{/if}
 </div>
