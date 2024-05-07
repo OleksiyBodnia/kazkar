@@ -2,31 +2,7 @@
 	/** @type {import('./$types').PageData} */
 	export let data;
 
-	import { onMount } from 'svelte';
-	import { fade, fly } from 'svelte/transition';
-	import { tweened } from 'svelte/motion';
-	import { cubicOut } from 'svelte/easing';
-
-	let visible = false;
-	const finished_bar = tweened(0, {
-		duration: 1000,
-		easing: cubicOut
-	});
-	const unfinished_bar = tweened(0, {
-		duration: 1000,
-		easing: cubicOut
-	});
-	const user_bar = tweened(0, {
-		duration: 1000,
-		easing: cubicOut
-	});
-
-	onMount(() => {
-		visible = true;
-		finished_bar.set(data.finished);
-		unfinished_bar.set(data.unfinished);
-		user_bar.set(100);
-	});
+	import { fade } from 'svelte/transition';
 
 	let top_users = true;
 </script>
@@ -38,12 +14,12 @@
 		<div class="site-stat-bars">
 			<div class="finished-bar">
 				<label for="" style="padding: 0 9px 0 9px">Завершених казок</label>
-				<div class="prog-finished-bar" style="width: {$finished_bar}px;"></div>
+				<div class="prog-finished-bar" style="width: {data.finished}px;"></div>
 				<label for="">{data.finished}</label>
 			</div>
 			<div class="unfinished-bar">
 				<label for="">Незавершених казок</label>
-				<div class="prog-unfinished-bar" style="width: {$unfinished_bar}px;"></div>
+				<div class="prog-unfinished-bar" style="width: {data.unfinished}px;"></div>
 				<label for="">{data.unfinished}</label>
 			</div>
 		</div>
@@ -59,37 +35,41 @@
 		</div>
 		
 		
-			{#if top_users == true}
-				<p>Найактивніший казкар за кількістю написаних речень!</p>
-				<div class="best-kazkar">
-					<img src={data.best_users[0].image} alt="kazkar" class="best-kazkar-img" />
-					<p>{data.best_users[0].name}</p>
-				</div>
-				<div class="user-stat-bars">
-					{#each data.best_users as user}
-						<div class="user-bar">
-							<label for="">{user.name}</label>
-							<div class="user-prog-bar" style="width: {user.rech_count}px;"></div>
-							<label for="">{user.rech_count}</label>
-						</div>
-					{/each}
-				</div>
-			{:else if top_users == false}
-				<p>Найменш активний казкар за кількістю написаних речень</p>
-				<div class="best-kazkar">
-					<img src={data.worst_users[0].image} alt="kazkar" class="best-kazkar-img" />
-					<p>{data.worst_users[0].name}</p>
-				</div>
-				<div class="user-stat-bars">
-					{#each data.worst_users as user}
-						<div class="user-bar">
-							<label for="">{user.name}</label>
-							<div class="user-prog-bar" style="width: {user.rech_count}px;"></div>
-							<label for="">{user.rech_count}</label>
-						</div>
-					{/each}
-				</div>
-			{/if}
+		{#if top_users == true}
+		<div in:fade={{ delay: 100, duration: 1000 }}>
+			<p>Найактивніший казкар за кількістю написаних речень!</p>
+			<div class="best-kazkar">
+				<img src={data.best_users[0].image} alt="kazkar" class="best-kazkar-img" />
+				<p>{data.best_users[0].name}</p>
+			</div>
+			<div class="user-stat-bars">
+				{#each data.best_users as user}
+					<div class="user-bar">
+						<label for="">{user.name}</label>
+						<div class="user-prog-bar" style="width: {user.rech_count}px;"></div>
+						<label for="">{user.rech_count}</label>
+					</div>
+				{/each}
+			</div>
+		</div>
+		{:else if top_users == false}
+		<div in:fade={{ delay: 100, duration: 1000 }}>
+			<p>Найменш активний казкар за кількістю написаних речень</p>
+			<div class="best-kazkar">
+				<img src={data.worst_users[0].image} alt="kazkar" class="best-kazkar-img" />
+				<p>{data.worst_users[0].name}</p>
+			</div>
+			<div class="user-stat-bars">
+				{#each data.worst_users as user}
+					<div class="user-bar">
+						<label for="">{user.name}</label>
+						<div class="user-prog-bar" style="width: {user.rech_count}px;"></div>
+						<label for="">{user.rech_count}</label>
+					</div>
+				{/each}
+			</div>
+		</div>
+		{/if}
 		
 	</div>
 
