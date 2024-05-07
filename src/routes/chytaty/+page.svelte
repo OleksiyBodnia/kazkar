@@ -5,6 +5,9 @@
 	import { combineRechennia } from '$lib/utils';
 	import ReadWriteTemplate from '../../components/ReadWriteTemplate.svelte';
 	
+
+	let rnd_kazka = Math.floor(Math.random() * data.kazky.length);
+
 </script>
 
 <ReadWriteTemplate
@@ -14,9 +17,11 @@
 	{data}
 	let:kazka={kazka}
 >
+	<a slot="rnd-kazka-btn" href="/kazka/{data.kazky[rnd_kazka].id}">
+		<button>Випадкова казка</button>
+	</a>
 	
-	<KazkaCard id={kazka.id} state={"completed"} title={kazka.title} 
-				content={combineRechennia(kazka.rechennia)} />
+	<KazkaCard state={"completed"} {kazka} />
 
 </ReadWriteTemplate>
 
