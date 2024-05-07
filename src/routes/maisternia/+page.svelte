@@ -2,10 +2,24 @@
 	/** @type {import('./$types').PageData} */
 	export let data;
 	import KazkaCard from '../../components/KazkaCard.svelte';
-	import { lastRechennia } from '$lib/utils';
 	import ReadWriteTemplate from '../../components/ReadWriteTemplate.svelte';
+	import WriteKazkaDialog from '../../components/WriteKazkaDialog.svelte';
 
+	let RandomKazkaDialog;
+	let NewKazkaDialog;
+	
+	let y = 0;
+
+	let rnd_kazka = Math.floor(Math.random() * data.kazky.length);
+	function randomKazka() {
+		rnd_kazka = Math.floor(Math.random() * data.kazky.length);
+		RandomKazkaDialog.toggleWrite();
+	}
+
+	
 </script>
+
+<svelte:window bind:scrollY={y} />
 
 <ReadWriteTemplate
 	header={"Майстерня Казкаря"}
@@ -13,12 +27,15 @@
 	{data}
 	let:kazka={kazka}
 >
+	<button slot="rnd-kazka-btn" on:click={randomKazka}>Випадкова казка</button>
+	<button slot="new-kazka-btn" on:click={() => NewKazkaDialog.toggleWrite()}>Розпочати нову казку</button>
 
-	<KazkaCard id={kazka.id} state={"incompleted"} title={kazka.title} 
-				content={lastRechennia(kazka.rechennia).content} />
+	<KazkaCard state={"incompleted"} {kazka} />
 
 </ReadWriteTemplate>
 
+<WriteKazkaDialog bind:this={RandomKazkaDialog} type={"present"} kazka={data.kazky[rnd_kazka]}/>
+<WriteKazkaDialog bind:this={NewKazkaDialog} type={"new"} />
 
 <style>
 	

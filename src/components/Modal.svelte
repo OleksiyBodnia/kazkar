@@ -19,6 +19,10 @@
 	</div>
 {/if}
 
+<svelte:window on:keydown={(e) => {
+    if (e.key === "Escape") show_info = false;
+}} />
+
 <style>
 	.backdrop {
 		position: fixed;
@@ -37,7 +41,7 @@
     .modal {
 		padding: 2em;
 		border-radius: 20px;
-		max-width: 40%;
+		max-width: 80%;
         margin: 10% auto;
         background: white;
 		position: relative;

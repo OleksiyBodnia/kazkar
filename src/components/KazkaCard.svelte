@@ -1,47 +1,49 @@
 <script>
-	import { truncateText } from '$lib/utils';
+	import { truncateText, lastRechennia, combineRechennia } from '$lib/utils';
 	import WriteKazkaDialog from './WriteKazkaDialog.svelte';
-	import AlertDialog from './AlertDialog.svelte';
-	import { page } from "$app/stores";
+	import { page } from '$app/stores';
 	
-	export let id;
-	export let title;
-	export let content;
+	export let kazka;
 	export let state;
 
 	let WriteDialogComponent;
-	let AlertDialogComponent;
-	
 </script>
 
 {#if state == "completed"}
 	<article>
-		<a href="/kazka/{id}">
-			<h4>{title}</h4>
-			<p>{truncateText(content, 160)}</p>
+		<a href="/kazka/{kazka.id}">
+			<div class="kazka-container">
+				<h4>{kazka.title}</h4>
+				{#each kazka.rechennia as rechennia}
+					{#if $page.data.session.user.id == rechennia.user_id}
+						<span style="color: var(--color-user);">{rechennia.content} </span>
+					{:else}
+						<span>{rechennia.content} </span>
+					{/if}
+					<span>{rechennia.content} </span>
+				{/each}
+			</div>
 		</a>
 	</article>
 {:else if state == "incompleted"}
-	<article on:click={() => {
-		if ($page.data.session)
-			WriteDialogComponent.toggleWrite();
-		else
-			AlertDialogComponent.toggleAlert();
-	}
-	 }>
-		<h4>{title}</h4>
-		<p>{truncateText(content, 160)}</p>
+	<article on:click={() => WriteDialogComponent.toggleWrite()}>
+		<div class="rech-conteiner">
+			<h4>{kazka.title}</h4>
+			<span>{lastRechennia(kazka.rechennia).content}</span>
+		</div>
 	</article>
-	<WriteKazkaDialog bind:this={WriteDialogComponent} {id} {title} {content} />
-	<AlertDialog bind:this={AlertDialogComponent} />
+	<WriteKazkaDialog bind:this={WriteDialogComponent} type={"present"} {kazka} />
 {/if}
 
 <style>
 	article {
-		width: 500px;
+		width: 500px;	
 		/* some padding should be here */
 		border-radius: 24px;
-		padding: 1px 10px 10px 10px;
+		padding: 0px 10px 17px 10px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
 	}
 
 	article:hover {
@@ -54,7 +56,31 @@
 		text-align: center;
 	}
 
-	p {
+	span {
 		text-align: start;
+	}
+
+	/* button {
+		width: 100%;
+		all: unset;
+		
+	}
+
+	button:hover {
+		all: unset;
+	} */
+
+	.kazka-container {
+		height: 133px;
+		overflow: hidden;
+	}
+
+	.rech-conteiner {
+		height: 100px;
+		overflow: hidden;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		/* justify-content: center; */
 	}
 </style>

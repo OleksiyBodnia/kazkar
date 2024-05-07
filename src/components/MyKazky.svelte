@@ -1,11 +1,13 @@
 <script>
     import KazkaCard from "./KazkaCard.svelte"
 
+    export let kazky;
 </script>
 
 <div class="">
-    <!-- <KazkaCard id={kazka.id} state={"completed"} title={kazka.title} 
-				content={combineRechennia(kazka.rechennia)} /> -->
+    {#each kazky as kazka}
+        <KazkaCard state="completed" {kazka} />
+    {/each}
 </div>
 
 
