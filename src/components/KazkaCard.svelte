@@ -10,7 +10,7 @@
 </script>
 
 {#if state == "completed"}
-	<article>
+	<article class="comp-article">
 		<a href="/kazka/{kazka.id}">
 			<div class="kazka-container">
 				<h4>{kazka.title}</h4>
@@ -26,17 +26,19 @@
 		</a>
 	</article>
 {:else if state == "incompleted"}
-	<article on:click={() => WriteDialogComponent.toggleWrite()}>
-		<div class="rech-conteiner">
-			<h4>{kazka.title}</h4>
-			<span>{lastRechennia(kazka.rechennia).content}</span>
-		</div>
-	</article>
+	<button class="custom-btn" on:click={() => WriteDialogComponent.toggleWrite()}>
+		<article class="incomp-article">
+			<div class="rech-conteiner">
+				<h4>{kazka.title}</h4>
+				<span>{lastRechennia(kazka.rechennia).content}</span>
+			</div>
+		</article>
+	</button>
 	<WriteKazkaDialog bind:this={WriteDialogComponent} type={"present"} {kazka} />
 {/if}
 
 <style>
-	article {
+	.comp-article {
 		width: 500px;	
 		/* some padding should be here */
 		border-radius: 24px;
@@ -51,6 +53,15 @@
 		transition: all 0.5s ease;
 		cursor: pointer;
 	}
+	.incomp-article{
+		width: 500px;	
+		/* some padding should be here */
+		border-radius: 24px;
+		padding: 0px 10px 10px 10px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
 
 	h4 {
 		text-align: center;
@@ -60,15 +71,15 @@
 		text-align: start;
 	}
 
-	/* button {
+	.custom-btn {
 		width: 100%;
 		all: unset;
 		
 	}
 
-	button:hover {
+	.custom-btn:hover {
 		all: unset;
-	} */
+	}
 
 	.kazka-container {
 		height: 133px;
@@ -76,7 +87,7 @@
 	}
 
 	.rech-conteiner {
-		height: 100px;
+		height: 115px;
 		overflow: hidden;
 		display: flex;
 		flex-direction: column;

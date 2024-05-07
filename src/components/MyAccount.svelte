@@ -26,55 +26,55 @@
 		}
 	}
 
-  function getCurrentTheme() {
-    return localStorage.getItem('theme') || 'light';
-  }
-  const theme = writable(getCurrentTheme());
+//   function getCurrentTheme() {
+//     return localStorage.getItem('theme') || 'light';
+//   }
+//   const theme = writable(getCurrentTheme());
 
-  function toggleTheme() {
-    theme.update(currentTheme => {
-      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-      localStorage.setItem('theme', newTheme); // Збереження нової теми в локальне сховище
-      return newTheme;
-    });
-  }
-  $: {
-    const currentTheme = $theme;
-    if (currentTheme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }
+//   function toggleTheme() {
+//     theme.update(currentTheme => {
+//       const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+//       localStorage.setItem('theme', newTheme); // Збереження нової теми в локальне сховище
+//       return newTheme;
+//     });
+//   }
+//   $: {
+//     const currentTheme = $theme;
+//     if (currentTheme === 'dark') {
+//       document.documentElement.classList.add('dark');
+//     } else {
+//       document.documentElement.classList.remove('dark');
+//     }
+//   }
 
-  let isAnimating = false;
-let isToggled = JSON.parse(localStorage.getItem('isToggled')) || false;
+//   let isAnimating = false;
+// let isToggled = JSON.parse(localStorage.getItem('isToggled')) || false;
 
-function toggleThemeAndAnimation() {
-  if (!isAnimating) {
-    isAnimating = true;
-    toggleTheme();
-    const themeSpan = document.querySelector('.theme-btn-span');
-    const themeBtn = document.querySelector('.theme-btn');
-    const btnWidth = themeBtn.offsetWidth;
+// function toggleThemeAndAnimation() {
+//   if (!isAnimating) {
+//     isAnimating = true;
+//     toggleTheme();
+//     const themeSpan = document.querySelector('.theme-btn-span');
+//     const themeBtn = document.querySelector('.theme-btn');
+//     const btnWidth = themeBtn.offsetWidth;
 
-    if (!isToggled) {
-      themeSpan.style.backgroundColor = 'black';
-      themeSpan.style.transform = `translateX(${btnWidth - 22}px)`;
-      isToggled = true;
-      localStorage.setItem('isToggled', JSON.stringify(true));
-    } else {
-      themeSpan.style.backgroundColor = 'white'
-      themeSpan.style.transform = 'translateX(0)';
-      isToggled = false;
-      localStorage.setItem('isToggled', JSON.stringify(false));
-    }
+//     if (!isToggled) {
+//       themeSpan.style.backgroundColor = 'black';
+//       themeSpan.style.transform = `translateX(${btnWidth - 22}px)`;
+//       isToggled = true;
+//       localStorage.setItem('isToggled', JSON.stringify(true));
+//     } else {
+//       themeSpan.style.backgroundColor = 'white'
+//       themeSpan.style.transform = 'translateX(0)';
+//       isToggled = false;
+//       localStorage.setItem('isToggled', JSON.stringify(false));
+//     }
 
-    themeSpan.addEventListener('transitionend', () => {
-      isAnimating = false;
-    });
-  }
-}
+//     themeSpan.addEventListener('transitionend', () => {
+//       isAnimating = false;
+//     });
+//   }
+// }
 
 </script>
 
@@ -82,10 +82,10 @@ function toggleThemeAndAnimation() {
 	<div>
 		<p>Пошта <b>{userEmail}</b></p>
 		<p>Кількість казок, у яких брали участь</p>
-		<div class="theme-toggle-div">
+		<!-- <div class="theme-toggle-div">
 			<p>Вибір кольру </p>
 			<button on:click={toggleThemeAndAnimation} class="theme-btn"><div class="theme-btn-span"></div></button>
-		</div>
+		</div> -->
 	</div>
 	<input type="text" bind:this={usernameField} />
 	<button
