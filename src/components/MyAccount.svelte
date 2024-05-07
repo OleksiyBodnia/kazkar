@@ -80,7 +80,8 @@
 
 <div class="myaccount-tab">
 		<p>Пошта: <b>{userEmail}</b></p>
-		<p>Кількість казок, у яких брав участь: {data.user_kazky.length}</p>
+		<p>Кількість казок, у яких брав участь: <b>{data.user_kazky.length}</b></p>
+		<p>Всього написано речень: <b>{data.user_kazky.reduce((total, kazka) => total + kazka.rechennia.length, 0)}</b></p>
 		<!-- <div class="theme-toggle-div">
 			<p>Вибір кольру </p>
 			<button on:click={toggleThemeAndAnimation} class="theme-btn"><div class="theme-btn-span"></div></button>
