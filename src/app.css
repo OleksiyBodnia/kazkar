@@ -1,7 +1,7 @@
 /* @import 'modern-normalize/modern-normalize.css'; */
 * {
 	box-sizing: border-box;
-	font-family: 'Comic Neue', cursive;
+	font-family: 'Balsamiq Sans', sans-serif;
 	color: var(--color-black);
 	/* color: #212121; */
 	/* background-color: #fbfbfb; */
@@ -17,7 +17,6 @@
 }
 
 body {
-	/* font-family: "Comic Sans MS", cursive;	does it needs to be here? */
 	margin: 0;
 	/* padding: 4rem 2rem 2rem 2rem;	moved to main sytles */
 }
