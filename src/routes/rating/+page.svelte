@@ -8,86 +8,92 @@
 </script>
 
 <div>
-<div class="rating-main-section">
-	<div class="site-statistics">
-		<h1>Статистика сайту</h1>
-		<div class="site-stat-bars">
-			<div class="finished-bar">
-				<label for="" style="padding: 0 9px 0 9px">Завершених казок</label>
-				<div class="prog-finished-bar" style="width: {data.finished}px;"></div>
-				<label for="">{data.finished}</label>
-			</div>
-			<div class="unfinished-bar">
-				<label for="">Незавершених казок</label>
-				<div class="prog-unfinished-bar" style="width: {data.unfinished}px;"></div>
-				<label for="">{data.unfinished}</label>
-			</div>
-		</div>
-	</div>
-
-	<div class="users-statistics">
-		<h1>Хто тут ліпший казкар?</h1>
-		<div class="top-controls">
-			<button class={top_users ? 'top-switch-active' : 'top-switch-unactive'} 
-				on:click={() => {top_users = true}}>Кращі</button>
-			<button class={top_users ? 'top-switch-unactive' : 'top-switch-active'} 
-				on:click={() => {top_users = false}}>Гірші</button>
-		</div>
-		
-		
-		{#if top_users == true}
-		<div class="top-transitions" in:fade={{ delay: 100, duration: 1000 }}>
-			<p>Найактивніший казкар за кількістю написаних речень!</p>
-			<div class="best-kazkar">
-				<img src={data.best_users[0].image} alt="kazkar" class="best-kazkar-img" />
-				<p>{data.best_users[0].name}</p>
-			</div>
-			<div class="user-stat-bars">
-				{#each data.best_users as user}
-					<div class="user-bar">
-						<label for="">{user.name}</label>
-						<div class="user-prog-bar" style="width: {user.rech_count}px;"></div>
-						<label for="">{user.rech_count}</label>
-					</div>
-				{/each}
-			</div>
-		</div>
-		{:else if top_users == false}
-		<div class="top-transitions" in:fade={{ delay: 100, duration: 1000 }}>
-			<p>Найменш активний казкар за кількістю написаних речень</p>
-			<div class="best-kazkar">
-				<img src={data.worst_users[0].image} alt="kazkar" class="best-kazkar-img" />
-				<p>{data.worst_users[0].name}</p>
-			</div>
-			<div class="user-stat-bars">
-				{#each data.worst_users as user}
-					<div class="user-bar">
-						<label for="">{user.name}</label>
-						<div class="user-prog-bar" style="width: {user.rech_count}px;"></div>
-						<label for="">{user.rech_count}</label>
-					</div>
-				{/each}
-			</div>
-		</div>
-		{/if}
-		
-	</div>
-
-	<div class="kazky-distribution-with-title">
-		<h1>Розподіл казок</h1>
-		<span style="position: relative;">кількість казок</span>
-		<div class="kazky-distribution">
-			{#each Object.entries(data.distribution) as [key, value]}
-				<div class="kazka-distribution-bar">
-					<label for="" style="font-weight: 100;">{value}</label>
-					<div class="distribution-bar" style="width: 20px; height: {value*30}px;"><br></div>
-					<label for="">{key}</label>
+	<div class="rating-main-section">
+		<div class="site-statistics">
+			<h1>Статистика сайту</h1>
+			<div class="site-stat-bars">
+				<div class="finished-bar">
+					<label for="" style="padding: 0 9px 0 9px">Завершених казок</label>
+					<div class="prog-finished-bar" style="width: {data.finished}px;"></div>
+					<label for="">{data.finished}</label>
 				</div>
-			{/each}
+				<div class="unfinished-bar">
+					<label for="">Незавершених казок</label>
+					<div class="prog-unfinished-bar" style="width: {data.unfinished}px;"></div>
+					<label for="">{data.unfinished}</label>
+				</div>
+			</div>
 		</div>
-		<span style="position: relative;">кількість речень</span>
+
+		<div class="users-statistics">
+			<h1>Хто тут ліпший казкар?</h1>
+			<div class="top-controls">
+				<button
+					class={top_users ? 'top-switch-active' : 'top-switch-unactive'}
+					on:click={() => {
+						top_users = true;
+					}}>Найкращі</button
+				>
+				<button
+					class={top_users ? 'top-switch-unactive' : 'top-switch-active'}
+					on:click={() => {
+						top_users = false;
+					}}>Найгірші</button
+				>
+			</div>
+
+			{#if top_users == true}
+				<div class="top-transitions" in:fade={{ delay: 100, duration: 1000 }}>
+					<p>Найактивніший казкар за кількістю написаних речень!</p>
+					<div class="best-kazkar">
+						<img src={data.best_users[0].image} alt="kazkar" class="best-kazkar-img" />
+						<p>{data.best_users[0].name}</p>
+					</div>
+					<div class="user-stat-bars">
+						{#each data.best_users as user}
+							<div class="user-bar">
+								<label for="">{user.name}</label>
+								<div class="user-prog-bar" style="width: {user.rech_count}px;"></div>
+								<label for="">{user.rech_count}</label>
+							</div>
+						{/each}
+					</div>
+				</div>
+			{:else if top_users == false}
+				<div class="top-transitions" in:fade={{ delay: 100, duration: 1000 }}>
+					<p>Найменш активний казкар за кількістю написаних речень</p>
+					<div class="best-kazkar">
+						<img src={data.worst_users[0].image} alt="kazkar" class="best-kazkar-img" />
+						<p>{data.worst_users[0].name}</p>
+					</div>
+					<div class="user-stat-bars">
+						{#each data.worst_users as user}
+							<div class="user-bar">
+								<label for="">{user.name}</label>
+								<div class="user-prog-bar" style="width: {user.rech_count}px;"></div>
+								<label for="">{user.rech_count}</label>
+							</div>
+						{/each}
+					</div>
+				</div>
+			{/if}
+		</div>
+
+		<div class="kazky-distribution-with-title">
+			<h1>Розподіл казок</h1>
+			<span style="position: relative;">кількість казок</span>
+			<div class="kazky-distribution">
+				{#each Object.entries(data.distribution) as [key, value]}
+					<div class="kazka-distribution-bar">
+						<label for="" style="font-weight: 100;">{value}</label>
+						<div class="distribution-bar" style="width: 20px; height: {value * 30}px;"><br /></div>
+						<label for="">{key}</label>
+					</div>
+				{/each}
+			</div>
+			<span style="position: relative;">кількість речень</span>
+		</div>
 	</div>
-</div>
 </div>
 
 <style>
@@ -99,7 +105,7 @@
 		flex-direction: row;
 		gap: 100px;
 	}
-	
+
 	h1 {
 		text-align: center;
 	}
@@ -143,8 +149,6 @@
 		border-radius: 5px;
 	}
 
-
-
 	.kazky-distribution-with-title {
 		width: 25%;
 		display: flex;
@@ -152,7 +156,6 @@
 		justify-content: center;
 		flex-direction: column;
 		gap: 20px;
-		
 	}
 
 	.kazky-distribution {
@@ -175,8 +178,6 @@
 		background-color: rgb(149, 222, 207);
 		border-radius: 5px;
 	}
-
-
 
 	.users-statistics {
 		width: 25%;

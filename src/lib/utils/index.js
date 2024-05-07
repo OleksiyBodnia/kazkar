@@ -60,3 +60,27 @@ export function tooltip(node, params) {
 		}
 	};
 }
+
+export async function releaseKazka(kazka) {
+	await fetch('/api/kazka/release-kazka', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({
+			kazka_id: kazka.id
+		})
+	});
+}
+
+export async function takeKazka(kazka) {
+	await fetch('/api/kazka/take-kazka', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({
+			kazka_id: kazka.id
+		})
+	});
+}

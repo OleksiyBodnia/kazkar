@@ -3,11 +3,11 @@
 import { createClient } from '@supabase/supabase-js';
 import { SUPABASE_URL, SUPABASE_ANON_KEY } from '$env/static/private';
 
-const supabase_public = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+export const supabase_public = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
 	db: { schema: 'public' }
 });
 
-const supabase_next_auth = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+export const supabase_next_auth = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
 	db: { schema: 'next_auth' }
 });
 
@@ -220,7 +220,7 @@ export async function getTopUsers(amount = 10, top = true) {
 	}
 
 	users.sort((a, b) => b.rech_count - a.rech_count);
-	
+
 	if (top) {
 		return users.slice(0, amount);
 	} else {
