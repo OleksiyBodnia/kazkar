@@ -79,16 +79,24 @@
 </script>
 
 <div class="myaccount-tab">
-		<p>Пошта: <b>{userEmail}</b></p>
-		<p>Кількість казок, у яких брав участь: <b>{data.user_kazky.length}</b></p>
-		<p>Всього написано речень: <b>{data.user_kazky.reduce((total, kazka) => total + kazka.rechennia.length, 0)}</b></p>
-		<!-- <div class="theme-toggle-div">
-			<p>Вибір кольру </p>
-			<button on:click={toggleThemeAndAnimation} class="theme-btn"><div class="theme-btn-span"></div></button>
-		</div> -->
+	<p>Пошта: <b>{userEmail}</b></p>
+	<p>Кількість казок, у яких брав участь: <b>{data.user_kazky.length}</b></p>
+	<p>Всього написано речень: <b>{data.user_kazky.reduce((total, kazka) => total + kazka.rechennia.length, 0)}</b></p>
+	<!-- <div class="theme-toggle-div">
+		<p>Вибір кольру </p>
+		<button on:click={toggleThemeAndAnimation} class="theme-btn"><div class="theme-btn-span"></div></button>
+	</div> -->
+	<!-- Щось по типу теми -->
+	<p>Акцентний колір: 
+		<select>
+				<option value="Блакитний">
+					Блакитний
+				</option>
+		</select>
+	</p>
 	<p>
-		<input type="text" bind:this={usernameField} />
 		<button on:click={() => { changeName(); }}>Змінити ім'я</button>
+		<input type="text" bind:this={usernameField} />
 	</p>
 	<p>
 		<button on:click={() => { signOut(); }}>Вийти з акаунту</button>
@@ -96,6 +104,10 @@
 </div>
 
 <style>
+	input {
+		width: 200px;
+	}
+
 	.theme-toggle-div {
 		display: flex;
 		align-items: center;

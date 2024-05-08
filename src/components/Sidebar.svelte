@@ -23,22 +23,56 @@
 
         return `${year}-${month}-${day} ${hours}:${minutes}`;      
     }
+
+    async function Like() {
+        const response = await fetch(`/api/kazka/like`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                user_id: data.session.user.id,
+                kazka_id: data.kazka.id,
+                like: !data.stats.entry.like
+            })
+        });
+
+        if (response.ok) {
+            if (data.stats.entry.like) {
+                data.stats.likes--;
+            } else {
+                data.stats.likes++;
+            }
+            data.stats.entry.like = !data.stats.entry.like;
+            // const { message } = await response.json();
+            // console.log(message);
+        } else {
+            // const { error } = await response.json();
+            // console.error(error);
+        }
+    }
 </script>
 
 <aside>
-    <h4 class="sb-title">Інформація про казку</h4>
+    <h4>Інформація про казку</h4>
     <p>Період створення:<br>
         з {niceTime(data.kazka.rechennia[0])}<br>
         по {niceTime(lastRechennia(data.kazka.rechennia))}</p>
     <p>Всього реченнь: {data.kazka.rechennia.length}</p>
-    <p> Унікальних авторів:
+    <p>Унікальних авторів:
         {unique_users.length}
         <!-- {#each data.users as user}
            <span>{user.name}</span>
         {/each} -->
     </p>
-    <p>Переглядів: </p>
-    <p>Уподобайок: </p>
+    <p>Переглядів: {data.stats.views}</p>
+    <p>Уподобайок: {data.stats.likes}</p>
+    {#if data.stats.entry.like}
+        <p><button class="btn-liked" on:click={Like}>&hearts; лайк?</button></p>
+    {:else}
+        <p><button on:click={Like}>&hearts; лайк?</button></p>
+    {/if}
+    
 </aside>
 
 <style>
@@ -58,5 +92,13 @@
     
     p {
         text-align: center;
+    }
+
+    .btn-liked {
+        background-color: var(--color-user);
+        color: white;
+        border-radius: 5px;
+        padding: 5px 10px;
+        cursor: pointer;
     }
 </style>

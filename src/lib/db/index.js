@@ -257,3 +257,64 @@ export async function getKazkyDistribution() {
 
 	return distribution;
 }
+
+// should be called getKazkaUserStats
+export async function getKazkaStats(kazka_id, user_id = null) {
+	let stats = {};
+
+	const { count: views, views_error } = await supabase_public
+		.from('views_likes')
+		.select('*', { count: 'exact', head: true })
+		.eq('kazka_id', kazka_id)
+		.eq('view', true);
+	if (views_error) {
+		throw views_error;
+	}
+	stats.views = views;
+
+	const { count: likes, error: likes_error } = await supabase_public
+		.from('views_likes')
+		.select('*', { count: 'exact', head: true })
+		.eq('kazka_id', kazka_id)
+		.eq('like', true);
+	if (likes_error) {
+		throw likes_error;
+	}
+	stats.likes = likes;
+
+	if (user_id) {
+		const { data: entry, error: entry_error } = await supabase_public
+			.from('views_likes')
+			.select('*')
+			.eq('kazka_id', kazka_id)
+			.eq('user_id', user_id);
+		if (entry_error) {
+			throw entry_error;
+		}
+		stats.entry = entry[0];
+	}
+	
+	return stats;
+}
+
+export async function addView(user_id, kazka_id) {
+	const { data: view, error } = await supabase_public
+		.from('views_likes')
+		.upsert({ user_id: user_id, kazka_id: kazka_id, view: true }, { onConflict: 'user_id, kazka_id' })
+		.select();
+	if (error) {
+		throw error;
+	}
+}
+
+export async function Like(user_id, kazka_id, like) {
+
+	const { error } = await supabase_public
+		.from('views_likes')
+		.update({ like: like })
+		.eq('user_id', user_id)
+		.eq('kazka_id', kazka_id);
+	if (error) {
+		throw error;
+	}
+}
