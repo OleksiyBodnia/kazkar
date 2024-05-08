@@ -20,7 +20,6 @@
 					{:else}
 						<span>{rechennia.content} </span>
 					{/if}
-					<span>{rechennia.content} </span>
 				{/each}
 			</div>
 		</a>
@@ -81,7 +80,7 @@
 	}
 
 	.kazka-container {
-		height: 133px;
+		height: 130px;
 		overflow: hidden;
 	}
 
