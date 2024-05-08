@@ -1,7 +1,11 @@
 /* @import 'modern-normalize/modern-normalize.css'; */
+
 * {
 	box-sizing: border-box;
-	font-family: 'Balsamiq Sans', sans-serif;
+
+	/* Альтернативні шрифти: Comic Sans, Balsamiq Sans, Itim, Shantell Sans, Literata */
+	font-family: "Shantell Sans", cursive;
+
 	color: var(--color-black);
 	/* color: #212121; */
 	/* background-color: #fbfbfb; */
