@@ -3,12 +3,14 @@
 	import { scale } from 'svelte/transition';
 	import { onMount } from 'svelte';
 
-    export let header = "Заголовок";
-    export let description = "Опис сторінки";
 	export let data;
+	export let header = 'Заголовок';
+	export let description = 'Опис сторінки';
 
 	let filter_selected;
 	let filters = ['Найновіші', 'Найстаріші', 'Популярні', 'Непопулярні'];
+	let page = 1;
+	let more_kazky_button;
 
 	let grid_visible = false;
 	onMount(() => {
@@ -16,6 +18,30 @@
 	});
 
 	function whenFilterSelected() {}
+
+	async function getMoreKazky() {
+		const new_kazky = await fetch(
+			`/api/get-kazky?state=incompleted&page=${++page}&kazky_per_page=${data.kazky_per_page ?? 4}`,
+			{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			}
+		)
+			.then((res) => res.json())
+			.then((res) => res.kazky);
+
+		data.kazky = [...data.kazky, ...new_kazky];
+
+		if (new_kazky.length === 0 || new_kazky.length < data.kazky_per_page) {
+			//console.log('Більше казок немає');
+
+			more_kazky_button.style.display = 'none';
+
+			return;
+		}
+	}
 </script>
 
 <div class="page-div">
@@ -26,11 +52,13 @@
 
 	<div class="find-tools">
 		<div class="rigth-find-tools">
-			<label>Пошук
+			<label
+				>Пошук
 				<input type="text" />
 			</label>
 
-			<label>Фільтр
+			<label
+				>Фільтр
 				<select bind:value={filter_selected} on:change={whenFilterSelected}>
 					{#each filters as filter}
 						<option value={filter}>
@@ -47,14 +75,16 @@
 	</div>
 
 	<div class="finished-samples">
-		{#each data.kazky as kazka,i}
-		{#if grid_visible}
-			<div class="sample" in:scale={{ delay:  160*i, duration: 700, start: 0.7 }}>
-				<slot {kazka}/>
-			</div>
-		{/if}
-	{/each}   
+		{#each data.kazky as kazka, i}
+			{#if grid_visible}
+				<div class="sample" in:scale={{ delay: 160 * i, duration: 700, start: 0.7 }}>
+					<slot {kazka} />
+				</div>
+			{/if}
+		{/each}
 	</div>
+
+	<button on:click={getMoreKazky} bind:this={more_kazky_button}>Завантажити ще</button>
 </div>
 
 <style>

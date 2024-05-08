@@ -1,15 +1,15 @@
 <script>
-	import { truncateText, lastRechennia, combineRechennia } from '$lib/utils';
+	import { truncateText, lastRechennia } from '$lib/utils';
 	import WriteKazkaDialog from './WriteKazkaDialog.svelte';
 	import { page } from '$app/stores';
-	
+
 	export let kazka;
 	export let state;
 
 	let WriteDialogComponent;
 </script>
 
-{#if state == "completed"}
+{#if state == 'completed'}
 	<article class="comp-article">
 		<a href="/kazka/{kazka.id}">
 			<div class="kazka-container">
@@ -24,7 +24,7 @@
 			</div>
 		</a>
 	</article>
-{:else if state == "incompleted"}
+{:else if state == 'incompleted'}
 	<button class="custom-btn" on:click={() => WriteDialogComponent.toggleWrite()}>
 		<article class="incomp-article">
 			<div class="rech-conteiner">
@@ -33,12 +33,12 @@
 			</div>
 		</article>
 	</button>
-	<WriteKazkaDialog bind:this={WriteDialogComponent} type={"present"} {kazka} />
+	<WriteKazkaDialog bind:this={WriteDialogComponent} type={'present'} {kazka} />
 {/if}
 
 <style>
 	.comp-article {
-		width: 500px;	
+		width: 500px;
 		/* some padding should be here */
 		border-radius: 24px;
 		padding: 0px 10px 17px 10px;
@@ -52,9 +52,8 @@
 		transition: all 0.5s ease;
 		cursor: pointer;
 	}
-
-	.incomp-article{
-		width: 500px;	
+	.incomp-article {
+		width: 500px;
 		/* some padding should be here */
 		border-radius: 24px;
 		padding: 0px 10px 10px 10px;
@@ -74,7 +73,6 @@
 	.custom-btn {
 		width: 100%;
 		all: unset;
-		
 	}
 
 	.custom-btn:hover {
