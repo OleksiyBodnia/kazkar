@@ -1,7 +1,7 @@
-import * as db from '$lib/db';
+import { getKazky } from '$lib/db';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load() {
-	let kazky = await db.getKazky('completed', 4);
+	const kazky = await getKazky({ state: 'completed', limit: 4 });
 	return { kazky };
 }

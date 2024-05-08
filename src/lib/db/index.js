@@ -11,14 +11,13 @@ export const supabase_next_auth = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, 
 	db: { schema: 'next_auth' }
 });
 
-// отримати казки з можливістю фільтрації за станом (виконані, невиконані, всі), за певним користувачем, сортуванням, зміщенням (для пакетного завантаження)
-export async function getKazky(
+export async function getKazky({
 	state = 'all',
-	limit = 100,
+	limit = 20,
 	sort = 'asc',
 	offset = 0,
 	user_id = null
-) {
+}) {
 	let kazky_query = supabase_public.from('kazky').select('*');
 
 	if (state === 'completed') {
@@ -41,15 +40,15 @@ export async function getKazky(
 		kazky_query = kazky_query.in('id', kazka_ids);
 	}
 
+	if (sort === 'asc') {
+		kazky_query = kazky_query.order('created_at', { ascending: true });
+	} else {
+		kazky_query = kazky_query.order('created_at', { ascending: false });
+	}
+
 	const rangeStart = offset;
 	const rangeEnd = offset + limit - 1;
 	kazky_query = kazky_query.range(rangeStart, rangeEnd);
-
-	if (sort === 'asc') {
-		kazky_query = kazky_query.order('created_at', { ascending: true });
-	} else if (sort === 'desc') {
-		kazky_query = kazky_query.order('created_at', { ascending: false });
-	}
 
 	const { data: kazky, error } = await kazky_query;
 
@@ -68,6 +67,10 @@ export async function getKazky(
 		}
 		kazka.rechennia = rechennia;
 	}
+
+	// console.log(kazky);
+	// console.log('offset:', offset);
+	// console.log('limit:', limit);
 
 	return kazky;
 }
@@ -90,6 +93,7 @@ export async function getKazka(id) {
 		throw errorRechennia;
 	}
 	kazka.rechennia = rechennia;
+
 	return kazka;
 }
 
@@ -113,6 +117,7 @@ export async function getRandomKazka(completed = false, count = 1) {
 		}
 		kazka.rechennia = rechennia;
 	}
+
 	return kazky;
 }
 
