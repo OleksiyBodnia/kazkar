@@ -82,6 +82,8 @@
 	<p>Пошта: <b>{userEmail}</b></p>
 	<p>Кількість казок, у яких брав участь: <b>{data.user_kazky.length}</b></p>
 	<p>Всього написано речень: <b>{data.user_kazky.reduce((total, kazka) => total + kazka.rechennia.length, 0)}</b></p>
+	<p>Прочитаних казок: <b>{data.user_stats.views}</b></p>
+	<p>Та доданих уподобайок: <b>{data.user_stats.likes}</b></p>
 	<!-- <div class="theme-toggle-div">
 		<p>Вибір кольру </p>
 		<button on:click={toggleThemeAndAnimation} class="theme-btn"><div class="theme-btn-span"></div></button>

@@ -1,10 +1,11 @@
 import { redirect } from '@sveltejs/kit';
-import { getKazky } from '$lib/db';
+import { getKazky, getUserStats } from '$lib/db';
 
 /** @type {import('./$types').PageServerLoad} */
 export const load = async (event) => {
 	const session = await event.locals.auth();
-	let user_kazky = await getKazky('completed', 100, 'asc', 0, session?.user.id);
+	const user_kazky = await getKazky('completed', 100, 'asc', 0, session?.user.id);
+	const user_stats = await getUserStats(session?.user.id);
 
 	if (!session?.user) {
 		redirect(303, '/');
@@ -12,6 +13,7 @@ export const load = async (event) => {
 
 	return {
 		session,
-		user_kazky
+		user_kazky,
+		user_stats
 	};
 };

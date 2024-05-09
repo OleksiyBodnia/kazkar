@@ -67,6 +67,8 @@ export async function getKazky(
 			throw errorRechennia;
 		}
 		kazka.rechennia = rechennia;
+
+		kazka.stats = await getKazkaStats(kazka.id);
 	}
 
 	return kazky;
@@ -112,6 +114,8 @@ export async function getRandomKazka(completed = false, count = 1) {
 			throw errorRechennia;
 		}
 		kazka.rechennia = rechennia;
+
+		kazka.stats = await getKazkaStats(kazka.id);
 	}
 	return kazky;
 }
@@ -258,7 +262,7 @@ export async function getKazkyDistribution() {
 	return distribution;
 }
 
-// should be called getKazkaUserStats
+// should be called getKazkaUserStats?
 export async function getKazkaStats(kazka_id, user_id = null) {
 	let stats = {};
 
@@ -317,4 +321,30 @@ export async function Like(user_id, kazka_id, like) {
 	if (error) {
 		throw error;
 	}
+}
+
+export async function getUserStats(user_id) {
+	let stats = {};
+
+	const { count: views, views_error } = await supabase_public
+		.from('views_likes')
+		.select('*', { count: 'exact', head: true })
+		.eq('user_id', user_id)
+		.eq('view', true);
+	if (views_error) {
+		throw views_error;
+	}
+	stats.views = views;
+
+	const { count: likes, error: likes_error } = await supabase_public
+		.from('views_likes')
+		.select('*', { count: 'exact', head: true })
+		.eq('user_id', user_id)
+		.eq('like', true);
+	if (likes_error) {
+		throw likes_error;
+	}
+	stats.likes = likes;
+
+	return stats;
 }
