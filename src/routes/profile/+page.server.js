@@ -4,9 +4,9 @@ import { getKazky, getUserStats } from '$lib/db';
 /** @type {import('./$types').PageServerLoad} */
 export const load = async (event) => {
 	const session = await event.locals.auth();
-	const user_kazky = await getKazky('completed', 100, 'asc', 0, session?.user.id);
+	let user_kazky = await getKazky({ state: 'completed', user_id: session?.user.id });
 	const user_stats = await getUserStats(session?.user.id);
-
+	
 	if (!session?.user) {
 		redirect(303, '/');
 	}
