@@ -22,6 +22,7 @@
 					{/if}
 				{/each}
 			</div>
+			<div class="kazka-stats">{kazka.stats.views}&#128065 {kazka.stats.likes}&hearts;</div>
 		</a>
 	</article>
 {:else if state == 'incompleted'}
@@ -31,20 +32,17 @@
 				<h4>{kazka.title}</h4>
 				<span>{lastRechennia(kazka.rechennia).content}</span>
 			</div>
+			<div class="kazka-count">{kazka.rechennia.length}/10</div>
 		</article>
 	</button>
 	<WriteKazkaDialog bind:this={WriteDialogComponent} type={'present'} {kazka} />
 {/if}
 
 <style>
-	.comp-article {
-		width: 500px;
-		/* some padding should be here */
+	article {
+		margin: 10px;
+		box-shadow: rgba(149, 157, 165, 0.1) 0px 8px 24px;
 		border-radius: 24px;
-		padding: 0px 10px 17px 10px;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
 	}
 
 	article:hover {
@@ -52,10 +50,19 @@
 		transition: all 0.5s ease;
 		cursor: pointer;
 	}
-	.incomp-article {
-		width: 500px;
+
+	.comp-article {
+		width: 500px;	
 		/* some padding should be here */
-		border-radius: 24px;
+		padding: 0px 10px 17px 10px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.incomp-article{
+		width: 500px;	
+		/* some padding should be here */
 		padding: 0px 10px 10px 10px;
 		display: flex;
 		flex-direction: column;
@@ -85,11 +92,23 @@
 	}
 
 	.rech-conteiner {
-		height: 113px;
+		height: 112px;
 		overflow: hidden;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		/* justify-content: center; */
+	}
+
+	.kazka-stats {
+		text-align: right;
+		/* position: relative; */
+	}
+
+	.kazka-count {
+		align-self: flex-end;
+		text-align: right;
+		position: relative;
+		top: -9px;
 	}
 </style>
