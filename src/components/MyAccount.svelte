@@ -25,56 +25,13 @@
 			}, 1000);
 		}
 	}
+	let selectedTheme = '';
 
-//   function getCurrentTheme() {
-//     return localStorage.getItem('theme') || 'light';
-//   }
-//   const theme = writable(getCurrentTheme());
-
-//   function toggleTheme() {
-//     theme.update(currentTheme => {
-//       const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-//       localStorage.setItem('theme', newTheme); // Збереження нової теми в локальне сховище
-//       return newTheme;
-//     });
-//   }
-//   $: {
-//     const currentTheme = $theme;
-//     if (currentTheme === 'dark') {
-//       document.documentElement.classList.add('dark');
-//     } else {
-//       document.documentElement.classList.remove('dark');
-//     }
-//   }
-
-//   let isAnimating = false;
-// let isToggled = JSON.parse(localStorage.getItem('isToggled')) || false;
-
-// function toggleThemeAndAnimation() {
-//   if (!isAnimating) {
-//     isAnimating = true;
-//     toggleTheme();
-//     const themeSpan = document.querySelector('.theme-btn-span');
-//     const themeBtn = document.querySelector('.theme-btn');
-//     const btnWidth = themeBtn.offsetWidth;
-
-//     if (!isToggled) {
-//       themeSpan.style.backgroundColor = 'black';
-//       themeSpan.style.transform = `translateX(${btnWidth - 22}px)`;
-//       isToggled = true;
-//       localStorage.setItem('isToggled', JSON.stringify(true));
-//     } else {
-//       themeSpan.style.backgroundColor = 'white'
-//       themeSpan.style.transform = 'translateX(0)';
-//       isToggled = false;
-//       localStorage.setItem('isToggled', JSON.stringify(false));
-//     }
-
-//     themeSpan.addEventListener('transitionend', () => {
-//       isAnimating = false;
-//     });
-//   }
-// }
+  const setTheme = (theme) => {
+    selectedTheme = theme;
+    document.documentElement.style.setProperty('--color-black', theme);
+    // В этом месте вы можете добавить логику для сохранения выбранной темы, например, в локальное хранилище.
+  };
 
 </script>
 
@@ -84,21 +41,20 @@
 	<p>Всього написано речень: <b>{data.user_kazky.reduce((total, kazka) => total + kazka.rechennia.length, 0)}</b></p>
 	<p>Прочитаних казок: <b>{data.user_stats.views}</b></p>
 	<p>Та доданих уподобайок: <b>{data.user_stats.likes}</b></p>
-	<!-- <div class="theme-toggle-div">
-		<p>Вибір кольру </p>
-		<button on:click={toggleThemeAndAnimation} class="theme-btn"><div class="theme-btn-span"></div></button>
-	</div> -->
-	<!-- Щось по типу теми -->
-	<p>Акцентний колір: 
-		<select>
-				<option value="Блакитний">
-					Блакитний
-				</option>
-		</select>
-	</p>
+
+	 
+		<div class="theme-div">
+			<p>Акцентний колір: </p>
+			<div class="theme-btn defaul {selectedTheme === 'dark-red' ? 'selected' : ''}" on:click={() => setTheme('dark-red')}></div>
+			<div class="theme-btn blue-theme {selectedTheme === 'blue' ? 'selected' : ''}" on:click={() => setTheme('blue')}></div>
+			<div class="theme-btn green-theme {selectedTheme === 'green' ? 'selected' : ''}" on:click={() => setTheme('green')}></div>
+			<div class="theme-btn purple-theme {selectedTheme === 'purple' ? 'selected' : ''}" on:click={() => setTheme('purple')}></div>
+
+		</div>
+	
 	<p>
 		<button on:click={() => { changeName(); }}>Змінити ім'я</button>
-		<input type="text" bind:this={usernameField} />
+		<input type="text" bind:this={usernameField} class="profile-change-name-input"/>
 	</p>
 	<p>
 		<button on:click={() => { signOut(); }}>Вийти з акаунту</button>
@@ -106,6 +62,56 @@
 </div>
 
 <style>
+	.profile-change-name-input{
+		border-radius: 4px;
+		padding: 2px;
+		padding-left: 5px;
+		padding-right: 5px;
+	}
+	.theme-btn {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.3);
+    transition: width 0.3s ease, height 0.3s ease; /* Добавляем плавную анимацию изменения размера */
+  }
+  .selected {
+  transform: scale(1.2); /* Увеличиваем размер кнопки в 1.5 раза */
+}
+	.defaul{
+		background-color: black;
+	}
+	.blue-theme{
+		background-color: #007bff;
+	}
+	.green-theme{
+		background-color: #28a745;
+	}
+	.purple-theme{
+		background-color: #6f42c1;
+	}
+	.theme-div{
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 5px;
+	}
+  .blue {
+    --color-black: #007bff; 
+  }
+
+  .green {
+    --color-black: #28a745; 
+  }
+
+  .purple {
+    --color-black: #6f42c1; 
+  }
+
+  .dark-red {
+    --color-black: #010101; 
+  }
+  
 	input {
 		width: 200px;
 	}
@@ -114,22 +120,6 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-	}
-
-	.theme-btn {
-		width: 50px;
-		height: 22px;
-		margin-left: 10px;
-		position: relative;
-		border-radius: 11px;
-		overflow: hidden;
-		background-color: rgb(130, 130, 130);
-	}
-
-	.theme-btn:hover{
-		background-color: inherit;
-		background-image: inherit;
-		color: inherit;
 	}
 
 	.profile-change-name-form{
