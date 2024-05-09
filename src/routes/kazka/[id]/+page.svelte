@@ -138,7 +138,7 @@
 
 	.sidebar-container {
 		margin-left: 5%;
-		margin-top: 60px;
+		margin-top: 30px;
 		max-width: 25%;
 	}
 
