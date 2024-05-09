@@ -353,3 +353,16 @@ export async function getUserStats(user_id) {
 
 	return stats;
 }
+
+export async function searchKazky(is_completed, query) {
+	const { data: kazky, error } = await supabase_public
+		.from('kazky')
+		.select('*')
+		.filter('is_completed', 'eq', is_completed)
+		.textSearch('title', query);
+	if (error) {
+		throw error;
+	}
+	
+	return kazky;
+}

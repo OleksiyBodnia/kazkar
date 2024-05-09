@@ -15,6 +15,7 @@
 	let grid_visible = false;
 	onMount(() => {
 		grid_visible = true;
+		data.kazky_backup = data.kazky;
 	});
 
 	function whenFilterSelected() {}
@@ -42,6 +43,36 @@
 			return;
 		}
 	}
+
+	async function search(event) {	
+		if (event.key === 'Enter') {
+			if (event.target.value == '') {
+				console.log('Пустий пошуковий запит');
+				data.kazky = data.kazky_backup;
+				console.log(data.kazky);
+				return;
+			}
+			const search_query = event.target.value;
+
+			const response = await fetch('/api/search-kazky', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					is_completed: true,
+					query: search_query,
+				})
+			});
+
+			if (response.ok) {
+				const { kazky } = await response.json();
+				data.kazky = kazky;
+			} else {
+				console.log('Помилка при пошуку казок');
+			}
+		}
+	}
 </script>
 
 <div class="page-div">
@@ -51,12 +82,11 @@
 	</div>
 
 	<div class="find-tools">
-		<div class="rigth-find-tools">
+		<div class="left-find-tools">
 			<label
 				>Пошук
-				<input type="text" />
+				<input type="text" on:keydown={search}/>
 			</label>
-
 			<label
 				>Фільтр
 				<select bind:value={filter_selected} on:change={whenFilterSelected}>
@@ -68,7 +98,7 @@
 				</select>
 			</label>
 		</div>
-		<div class="left-find-tools">
+		<div class="right-find-tools">
 			<slot name="rnd-kazka-btn" />
 			<slot name="new-kazka-btn" />
 		</div>
@@ -120,7 +150,7 @@
 		justify-content: space-between;
 	}
 
-	.rigth-find-tools {
+	.right-find-tools {
 		display: flex;
 		align-items: center;
 		gap: 40px;
@@ -129,11 +159,12 @@
 	.left-find-tools {
 		display: flex;
 		align-items: center;
-		gap: 25px;
+		gap: 40px;
 	}
 
 	/* на майбутнє: треба гатрно силізувати input, поки не шарю як */
 	input {
+		width: 220px;
 		border: none;
 		border-bottom: 1px solid black;
 		background-color: transparent;
