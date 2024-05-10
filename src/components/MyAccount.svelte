@@ -142,18 +142,6 @@
 		transition: transform 0.3s ease, background-color 0.3s ease;
 	}
 
-	.myaccount-tab {
-		width: 800px;
-		text-align: center;
-		border: 2px solid black;
-		border-radius: 10px;
-		padding: 20px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		flex-direction: column;
-	}
-
 	:root.dark {
 		--color-black: rgb(47, 39, 119);
 	}

@@ -19,7 +19,7 @@
 </script>
 
 <div class="profile-page-div">
-	<h1>Профіль користувача <strong>{username}</strong></h1>
+	<h1 class="profile-page-h">Профіль користувача <strong>{username}</strong></h1>
 
 	<div class="tabs">
 		<ul>
@@ -37,11 +37,11 @@
 	</div>
 
 	{#if active_item === items[0]}
-		<div in:fade={{ x: -200, duration: 700 }}>
+		<div in:fade={{ x: -200, duration: 700 }} class="myaccount-tab">
 			<MyAccount {data} />
 		</div>
 	{:else if active_item === items[1]}
-		<div in:fade={{ x: 200, duration: 700 }}>
+		<div in:fade={{ x: 200, duration: 700 }} class="myaccount-tab">
 			<MyKazky kazky={data.user_kazky}/>
 		</div>
 		<!-- {:else if active_item === items[1] && previous_item === items[2]}
@@ -49,7 +49,7 @@
 			<MyKazky />
 		</div> -->
 	{:else if active_item === items[2]}
-		<div in:fade={{ x: 200, duration: 700 }}>
+		<div in:fade={{ x: 200, duration: 700 }} class="myaccount-tab">
 			<MyAchievements kazky={data.user_kazky}/>
 		</div>
 	{/if}
@@ -102,4 +102,28 @@
 		-webkit-text-fill-color: transparent;
 		/* border-bottom: 2px solid #78009d; */
 	}
+	.myaccount-tab {
+		width: 800px;
+		text-align: center;
+		border: 2px solid black;
+		border-radius: 10px;
+		padding: 20px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+	}
+	@media screen and (max-width: 767px){
+		.profile-page-h{
+			/* display: flex;
+			align-items: center;justify-content: center; */
+		}
+		ul{
+			gap: 0px;
+		}
+		.myaccount-tab{
+			width: 355px;
+		}
+	}
+	
 </style>

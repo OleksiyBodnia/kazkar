@@ -12,16 +12,17 @@
 
 
 <style>
-    div {
+    
+    /* div {
         display: flex;
         align-items: center;
         justify-content: center;
-        /* flex-direction: column; */
         column-gap: 90px;
         flex-wrap: wrap;
         border: 2px solid black;
         border-radius: 10px;
         padding: 20px;
         width: 800px;
-    }
+    } */
+    
 </style>
