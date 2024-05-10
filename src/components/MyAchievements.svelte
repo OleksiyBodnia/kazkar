@@ -36,7 +36,7 @@
 </div>
 
 <style>
-    .personal-achiev-tab {
+    /* .personal-achiev-tab {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -47,7 +47,7 @@
         border-radius: 10px;
         padding: 20px;
         width: 800px;
-    }
+    } */
 
     .achieves {
         margin-top: 20px;

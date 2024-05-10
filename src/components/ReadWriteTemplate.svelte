@@ -143,4 +143,44 @@
 	input:focus {
 		border-bottom: 2px solid black;
 	}
+	@media screen and (max-width: 767px){
+		.rigth-find-tools{
+			flex-direction: column;
+			gap: 15px;
+			align-items: start;
+			margin-right: 50px;
+		}
+		.find-tools{
+			padding: 0;
+		}
+		.finished-samples{
+			margin: 0;
+		}
+		.left-find-tools{
+			flex-direction: column;
+			gap: 15px;
+			align-items: end;
+		}
+		input{
+			width: 150px;
+		}
+		.page-div{
+			padding: 0;
+		}
+	}
+	@media screen and (min-width: 768px) and (max-width:1023px){
+		.rigth-find-tools{
+			flex-direction: column;
+			gap: 15px;
+			align-items: start;
+		}
+		.left-find-tools{
+			flex-direction: column;
+			gap: 15px;
+			align-items: end;
+		}
+		input{
+			width: 150px;
+		}
+	}
 </style>
