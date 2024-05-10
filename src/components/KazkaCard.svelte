@@ -59,6 +59,7 @@
 		flex-direction: column;
 		align-items: center;
 	}
+	
 
 	.incomp-article{
 		width: 500px;	
@@ -111,4 +112,13 @@
 		position: relative;
 		top: -9px;
 	}
+	@media screen and (max-width: 767px){
+        .comp-article, .incomp-article{
+            width: 340px;
+        }
+		.kazka-container{
+			height: 125px;
+			overflow: hidden;
+		}
+    }
 </style>

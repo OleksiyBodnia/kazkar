@@ -57,7 +57,7 @@
 				{/each}
 			</p>
 		</article>
-		<div style="height: 500px;"></div>
+		<div class="height-correction" style="height: 500px;"></div>
 		{#if show_sidebar}
 			<div class="sidebar-container" transition:slide={{ duration: 900, axis: 'x' }}>
 				<Sidebar bind:this={SidebarComponent} {data} />
@@ -92,6 +92,8 @@
 		</svg>
 	</button>
 	<div class="delimeter"></div>
+	<div class="mobile-sidebar"><Sidebar {data}/></div>
+	<div class="delimeter second-delimetr"></div>
 	<div class="offer">
 		<h3 style="text-align: left;">Читайте також</h3>
 		<div class="finished-samples">
@@ -185,4 +187,36 @@
 	.show-sidebar-btn-arrow2:hover {
 		stroke: var(--color-purple);
 	}
+	.second-delimetr{
+		display: none;
+	}
+	.mobile-sidebar{
+		display: none;
+	}
+	@media screen and (max-width: 767px){
+		.sidebar-container, .show-sidebar-btn{
+		display: none;
+		}
+		.kazka-and-sidebar{
+			justify-content: center;
+		}
+		.kazka-itself{
+			max-width: 100%;
+		}
+		.individual-kazka-div{
+			margin-top: 0;
+			padding-top: 0;
+		}
+		.height-correction{
+			display: none;
+		}
+		.second-delimetr{
+			display: block;
+		}
+		.mobile-sidebar{
+			display: flex;
+		}
+	}
+	
+	
 </style>
