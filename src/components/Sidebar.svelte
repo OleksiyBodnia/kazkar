@@ -101,4 +101,19 @@
         padding: 5px 10px;
         cursor: pointer;
     }
+    @media screen and (max-width: 767px){
+        aside{
+            border: none;
+        }
+    }
+    @media screen and (min-width: 768px) and (max-width: 1023px){
+        aside{
+            width: 190px;
+        }
+        h4{
+            text-align: center;
+            width: 180px;
+            text-wrap: wrap;
+        }
+    }
 </style>

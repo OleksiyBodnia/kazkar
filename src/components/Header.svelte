@@ -32,22 +32,22 @@
 	</nav>
 	<div class="nav-div-desc" class:active={$isMenuOpen}>
 		<nav class="nav-mobile">
-			<a href="/chytaty" class="header-link" on:click={() => $isMenuOpen = !$isMenuOpen}>Читати</a>
-			<a href="/maisternia" class="header-link" on:click={() => $isMenuOpen = !$isMenuOpen}>Писати</a>
-			<a href="/rating" class="header-link" on:click={() => $isMenuOpen = !$isMenuOpen}>Рейтинг</a>
-			<button on:click={InfoDialogComponent.toggleInfoDialog} on:click={() => $isMenuOpen = !$isMenuOpen}>Що тут коїться?</button>
+			<a  href="/chytaty" class="header-link nav-mobile-item" on:click={() => $isMenuOpen = !$isMenuOpen}>Читати</a>
+			<a  href="/maisternia" class="header-link nav-mobile-item" on:click={() => $isMenuOpen = !$isMenuOpen}>Писати</a>
+			<a  href="/rating" class="header-link nav-mobile-item" on:click={() => $isMenuOpen = !$isMenuOpen}>Рейтинг</a>
+			<button class="nav-mobile-item" on:click={InfoDialogComponent.toggleInfoDialog} on:click={() => $isMenuOpen = !$isMenuOpen}>Що тут коїться?</button>
 			<!-- <button on:click={LoginDialogComponent.toggleLoginDialog}>Увійти</button> -->
 			{#if $page.data.session}
-				<a href="/profile" class="header-link" on:click={() => $isMenuOpen = !$isMenuOpen}>Профіль</a>
+				<a  href="/profile" class="header-link nav-mobile-item" on:click={() => $isMenuOpen = !$isMenuOpen}>Профіль</a>
 			{:else}
-				<button on:click={() => signIn()} on:click={() => $isMenuOpen = !$isMenuOpen}>Увійти</button>
+				<button class="nav-mobile-item" on:click={() => signIn()} on:click={() => $isMenuOpen = !$isMenuOpen}>Увійти</button>
 			{/if}
 
-			<svg on:click={() => $isMenuOpen = !$isMenuOpen} xmlns="http://www.w3.org/2000/svg" class="cross-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+			<!-- <svg  xmlns="http://www.w3.org/2000/svg"  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 				<line x1="18" y1="6" x2="6" y2="18"></line>
 				<line x1="6" y1="6" x2="18" y2="18"></line>
-			  </svg>
-			  
+			  </svg> -->
+			<p on:click={() => $isMenuOpen = !$isMenuOpen} class="cross-icon">x</p>
 		</nav>
 	</div>
 	<svg
@@ -67,6 +67,7 @@
 		<line x1="3" y1="6" x2="21" y2="6"></line>
 		<line x1="3" y1="18" x2="21" y2="18"></line>
 	</svg>
+	
 </header>
 
 <style>
@@ -110,6 +111,12 @@
 		-webkit-text-fill-color: transparent;
 	}
 	@media screen and (max-width: 767px) {
+		.nav-mobile-item{
+			font-size: x-large;
+			width: 250px;
+			text-align: center;
+			margin-left: 0;
+		}
 		.nav-desctop {
 			display: none;
 		}
@@ -141,8 +148,9 @@
 		}
 		.cross-icon{
 			position: absolute;
-			top: 20px;
-			left: 20px;
+			top: -10px;
+			left: 40px;
+			font-size: 2em;
 		}
 	}
 	@media screen and (min-width: 767px) {

@@ -13,7 +13,7 @@
 			<h1>Статистика сайту</h1>
 			<div class="site-stat-bars">
 				<div class="finished-bar">
-					<label for="" style="padding: 0 9px 0 9px">Завершених казок</label>
+					<label for="" >Завершених казок</label>
 					<div class="prog-finished-bar" style="width: {data.finished}px;"></div>
 					<label for="">{data.finished}</label>
 				</div>
@@ -243,5 +243,53 @@
 		align-items: center;
 		justify-content: center;
 		flex-direction: column;
+	}
+	@media screen and (max-width: 767px){
+		.rating-main-section{
+			flex-direction: column;
+		}
+		.finished-bar, .unfinished-bar{
+			width: 350px;
+			justify-content: center;
+		}
+		.rating-main-section{
+			gap: 40px;
+			margin-top: 4%;
+		}
+		.user-bar{
+			width: 350px;
+			justify-content: center;
+		}
+		p{
+			text-align: center;
+		}
+		.kazky-distribution{
+			gap: 20px;
+		}
+		span{
+			text-align: center;
+			width: 350px;
+		}
+	}
+	@media screen and (min-width:768px) and (max-width: 1023px){
+		.rating-main-section{
+			flex-direction: column;
+			margin-top: 5%;
+		}
+		.finished-bar, .unfinished-bar{
+			width: 500px;
+			justify-content: center;
+		}
+		.user-bar{
+			width: 500px;
+			justify-content: center;
+		}
+		h1{
+			width: 500px;
+		}
+		.rating-main-section{
+			gap: 60px;
+		}
+		
 	}
 </style>

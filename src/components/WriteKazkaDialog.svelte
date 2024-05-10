@@ -108,8 +108,8 @@
 			</div>
 		{:else if type === 'new'}
 			<div>
-				<input class="kazka-title" type="text" bind:value={title} placeholder="Назва казки" />
-				<textarea bind:value={new_rech} placeholder="перше речення..."></textarea>
+				<input class="kazka-title" type="text" bind:value={title} placeholder="Назва казки" maxlength="40"/>
+				<textarea bind:value={new_rech} placeholder="перше речення..." maxlength="1000"></textarea>
 				<button on:click={newKazka}>Розпочати казку</button>
 			</div>
 		{/if}
@@ -137,6 +137,7 @@
 		position: absolute;
 		display: flex;
 		left: 2em;
+		top: 20px;
 		align-items: left;
 		flex-direction: row;
 	}
@@ -174,10 +175,17 @@
 		font-weight: bold;
 		text-align: center;
 		margin-bottom: 25px;
+		width: 300px;
+	}
+	@media screen and (max-width: 767px){
+		.kazka-title{
+			width: 200px;
+		}
 	}
 
 	progress {
 		width: 96%;
+		
 	}
 
 	.rech-progress span {
@@ -190,5 +198,22 @@
 		flex-direction: row;
 		justify-content: center;
 		gap: 30px;
+	}
+	@media screen and (max-width: 767px){
+		div{
+			width: 240px;
+		}
+		button{
+			margin-top: 14px;
+		}
+		.kazka-controls{
+			flex-direction: column;
+			gap: 12px;
+		}
+	}
+	@media screen and (min-width: 768px) and (max-width: 1023px){
+		div{
+			width: 550px;
+		}
 	}
 </style>
