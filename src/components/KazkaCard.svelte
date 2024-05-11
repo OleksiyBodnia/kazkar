@@ -15,8 +15,8 @@
 			<div class="kazka-container">
 				<h4>{kazka.title}</h4>
 				{#each kazka.rechennia as rechennia}
-					{#if $page.data.session.user.id == rechennia.user_id}
-						<span style="color: var(--color-user);">{rechennia.content} </span>
+					{#if $page.data.session && $page.data.session.user.id == rechennia.user_id}
+						<span style="color: var(--color-accent);">{rechennia.content} </span>
 					{:else}
 						<span>{rechennia.content} </span>
 					{/if}

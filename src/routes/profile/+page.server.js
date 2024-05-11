@@ -4,12 +4,12 @@ import { getKazky, getUserStats } from '$lib/db';
 /** @type {import('./$types').PageServerLoad} */
 export const load = async (event) => {
 	const session = await event.locals.auth();
-	let user_kazky = await getKazky({ state: 'completed', user_id: session?.user.id });
-	const user_stats = await getUserStats(session?.user.id);
-	
-	if (!session?.user) {
+	if (!session) {
 		redirect(303, '/');
 	}
+	
+	let user_kazky = await getKazky({ state: 'completed', user_id: session?.user.id });
+	const user_stats = await getUserStats(session?.user.id);
 
 	return {
 		session,

@@ -16,6 +16,8 @@
 	let new_rech = '';
 	let report = '';
 	let finish = false;
+	let bad_rech_report = 'Ви не ввели речення. Ай ай ай!';
+	let bad_kazka_report = 'Ви не ввели назву казки або перше речення. Ай ай ай!';
 
 	export function toggleWrite() {
 		if ($page.data.session) {
@@ -26,7 +28,7 @@
 
 	async function addRechennia() {
 		if (new_rech === '') {
-			report = 'Ви не ввели речення. Ай ай ай!';
+			report = bad_rech_report;
 			return;
 		}
 		const response = await fetch('/api/kazka/add-rechennia', {
@@ -54,7 +56,7 @@
 
 	async function newKazka() {
 		if (title === '' || new_rech === '') {
-			report = 'Ви не ввели назву або перше речення. Ай ай ай!';
+			report = bad_kazka_report;
 			return;
 		}
 		const response = await fetch('/api/kazka/new-kazka', {
@@ -117,6 +119,9 @@
 		<div>
 			<!-- <h4>Дякуємо за участь!</h4> -->
 			<p>{report}</p>
+			{#if report === bad_rech_report || report === bad_kazka_report}
+				<button on:click={() => {report = ''}}>Дописати</button>
+			{/if}
 		</div>
 	{/if}
 </Modal>

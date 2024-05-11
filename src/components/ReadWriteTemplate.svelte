@@ -141,7 +141,7 @@
 	}
 
 	input:focus {
-		border-bottom: 2px solid black;
+		border-bottom: 1px solid var(--color-accent);
 	}
 	@media screen and (max-width: 767px){
 		.rigth-find-tools{

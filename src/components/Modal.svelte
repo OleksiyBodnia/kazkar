@@ -57,6 +57,10 @@
 		cursor: pointer;
 	}
 
+	.close-button:hover {
+		color: var(--color-accent);
+	}
+
 	/* поки не треба */
 	/* .close-button:hover {
 		color: red;
