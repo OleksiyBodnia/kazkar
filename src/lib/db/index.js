@@ -351,5 +351,14 @@ export async function getUserStats(user_id) {
 	}
 	stats.likes = likes;
 
+	const { count: rechennia, error: rechennia_error } = await supabase_public
+		.from('rechennia')
+		.select('*', { count: 'exact', head: true })
+		.eq('user_id', user_id);
+	if (rechennia_error) {
+		throw rechennia_error;
+	}
+	stats.rechennia = rechennia;
+	
 	return stats;
 }
