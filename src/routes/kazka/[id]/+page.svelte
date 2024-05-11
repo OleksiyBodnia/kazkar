@@ -40,7 +40,7 @@
 						<span
 							use:tooltip={{ placement: 'left', theme: 'light-border' }}
 							title={'автор речення: ' + data.users[i].name}
-							style="color: var(--color-user)"
+							style="color: var(--color-accent)"
 							>{rechennia.content + ' '}</span>
 					{:else}
 						<span
@@ -56,7 +56,7 @@
 						<span
 							use:tooltip={{ placement: 'top', theme: 'light-border' }}
 							title={'автор речення: ' + data.users[i].name}
-							style="color: var(--color-user)"
+							style="color: var(--color-accent)"
 							>{rechennia.content + ' '}</span>
 					{:else}
 						<span

@@ -70,7 +70,7 @@
     <p>Уподобайок: {data.stats.likes}</p>
     {#if $page.data.session}
         {#if data.stats.entry.like}
-            <p><button class="btn-liked" on:click={Like}>&hearts; лайк?</button></p>
+            <p><button class="button-is-clicked" on:click={Like}>&hearts; лайк?</button></p>
         {:else}
             <p><button on:click={Like}>&hearts; лайк?</button></p>
         {/if}
@@ -99,18 +99,19 @@
         text-align: center;
     }
 
-    .btn-liked {
-        background-color: var(--color-user);
+    /* .button-is-clicked {
+        background-color: var(--color-accent);
         color: white;
-        border-radius: 5px;
-        padding: 5px 10px;
+        border: 2px solid var(--color-accent);
         cursor: pointer;
-    }
+    } */
+
     @media screen and (max-width: 767px){
         aside{
             border: none;
         }
     }
+
     @media screen and (min-width: 768px) and (max-width: 1023px){
         aside{
             width: 190px;

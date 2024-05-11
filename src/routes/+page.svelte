@@ -4,7 +4,9 @@
 	import KazkaCard from '../components/KazkaCard.svelte';
 	import { fly } from 'svelte/transition';
 	import { onMount } from 'svelte';
+
 	let content_visible = false;
+
 	onMount(() => {
 		content_visible = true;
 	});
@@ -45,10 +47,6 @@
 		text-align: center;
 	}
 
-	.write-encourage button {
-		font-size: 1.5em;
-	}
-
 	.read-finished {
 		margin-top: 40px;
 		display: flex;
@@ -59,10 +57,6 @@
 
 	.finished-samples {
 		width: 80%;
-		/* display: grid;
-        grid-template-columns: auto auto;
-        /* grid-gap: 20px; */
-
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -77,18 +71,19 @@
 	}
 
 	.main-page-link {
-		background-color: white;
+		background-color: var(--color-white);
+		color: var(--color-black);
 		text-align: center;
-		border: 2px solid;
+		border: 2px solid black;
 		border-radius: 8px;
 		cursor: pointer;
 		padding: 2px 8px;
 	}
 
 	.main-page-link:hover {
-		background-image: linear-gradient(120deg, #78009d 34%, #0087bc 100%);
-		background-clip: text;
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
+		background-color: var(--color-accent);
+		color: white;
+		border: 2px solid var(--color-accent);
+		cursor: pointer;
 	}
 </style>
