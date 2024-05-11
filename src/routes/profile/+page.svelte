@@ -42,11 +42,11 @@
 	</div>
 
 	{#if active_item === items[0]}
-		<div in:fade={{ x: -200, duration: 700 }} class="myaccount-tab">
+		<div in:fade={{ duration: 1000 }} class="myaccount-tab">
 			<MyAccount {data} />
 		</div>
 	{:else if active_item === items[1]}
-		<div in:fade={{ x: 200, duration: 700 }} class="myaccount-tab">
+		<div in:fade={{ duration: 1000 }} class="myaccount-tab">
 			<MyKazky kazky={data.user_kazky}/>
 		</div>
 		<!-- {:else if active_item === items[1] && previous_item === items[2]}
@@ -54,7 +54,7 @@
 			<MyKazky />
 		</div> -->
 	{:else if active_item === items[2]}
-		<div in:fade={{ x: 200, duration: 700 }} class="myaccount-tab">
+		<div in:fade={{ duration: 1000 }} class="myaccount-tab">
 			<MyAchievements kazky={data.user_kazky}/>
 		</div>
 	{/if}

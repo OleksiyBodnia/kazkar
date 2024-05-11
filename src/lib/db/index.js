@@ -242,7 +242,7 @@ export async function getTopUsers(amount = 10, top = true) {
 // { 1: 10, 2: 20, 3: 30, 4: 40, 5: 50 }
 // де ключ - кількість речень, значення - кількість казок з такою кількістю речень
 export async function getKazkyDistribution() {
-	const { data: kazky, error } = await supabase_public.from('kazky').select('*');
+	const { data: kazky, error } = await supabase_public.from('kazky').select('*').eq('is_completed', true);
 	if (error) {
 		throw error;
 	}

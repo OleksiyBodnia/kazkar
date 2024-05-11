@@ -270,6 +270,9 @@
 			text-align: center;
 			width: 350px;
 		}
+		h1 {
+			width: 350px;
+		}
 	}
 	@media screen and (min-width:768px) and (max-width: 1023px){
 		.rating-main-section{
