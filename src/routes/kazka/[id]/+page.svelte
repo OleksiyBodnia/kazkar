@@ -36,6 +36,7 @@
 			<h2 style="text-align: center;">{data.kazka.title}</h2>
 			<p>
 				{#each data.kazka.rechennia as rechennia, i}
+				{#if $page.data.session}
 					{#if $page.data.session.user.id == rechennia.user_id}
 						<span
 							use:tooltip={{ placement: 'left', theme: 'light-border' }}
@@ -50,6 +51,12 @@
 							>{rechennia.content + ' '}</span
 						>
 					{/if}
+				{:else}
+					<span
+						use:tooltip={{ placement: 'left', theme: 'light-border' }}
+						title={'автор речення: ' + data.users[i].name}
+						>{rechennia.content + ' '}</span>
+				{/if}
 					<!-- <span
 						use:tooltip={{ placement: 'left', theme: 'light-border' }}
 						title={'автор речення: ' + data.users[i].name}>{rechennia.content + ' '}</span

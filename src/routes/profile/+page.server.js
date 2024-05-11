@@ -4,8 +4,7 @@ import { getKazky, getUserStats } from '$lib/db';
 /** @type {import('./$types').PageServerLoad} */
 export const load = async (event) => {
 	const session = await event.locals.auth();
-	if (!session?.user) {
-		console.log('no session');
+	if (!session) {
 		redirect(303, '/');
 	}
 	
