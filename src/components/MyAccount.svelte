@@ -30,27 +30,26 @@
   const setTheme = (theme) => {
     selectedTheme = theme;
     document.documentElement.style.setProperty('--color-black', theme);
-    // В этом месте вы можете добавить логику для сохранения выбранной темы, например, в локальное хранилище.
+	// В цьому місці ви можете додати логіку для збереження обраної теми, наприклад, у локальне сховище.
   };
 
 </script>
 
 <div class="myaccount-tab">
 	<p>Пошта: <b>{userEmail}</b></p>
-	<p>Кількість казок, у яких брав участь: <b>{data.user_kazky.length}</b></p>
-	<p>Всього написано речень: <b>{data.user_kazky.reduce((total, kazka) => total + kazka.rechennia.length, 0)}</b></p>
+	<p>Завершених казок, у яких брав участь: <b>{data.user_kazky.length}</b></p>
+	<p>Всього написано речень: <b>{data.user_stats.rechennia}</b></p>
 	<p>Прочитаних казок: <b>{data.user_stats.views}</b></p>
 	<p>Та доданих уподобайок: <b>{data.user_stats.likes}</b></p>
-
 	 
-		<div class="theme-div">
-			<p>Акцентний колір: </p>
-			<div class="theme-btn defaul {selectedTheme === 'dark-red' ? 'selected' : ''}" on:click={() => setTheme('dark-red')}></div>
-			<div class="theme-btn blue-theme {selectedTheme === 'blue' ? 'selected' : ''}" on:click={() => setTheme('blue')}></div>
-			<div class="theme-btn green-theme {selectedTheme === 'green' ? 'selected' : ''}" on:click={() => setTheme('green')}></div>
-			<div class="theme-btn purple-theme {selectedTheme === 'purple' ? 'selected' : ''}" on:click={() => setTheme('purple')}></div>
+	<div class="theme-div">
+		<span>Акцентний колір:</span>
+		<div class="theme-btn defaul {selectedTheme === 'dark-red' ? 'selected' : ''}" on:click={() => setTheme('dark-red')}></div>
+		<div class="theme-btn blue-theme {selectedTheme === 'blue' ? 'selected' : ''}" on:click={() => setTheme('blue')}></div>
+		<div class="theme-btn green-theme {selectedTheme === 'green' ? 'selected' : ''}" on:click={() => setTheme('green')}></div>
+		<div class="theme-btn purple-theme {selectedTheme === 'purple' ? 'selected' : ''}" on:click={() => setTheme('purple')}></div>
 
-		</div>
+	</div>
 	
 	<p>
 		<button on:click={() => { changeName(); }}>Змінити ім'я</button>
@@ -68,16 +67,26 @@
 		padding-left: 5px;
 		padding-right: 5px;
 	}
+	.theme-div{
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 5px;
+	}
 	.theme-btn {
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.3);
-    transition: width 0.3s ease, height 0.3s ease; /* Добавляем плавную анимацию изменения размера */
-  }
-  .selected {
-  transform: scale(1.2); /* Увеличиваем размер кнопки в 1.5 раза */
-}
+		width: 18px;
+		height: 18px;
+		border-radius: 50%;
+		box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.3);
+		transition: width 0.3s ease, height 0.3s ease;
+	}
+	.theme-btn:hover {
+
+		cursor: pointer;
+	}
+	.selected {
+		transform: scale(1.2);
+	}
 	.defaul{
 		background-color: black;
 	}
@@ -90,12 +99,7 @@
 	.purple-theme{
 		background-color: #6f42c1;
 	}
-	.theme-div{
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: 5px;
-	}
+	
   .blue {
     --color-black: #007bff; 
   }

@@ -97,3 +97,58 @@ export async function isKazkaTaken(kazka, taking_window = 180) {
 	const diff_seconds = diff / 1000;
 	return diff_seconds < taking_window;
 }
+
+// Увага! Цю функцію писaв ChatGPT, тому за її роботу відповідає він
+export function transformDistribution(distribution) {
+	const numRanges = 8;
+
+	// Sort the distribution keys in ascending order
+	const sortedKeys = Object.keys(distribution).sort((a, b) => a - b);
+
+	// Calculate the range width based on the number of keys and desired number of ranges
+	const rangeWidth = Math.ceil(sortedKeys.length / numRanges);
+
+	const transformedDistribution = {};
+
+	let lowerBoundIndex = 0;
+	let upperBoundIndex = 0;
+
+	for (let i = 0; i < numRanges; i++) {
+		// Calculate the upper bound index for the current range
+		upperBoundIndex = Math.min(lowerBoundIndex + rangeWidth - 1, sortedKeys.length - 1);
+
+		// Determine the lower and upper bounds for the current range
+		let lowerBound = parseInt(sortedKeys[lowerBoundIndex]);
+		let upperBound = parseInt(sortedKeys[upperBoundIndex]);
+
+		// If lower bound is NaN or upper bound is NaN, skip this range
+		if (isNaN(lowerBound) || isNaN(upperBound)) {
+			break;
+		}
+
+		// Rename the range if lower and upper bounds are equal
+		const rangeKey = lowerBound === upperBound ? `${lowerBound}` : `${lowerBound}-${upperBound}`;
+
+		let sum = 0;
+
+		// Sum up the values in the current range
+		for (let j = lowerBound; j <= upperBound; j++) {
+			if (distribution[j]) {
+				sum += distribution[j];
+			}
+		}
+
+		// Assign the sum to the range key
+		transformedDistribution[rangeKey] = sum;
+
+		// Update the lower bound index for the next range
+		lowerBoundIndex = upperBoundIndex + 1;
+	}
+
+	return transformedDistribution;
+}
+
+export function findLargestAttribute(obj) {
+	const largestKey = Object.keys(obj).reduce((a, b) => obj[a] > obj[b] ? a : b);
+	return obj[largestKey];
+}

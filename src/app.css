@@ -17,7 +17,7 @@
 	--color-blue: #0087bc;
 	--color-default-text: black;
 
-	--color-user: #27a8e4;
+	--color-accent: #27a8e4;
 }
 
 body {
@@ -44,22 +44,24 @@ a {
 	-webkit-text-fill-color: transparent;
 } */
 
-/* просто посилання і посиллання кнопка мусять мати різне оформлення */
+/* просто посилання і посиллання кнопка мусять мати різне оформлення ? */
 
-button {
+button{
 	background-color: var(--color-white);
+	color: var(--color-black);
 	text-align: center;
-	border: 2px solid;
+	border: 2px solid black;
 	border-radius: 8px;
 	cursor: pointer;
 	padding: 2px 8px;
 }
 
-button:hover {
-	background-image: linear-gradient(120deg, var(--color-purple) 34%, var(--color-blue) 100%);
-	background-clip: text;
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
+button:hover,
+.button-is-clicked {
+	background-color: var(--color-accent);
+	color: white;
+	border: 2px solid var(--color-accent);
+	cursor: pointer;
 }
 
 select {
@@ -72,8 +74,13 @@ select {
 }
 
 select:hover {
-	background-image: linear-gradient(120deg, var(--color-purple) 34%, var(--color-blue) 100%);
-	background-clip: text;
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
+	background-color: var(--color-accent);
+	color: white;
+	border: 2px solid var(--color-accent);
+	cursor: pointer;
+}
+
+select>option {
+	background-color: var(--color-white);
+	color: var(--color-black);
 }

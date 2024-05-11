@@ -35,8 +35,7 @@
 			<a  href="/chytaty" class="header-link nav-mobile-item" on:click={() => $isMenuOpen = !$isMenuOpen}>Читати</a>
 			<a  href="/maisternia" class="header-link nav-mobile-item" on:click={() => $isMenuOpen = !$isMenuOpen}>Писати</a>
 			<a  href="/rating" class="header-link nav-mobile-item" on:click={() => $isMenuOpen = !$isMenuOpen}>Рейтинг</a>
-			<button class="nav-mobile-item" on:click={InfoDialogComponent.toggleInfoDialog} on:click={() => $isMenuOpen = !$isMenuOpen}>Що тут коїться?</button>
-			<!-- <button on:click={LoginDialogComponent.toggleLoginDialog}>Увійти</button> -->
+			<button class="header-btn nav-mobile-item" on:click={InfoDialogComponent.toggleInfoDialog} on:click={() => $isMenuOpen = !$isMenuOpen}>Що тут коїться?</button>
 			{#if $page.data.session}
 				<a  href="/profile" class="header-link nav-mobile-item" on:click={() => $isMenuOpen = !$isMenuOpen}>Профіль</a>
 			{:else}
@@ -103,13 +102,18 @@
 		font: inherit;
 		outline: inherit;
 	}
+	nav button:hover {
+		background-color: white;
+		color: var(--color-accent);
+	}
+
+	.title:hover,
 	.header-link:hover,
 	.header-link:focus {
-		background-image: linear-gradient(120deg, #78009d 34%, #0087bc 100%);
-		background-clip: text;
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
+		background-color: white;
+		color: var(--color-accent);
 	}
+
 	@media screen and (max-width: 767px) {
 		.nav-mobile-item{
 			font-size: x-large;

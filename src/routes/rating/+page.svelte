@@ -1,10 +1,19 @@
 <script>
 	/** @type {import('./$types').PageData} */
-	export let data;
-
 	import { fade } from 'svelte/transition';
+	import { findLargestAttribute, transformDistribution } from '$lib/utils';
+
+	export let data;
+	data.distribution = transformDistribution(data.distribution);
 
 	let top_users = true;
+
+	let bars_scale = 120;
+	let fin_bar_multiplier = bars_scale / ( (data.finished > data.unfinished) ? data.finished : data.unfinished );
+	let top_bar_multiplier = bars_scale / (data.best_users[0].rech_count);
+	// let worst_bar_multiplier = bars_scale / (data.worst_users[4].rech_count);
+	let distrb_bar_multiplier = bars_scale / findLargestAttribute(data.distribution);
+
 </script>
 
 <div>
@@ -14,12 +23,12 @@
 			<div class="site-stat-bars">
 				<div class="finished-bar">
 					<label for="" >Завершених казок</label>
-					<div class="prog-finished-bar" style="width: {data.finished}px;"></div>
+					<div class="prog-finished-bar" style="width: {data.finished * fin_bar_multiplier}px;"></div>
 					<label for="">{data.finished}</label>
 				</div>
 				<div class="unfinished-bar">
 					<label for="">Незавершених казок</label>
-					<div class="prog-unfinished-bar" style="width: {data.unfinished}px;"></div>
+					<div class="prog-unfinished-bar" style="width: {data.unfinished * fin_bar_multiplier}px;"></div>
 					<label for="">{data.unfinished}</label>
 				</div>
 			</div>
@@ -53,7 +62,7 @@
 						{#each data.best_users as user}
 							<div class="user-bar">
 								<label for="">{user.name}</label>
-								<div class="user-prog-bar" style="width: {user.rech_count}px;"></div>
+								<div class="user-prog-bar" style="width: {user.rech_count * top_bar_multiplier}px;"></div>
 								<label for="">{user.rech_count}</label>
 							</div>
 						{/each}
@@ -61,7 +70,7 @@
 				</div>
 			{:else if top_users == false}
 				<div class="top-transitions" in:fade={{ delay: 100, duration: 1000 }}>
-					<p>Найменш активний казкар за кількістю написаних речень</p>
+					<p>Найменш активний казкар за кількістю написаних речень &#128542</p>
 					<div class="best-kazkar">
 						<img src={data.worst_users[0].image} alt="kazkar" class="best-kazkar-img" />
 						<p>{data.worst_users[0].name}</p>
@@ -70,7 +79,7 @@
 						{#each data.worst_users as user}
 							<div class="user-bar">
 								<label for="">{user.name}</label>
-								<div class="user-prog-bar" style="width: {user.rech_count}px;"></div>
+								<div class="user-prog-bar" style="width: {user.rech_count * top_bar_multiplier}px;"></div>
 								<label for="">{user.rech_count}</label>
 							</div>
 						{/each}
@@ -86,7 +95,7 @@
 				{#each Object.entries(data.distribution) as [key, value]}
 					<div class="kazka-distribution-bar">
 						<label for="" style="font-weight: 100;">{value}</label>
-						<div class="distribution-bar" style="width: 20px; height: {value * 30}px;"><br /></div>
+						<div class="distribution-bar" style="width: 20px; height: {value * distrb_bar_multiplier}px;"><br /></div>
 						<label for="">{key}</label>
 					</div>
 				{/each}
@@ -110,6 +119,10 @@
 		text-align: center;
 	}
 
+	p{
+		text-align: center;
+	}
+
 	.site-statistics {
 		width: 25%;
 		display: flex;
@@ -125,8 +138,7 @@
 	.site-stat-bars {
 		display: flex;
 		flex-direction: column;
-		align-items: start;
-		justify-content: start;
+		align-items: center;
 		gap: 20px;
 	}
 
@@ -225,17 +237,16 @@
 		all: unset;
 		font-size: 18px;
 		cursor: pointer;
-		border-bottom: grey 2px solid;
-		background-image: linear-gradient(120deg, #78009d 34%, #0087bc 100%);
-		background-clip: text;
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
+		border-bottom: var(--color-accent) 2px solid;
+		color: var(--color-accent);
 	}
 	.top-switch-unactive {
 		all: unset;
 		font-size: 18px;
 		cursor: pointer;
-		/* border-bottom: grey 2px solid; */
+	}
+	.top-switch-unactive:hover {
+		color: var(--color-accent);
 	}
 
 	.top-transitions {
@@ -260,14 +271,14 @@
 			width: 350px;
 			justify-content: center;
 		}
-		p{
-			text-align: center;
-		}
 		.kazky-distribution{
 			gap: 20px;
 		}
 		span{
 			text-align: center;
+			width: 350px;
+		}
+		h1 {
 			width: 350px;
 		}
 	}
