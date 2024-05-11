@@ -34,7 +34,7 @@
 	<div class="kazka-and-sidebar">
 		<article class="kazka-itself" style="margin-right: {$sp_width}%;">
 			<h2 style="text-align: center;">{data.kazka.title}</h2>
-			<p>
+			<p class="tippy-pc">
 				{#each data.kazka.rechennia as rechennia, i}
 					{#if $page.data.session && $page.data.session.user.id == rechennia.user_id}
 						<span
@@ -48,10 +48,22 @@
 							title={'автор речення: ' + data.users[i].name}
 							>{rechennia.content + ' '}</span>
 					{/if}
-					<!-- <span
-						use:tooltip={{ placement: 'left', theme: 'light-border' }}
-						title={'автор речення: ' + data.users[i].name}>{rechennia.content + ' '}</span
-					> -->
+				{/each}
+			</p>
+			<p class="tippy-mobile">
+				{#each data.kazka.rechennia as rechennia, i}
+					{#if $page.data.session && $page.data.session.user.id == rechennia.user_id}
+						<span
+							use:tooltip={{ placement: 'top', theme: 'light-border' }}
+							title={'автор речення: ' + data.users[i].name}
+							style="color: var(--color-user)"
+							>{rechennia.content + ' '}</span>
+					{:else}
+						<span
+							use:tooltip={{ placement: 'top', theme: 'light-border' }}
+							title={'автор речення: ' + data.users[i].name}
+							>{rechennia.content + ' '}</span>
+					{/if}
 				{/each}
 			</p>
 		</article>
@@ -191,6 +203,9 @@
 	.mobile-sidebar{
 		display: none;
 	}
+	.tippy-mobile{
+		display: none;
+	}
 	@media screen and (max-width: 767px){
 		.sidebar-container, .show-sidebar-btn{
 		display: none;
@@ -213,6 +228,12 @@
 		}
 		.mobile-sidebar{
 			display: flex;
+		}
+		.tippy-pc{
+			display: none;
+		}
+		.tippy-mobile{
+			display: block;
 		}
 	}
 	
