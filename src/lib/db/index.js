@@ -242,7 +242,10 @@ export async function getTopUsers(amount = 10, top = true) {
 // { 1: 10, 2: 20, 3: 30, 4: 40, 5: 50 }
 // де ключ - кількість речень, значення - кількість казок з такою кількістю речень
 export async function getKazkyDistribution() {
-	const { data: kazky, error } = await supabase_public.from('kazky').select('*').eq('is_completed', true);
+	const { data: kazky, error } = await supabase_public
+		.from('kazky')
+		.select('*')
+		.eq('is_completed', true);
 	if (error) {
 		throw error;
 	}
@@ -302,14 +305,17 @@ export async function getKazkaStats(kazka_id, user_id = null) {
 		}
 		stats.entry = entry[0];
 	}
-	
+
 	return stats;
 }
 
 export async function addView(user_id, kazka_id) {
 	const { data: view, error } = await supabase_public
 		.from('views_likes')
-		.upsert({ user_id: user_id, kazka_id: kazka_id, view: true }, { onConflict: 'user_id, kazka_id' })
+		.upsert(
+			{ user_id: user_id, kazka_id: kazka_id, view: true },
+			{ onConflict: 'user_id, kazka_id' }
+		)
 		.select();
 	if (error) {
 		throw error;
@@ -317,7 +323,6 @@ export async function addView(user_id, kazka_id) {
 }
 
 export async function Like(user_id, kazka_id, like) {
-
 	const { error } = await supabase_public
 		.from('views_likes')
 		.update({ like: like })
@@ -359,6 +364,6 @@ export async function getUserStats(user_id) {
 		throw rechennia_error;
 	}
 	stats.rechennia = rechennia;
-	
+
 	return stats;
 }

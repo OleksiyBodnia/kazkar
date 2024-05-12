@@ -3,8 +3,6 @@
 	export let data;
 	import KazkaCard from '../../components/KazkaCard.svelte';
 	import ReadWriteTemplate from '../../components/ReadWriteTemplate.svelte';
-
-	let rnd_kazka = Math.floor(Math.random() * data.kazky.length);
 </script>
 
 <ReadWriteTemplate
@@ -14,7 +12,7 @@
 	{data}
 	let:kazka
 >
-	<a slot="rnd-kazka-btn" href="/kazka/{data.kazky[rnd_kazka]?.id || 1}">
+	<a slot="rnd-kazka-btn" href="/kazka/{data.random_kazka.id}">
 		<button>Випадкова казка</button>
 	</a>
 

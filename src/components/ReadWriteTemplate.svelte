@@ -1,5 +1,4 @@
 <script>
-	//import { getRandomKazka } from '$lib/db/';
 	import { scale } from 'svelte/transition';
 	import { onMount } from 'svelte';
 
@@ -69,7 +68,9 @@
 			</label>
 		</div>
 		<div class="left-find-tools">
-			<slot name="rnd-kazka-btn" />
+			{#if data.random_kazka}
+				<slot name="rnd-kazka-btn" />
+			{/if}
 			<slot name="new-kazka-btn" />
 		</div>
 	</div>
@@ -143,43 +144,43 @@
 	input:focus {
 		border-bottom: 1px solid var(--color-accent);
 	}
-	@media screen and (max-width: 767px){
-		.rigth-find-tools{
+	@media screen and (max-width: 767px) {
+		.rigth-find-tools {
 			flex-direction: column;
 			gap: 15px;
 			align-items: start;
 			margin-right: 50px;
 		}
-		.find-tools{
+		.find-tools {
 			padding: 0;
 		}
-		.finished-samples{
+		.finished-samples {
 			margin: 0;
 		}
-		.left-find-tools{
+		.left-find-tools {
 			flex-direction: column;
 			gap: 15px;
 			align-items: end;
 		}
-		input{
+		input {
 			width: 150px;
 		}
-		.page-div{
+		.page-div {
 			padding: 0;
 		}
 	}
-	@media screen and (min-width: 768px) and (max-width:1023px){
-		.rigth-find-tools{
+	@media screen and (min-width: 768px) and (max-width: 1023px) {
+		.rigth-find-tools {
 			flex-direction: column;
 			gap: 15px;
 			align-items: start;
 		}
-		.left-find-tools{
+		.left-find-tools {
 			flex-direction: column;
 			gap: 15px;
 			align-items: end;
 		}
-		input{
+		input {
 			width: 150px;
 		}
 	}

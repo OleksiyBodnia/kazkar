@@ -4,7 +4,6 @@
 	import { page } from '$app/stores';
 	import { lastRechennia } from '$lib/utils';
 	import Timer from './Timer.svelte';
-	import { fade } from 'svelte/transition';
 
 	let ModalComponent;
 	let AlertDialogComponent;
@@ -92,6 +91,7 @@
 				</div>
 				<h4>{kazka.title}</h4>
 				<p>{lastRechennia(kazka.rechennia).content}</p>
+				<!-- svelte-ignore a11y-autofocus -->
 				<textarea bind:value={new_rech} placeholder="продовження..." autofocus></textarea>
 				<div class="rech-progress">
 					<progress max="10" value={kazka.rechennia.length}></progress>
@@ -110,7 +110,13 @@
 			</div>
 		{:else if type === 'new'}
 			<div>
-				<input class="kazka-title" type="text" bind:value={title} placeholder="Назва казки" maxlength="40"/>
+				<input
+					class="kazka-title"
+					type="text"
+					bind:value={title}
+					placeholder="Назва казки"
+					maxlength="40"
+				/>
 				<textarea bind:value={new_rech} placeholder="перше речення..." maxlength="1000"></textarea>
 				<button on:click={newKazka}>Розпочати казку</button>
 			</div>
@@ -120,7 +126,11 @@
 			<!-- <h4>Дякуємо за участь!</h4> -->
 			<p>{report}</p>
 			{#if report === bad_rech_report || report === bad_kazka_report}
-				<button on:click={() => {report = ''}}>Дописати</button>
+				<button
+					on:click={() => {
+						report = '';
+					}}>Дописати</button
+				>
 			{/if}
 		</div>
 	{/if}
@@ -182,15 +192,14 @@
 		margin-bottom: 25px;
 		width: 300px;
 	}
-	@media screen and (max-width: 767px){
-		.kazka-title{
+	@media screen and (max-width: 767px) {
+		.kazka-title {
 			width: 200px;
 		}
 	}
 
 	progress {
 		width: 96%;
-		
 	}
 
 	.rech-progress span {
@@ -204,20 +213,20 @@
 		justify-content: center;
 		gap: 30px;
 	}
-	@media screen and (max-width: 767px){
-		div{
+	@media screen and (max-width: 767px) {
+		div {
 			width: 240px;
 		}
-		button{
+		button {
 			margin-top: 14px;
 		}
-		.kazka-controls{
+		.kazka-controls {
 			flex-direction: column;
 			gap: 12px;
 		}
 	}
-	@media screen and (min-width: 768px) and (max-width: 1023px){
-		div{
+	@media screen and (min-width: 768px) and (max-width: 1023px) {
+		div {
 			width: 550px;
 		}
 	}
