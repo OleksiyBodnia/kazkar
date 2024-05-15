@@ -166,7 +166,7 @@ export function findLargestAttribute(obj) {
 	return obj[largestKey];
 }
 
-function correctSentence(sentence) {
+export function correctSentence(sentence) {
 	// Upper Case for 1st letter
 	if (sentence.charAt(0) !== sentence.charAt(0).toUpperCase()) {
 		sentence = sentence.charAt(0).toUpperCase() + sentence.slice(1);
