@@ -4,6 +4,7 @@
 	import { page } from '$app/stores';
 	import { lastRechennia, releaseKazka } from '$lib/utils';
 	import Timer from './Timer.svelte';
+	import { correctSentence, validateSentence } from '$lib/utils';
 
 	let ModalComponent;
 	let AlertDialogComponent;
@@ -33,10 +34,14 @@
 	}
 
 	async function addRechennia() {
+
 		if (new_rech === '') {
 			report = bad_rech_report;
 			return;
 		}
+
+		if ()
+
 		const response = await fetch('/api/kazka/add-rechennia', {
 			method: 'POST',
 			headers: {
