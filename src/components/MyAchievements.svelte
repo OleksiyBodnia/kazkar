@@ -16,22 +16,27 @@
         {#if kazky.length >= 0}
             <div class="achiev-unit">
                 <div class="achiev-icon"></div>
-                <img src="static/img/five.png"/>
+                <img src="/img/K_five.png"/>
                 <p>{achievements[0]}</p>
             </div>
         {/if}
         {#if kazky.length > 9}
             <div class="achiev-unit">
                 <div class="achiev-icon"></div>
+                <img src="/img/K_ten.png"/>
                 <p>{achievements[1]}</p>
             </div>
         {/if}
         {#if kazky.length > 99}
             <div class="achiev-unit">
                 <div class="achiev-icon"></div>
+                     <img src="/img/K_hundred.png"/>
                 <p>{achievements[2]}</p>
             </div>
         {/if}
+        <img src="/img/gL_five.png"/>
+        <img src="/img/gL_ten.png"/>
+        <img src="/img/gK_hundred.png"/>
     </div>
     
 </div>
