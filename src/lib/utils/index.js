@@ -190,7 +190,7 @@ export function validateSentence(sentence) {
 	}
 
 	// check somethink like "_?!!₽?(")"
-	if (/^[^\w\s]*$/.test(sentence)) {
+	if (/^[^\w\s-]*$/.test(sentence)) {
 		return false;
 	}
 
