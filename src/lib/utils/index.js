@@ -166,6 +166,20 @@ export function findLargestAttribute(obj) {
 	return obj[largestKey];
 }
 
+function validateSentence(sentence) {
+	//empty string
+	if (!sentence.trim()) {
+		return false;
+	}
+
+	// check somethink like "_?!!₽?(")"
+	if (/^[^\w\s]*$/.test(sentence)) {
+		return false;
+	}
+
+	return true;
+}
+
 export function correctSentence(sentence) {
 	// Upper Case for 1st letter
 	if (sentence.charAt(0) !== sentence.charAt(0).toUpperCase()) {
