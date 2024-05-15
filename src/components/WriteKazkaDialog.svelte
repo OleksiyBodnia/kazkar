@@ -2,7 +2,7 @@
 	import Modal from './Modal.svelte';
 	import AlertDialog from './AlertDialog.svelte';
 	import { page } from '$app/stores';
-	import { lastRechennia, releaseKazka, isKazkaTaken } from '$lib/utils';
+	import { lastRechennia, releaseKazka } from '$lib/utils';
 	import Timer from './Timer.svelte';
 
 	let ModalComponent;

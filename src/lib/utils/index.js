@@ -85,11 +85,24 @@ export async function takeKazka(kazka) {
 	});
 }
 
-export async function isKazkaTaken(kazka, taking_window = 180) {
+export async function isKazkaTaken(kazka_id, taking_window = 180) {
+	const responce = await fetch('/api/kazka/is-kazka-taken', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({
+			kazka_id: kazka_id
+		})
+	});
+	
+	const { kazka } = await responce.json();
+
 	// if kazka.taken_at is null, it is considered not taken
-	if (!kazka.taken_at) {
+	if (kazka.taken_at === null) {
 		return false;
 	}
+
 	// if kazka.taken_at is less than 'taking_window' seconds ago, it is considered taken
 	const now = new Date();
 	const taken_at = new Date(kazka.taken_at);

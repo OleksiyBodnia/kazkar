@@ -1,12 +1,23 @@
 <script>
-	import { truncateText, lastRechennia, takeKazka } from '$lib/utils';
+	import { lastRechennia, isKazkaTaken, takeKazka } from '$lib/utils';
 	import WriteKazkaDialog from './WriteKazkaDialog.svelte';
 	import { page } from '$app/stores';
+	import Modal from './Modal.svelte';
 
 	export let kazka;
 	export let state;
 
 	let WriteDialogComponent;
+	let IsTakenModal;
+
+	async function tryWriteKazka() {
+		if (await isKazkaTaken(kazka.id)) {
+			IsTakenModal.toggle();
+		} else {
+			takeKazka(kazka);
+			WriteDialogComponent.toggleWrite()
+		}
+	}
 </script>
 
 {#if state == 'completed'}
@@ -26,7 +37,7 @@
 		</a>
 	</article>
 {:else if state == 'incompleted'}
-	<button class="custom-btn" on:click={() => {takeKazka(kazka); WriteDialogComponent.toggleWrite()}}>
+	<button class="custom-btn" on:click={tryWriteKazka}>
 		<article class="incomp-article">
 			<div class="rech-conteiner">
 				<h4>{kazka.title}</h4>
@@ -36,6 +47,11 @@
 		</article>
 	</button>
 	<WriteKazkaDialog bind:this={WriteDialogComponent} type={'present'} {kazka} />
+	<Modal bind:this={IsTakenModal}>
+		<div class="kazka-taken-alert">
+			<p>Упс, хтось вже пише цю казку...</p>
+		</div>
+	</Modal>
 {/if}
 
 <style>
