@@ -165,3 +165,18 @@ export function findLargestAttribute(obj) {
 	const largestKey = Object.keys(obj).reduce((a, b) => obj[a] > obj[b] ? a : b);
 	return obj[largestKey];
 }
+
+function correctSentence(sentence) {
+	// Upper Case for 1st letter
+	if (sentence.charAt(0) !== sentence.charAt(0).toUpperCase()) {
+		sentence = sentence.charAt(0).toUpperCase() + sentence.slice(1);
+	}
+
+	//check last symbol
+	const lastChar = sentence.charAt(sentence.length - 1);
+	if (!".!?".includes(lastChar)) {
+		sentence += '.';
+	}
+
+	return sentence;
+}
