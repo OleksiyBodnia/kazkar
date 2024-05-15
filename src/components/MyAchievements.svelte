@@ -13,9 +13,10 @@
                 <p>{achiev}</p>
             </div>
         {/each}  -->
-        {#if kazky.length > 0}
+        {#if kazky.length >= 0}
             <div class="achiev-unit">
                 <div class="achiev-icon"></div>
+                <img src="static/img/five.png"/>
                 <p>{achievements[0]}</p>
             </div>
         {/if}
