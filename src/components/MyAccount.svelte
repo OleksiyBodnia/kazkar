@@ -38,7 +38,7 @@
 <div class="myaccount-tab">
 	<p>Пошта: <b>{userEmail}</b></p>
 	<p>Завершених казок, у яких брав участь: <b>{data.user_kazky.length}</b></p>
-	<p>Всього написано речень: <b>{data.user_stats.rechennia}</b></p>
+	<p>Всього написаних речень: <b>{data.user_stats.rechennia}</b></p>
 	<p>Прочитаних казок: <b>{data.user_stats.views}</b></p>
 	<p>Та доданих уподобайок: <b>{data.user_stats.likes}</b></p>
 	 
