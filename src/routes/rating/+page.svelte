@@ -89,7 +89,7 @@
 		</div>
 
 		<div class="kazky-distribution-with-title">
-			<h1>Розподіл казок</h1>
+			<h1>Розподіл завершених казок</h1>
 			<span style="position: relative;">кількість казок</span>
 			<div class="kazky-distribution">
 				{#each Object.entries(data.distribution) as [key, value]}
@@ -152,12 +152,12 @@
 	}
 	.prog-finished-bar {
 		/* width: 176px; */
-		background-color: bisque;
+		background-color: var(--color-bar);
 		border-radius: 5px;
 	}
 	.prog-unfinished-bar {
 		/* width: 326px; */
-		background-color: rgb(180, 78, 78);
+		background-color: var(--color-bar);
 		border-radius: 5px;
 	}
 
@@ -187,7 +187,7 @@
 	}
 
 	.distribution-bar {
-		background-color: rgb(149, 222, 207);
+		background-color: var(--color-bar);
 		border-radius: 5px;
 	}
 
@@ -224,7 +224,7 @@
 	}
 	.user-prog-bar {
 		border-radius: 5px;
-		background-color: rgb(149, 222, 207);
+		background-color: var(--color-bar);
 	}
 
 	.top-controls {

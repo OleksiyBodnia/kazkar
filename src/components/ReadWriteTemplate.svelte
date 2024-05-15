@@ -3,6 +3,7 @@
 	import { onMount } from 'svelte';
 
 	export let data;
+	export let state;
 	export let header = 'Заголовок';
 	export let description = 'Опис сторінки';
 
@@ -20,7 +21,7 @@
 
 	async function getMoreKazky() {
 		const new_kazky = await fetch(
-			`/api/get-kazky?state=incompleted&page=${++page}&kazky_per_page=${data.kazky_per_page ?? 4}`,
+			`/api/get-kazky?state=${state}&page=${++page}&kazky_per_page=${data.kazky_per_page ?? 4}`,
 			{
 				method: 'GET',
 				headers: {

@@ -20,6 +20,7 @@
 <svelte:window bind:scrollY={y} />
 
 <ReadWriteTemplate
+	state={'incompleted'}
 	header={'Майстерня Казкаря'}
 	description={'Тут ви можете взяти участь у написанні казок! Правила, та та та і тому подібне'}
 	{data}
