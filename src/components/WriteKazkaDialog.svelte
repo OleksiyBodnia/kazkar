@@ -16,7 +16,7 @@
 	let new_rech = '';
 	let report = '';
 	let finish = false;
-	let bad_rech_report = 'Ви не ввели речення. Ай ай ай!';
+	let bad_rech_report = 'Ви ввели некорректне речення. Ай ай ай!';
 	let bad_kazka_report = 'Ви не ввели назву казки або перше речення. Ай ай ай!';
 
 	export function toggleWrite() {
@@ -35,12 +35,16 @@
 
 	async function addRechennia() {
 
-		if (new_rech === '') {
+		// if (new_rech === '') {
+		// 	report = bad_rech_report;
+		// 	return;
+		// }
+
+		if (!validateSentence(new_rech))
+		{
 			report = bad_rech_report;
 			return;
 		}
-
-		if ()
 
 		const response = await fetch('/api/kazka/add-rechennia', {
 			method: 'POST',
