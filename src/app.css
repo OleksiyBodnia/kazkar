@@ -8,16 +8,18 @@
 
 	color: var(--color-black);
 	/* color: #212121; */
-	/* background-color: #fbfbfb; */
+	background-color: var(--color-white);
 }
 :root {
-	--color-black: #212121;
-	--color-white: #ffffff;
+	--color-black: #212121; /* font */
+
+	--color-white: #ffffff; /* button */
 	--color-purple: #78009d;
 	--color-blue: #0087bc;
 	--color-default-text: black;
-	--color-accent: #27a8e4;
-	--color-bar: #FFEC9E;
+	--color-accent: #27a8e4; /* selected buttons */
+	--color-bar: #FFEC9E; /* reiting-page bars */
+
 }
 
 body {

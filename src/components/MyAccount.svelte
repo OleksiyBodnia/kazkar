@@ -30,6 +30,7 @@
 	const setTheme = (theme) => {
 		selectedTheme = theme;
 		document.documentElement.style.setProperty('--color-black', theme);
+		document.documentElement.style.setProperty('--color-white', theme);
 		// В цьому місці ви можете додати логіку для збереження обраної теми, наприклад, у локальне сховище.
 	};
 
@@ -101,11 +102,13 @@
 	}
 	
 	.blue {
-		--color-black: #007bff; 
+		--color-black: #007bff;
+
 	}
 
 	.green {
-		--color-black: #28a745; 
+		--color-black: #28a745;
+		--color-white: red;
 	}
 
 	.purple {
