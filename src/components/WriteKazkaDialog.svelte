@@ -68,12 +68,6 @@
 	}
 
 	async function newKazka() {
-/*
-		if (title === '' || new_rech === '') {
-			report = bad_kazka_report;
-			return;
-		}
-*/
 
 		if (!(validateSentence(new_rech) || validateSentence(title)))
 		{

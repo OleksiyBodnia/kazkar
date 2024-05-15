@@ -166,6 +166,23 @@ export function findLargestAttribute(obj) {
 	return obj[largestKey];
 }
 
+
+export function correctSentence(sentence) {
+	// Upper Case for 1st letter
+	if (sentence.charAt(0) !== sentence.charAt(0).toUpperCase()) {
+		sentence = sentence.charAt(0).toUpperCase() + sentence.slice(1);
+	}
+
+	//check last symbol
+	const lastChar = sentence.charAt(sentence.length - 1);
+	if (!".!?".includes(lastChar)) {
+		sentence += '.';
+	}
+
+	return sentence;
+}
+
+
 export function validateSentence(sentence) {
 	//empty string
 	if (!sentence.trim()) {
@@ -196,19 +213,3 @@ export function validateSentence(sentence) {
 
 	return true;
 }
-
-export function correctSentence(sentence) {
-	// Upper Case for 1st letter
-	if (sentence.charAt(0) !== sentence.charAt(0).toUpperCase()) {
-		sentence = sentence.charAt(0).toUpperCase() + sentence.slice(1);
-	}
-
-	//check last symbol
-	const lastChar = sentence.charAt(sentence.length - 1);
-	if (!".!?".includes(lastChar)) {
-		sentence += '.';
-	}
-
-	return sentence;
-}
-
