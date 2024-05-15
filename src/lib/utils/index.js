@@ -177,16 +177,11 @@ export function validateSentence(sentence) {
 		return false;
 	}
 
-	//Regex EN
-	const englishVowelRegex = /[aeiou]/i;
-	const englishConsonantRegex = /[bcdfghjklmnpqrstvwxyz]/i;
 
 	// Regex UKR
 	const ukrainianVowelRegex = /[аеєиіїоуюя]/i;
 	const ukrainianConsonantRegex = /[бвгґджзклмнпрстфхцчш]/i;
 
-	// checking
-	const englishWordRegex = new RegExp(`(?:${englishVowelRegex.source}{1,3}.{0,3})+`, "i");
 	const ukrainianWordRegex = new RegExp(`(?:${ukrainianVowelRegex.source}{1,3}.{0,3})+`, "i");
 
 
@@ -194,7 +189,7 @@ export function validateSentence(sentence) {
 	const words = sentence.split(" ");
 	for (let word of words) {
 		if (word.trim() != "")
-			if (!(englishWordRegex.test(word) || ukrainianWordRegex.test(word))) {
+			if (!(ukrainianWordRegex.test(word))) {
 				return false;
 			}
 	}
