@@ -367,3 +367,24 @@ export async function getUserStats(user_id) {
 
 	return stats;
 }
+
+// get kazky 'updated_at' column
+export async function getKazkyUpdates(state = 'all') {
+	let query = supabase_public.from('kazky').select('id, updated_at');
+
+	if (state === 'completed') {
+		query = query.filter('is_completed', 'eq', true);
+	}
+
+	if (state === 'incompleted') {
+		query = query.filter('is_completed', 'eq', false);
+	}
+
+	const { data: kazky, error } = await query;
+
+	if (error) {
+		throw error;
+	}
+
+	return kazky;
+}

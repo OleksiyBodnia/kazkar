@@ -95,7 +95,7 @@ export async function isKazkaTaken(kazka_id, taking_window = 180) {
 			kazka_id: kazka_id
 		})
 	});
-	
+
 	const { kazka } = await responce.json();
 
 	// if kazka.taken_at is null, it is considered not taken
@@ -111,7 +111,6 @@ export async function isKazkaTaken(kazka_id, taking_window = 180) {
 	return diff_seconds < taking_window;
 }
 
-// Увага! Цю функцію писaв ChatGPT, тому за її роботу відповідає він
 export function transformDistribution(distribution) {
 	const numRanges = 8;
 
@@ -162,6 +161,6 @@ export function transformDistribution(distribution) {
 }
 
 export function findLargestAttribute(obj) {
-	const largestKey = Object.keys(obj).reduce((a, b) => obj[a] > obj[b] ? a : b);
+	const largestKey = Object.keys(obj).reduce((a, b) => (obj[a] > obj[b] ? a : b));
 	return obj[largestKey];
 }
