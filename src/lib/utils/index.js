@@ -166,7 +166,7 @@ export function findLargestAttribute(obj) {
 	return obj[largestKey];
 }
 
-function validateSentence(sentence) {
+export function validateSentence(sentence) {
 	//empty string
 	if (!sentence.trim()) {
 		return false;
