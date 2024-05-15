@@ -52,10 +52,12 @@
 
 	<div class="find-tools">
 		<div class="rigth-find-tools">
+			{#if state === "completed"}
 			<label
 				>Пошук
 				<input type="text" />
 			</label>
+			{/if}
 
 			<label
 				>Фільтр

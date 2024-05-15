@@ -1,19 +1,35 @@
 <!-- Modal dialog template -->
 <script>
 	import { fade, scale} from 'svelte/transition';
+	import { createEventDispatcher } from 'svelte';
 
 	export let show_info = false;
     export let outer_close = true;
 
+	const dispatch = createEventDispatcher();
+
+	function Xclicked() {
+		dispatch('modal_closed');
+	}
+
 	export function toggle() {
 		show_info = !show_info;
+	}
+
+	export function open() {
+		show_info = true;
+	}
+
+	export function close() {	
+		show_info = false;
+		Xclicked();
 	}
 </script>
 
 {#if show_info}
 	<div class="backdrop" transition:fade on:click|self={() => { if (outer_close) toggle()}}>
 		<div class="modal" transition:scale>
-			<button class="close-button" on:click={toggle}>×</button>
+			<button class="close-button" on:click={close}>×</button>
 			<slot />
 		</div>
 	</div>

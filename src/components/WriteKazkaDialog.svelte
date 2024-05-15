@@ -2,7 +2,7 @@
 	import Modal from './Modal.svelte';
 	import AlertDialog from './AlertDialog.svelte';
 	import { page } from '$app/stores';
-	import { lastRechennia } from '$lib/utils';
+	import { lastRechennia, releaseKazka, isKazkaTaken } from '$lib/utils';
 	import Timer from './Timer.svelte';
 
 	let ModalComponent;
@@ -23,6 +23,13 @@
 			report = '';
 			ModalComponent.toggle();
 		} else AlertDialogComponent.toggleAlert();
+	}
+
+	function timeIsOut() {
+		report = 'Час вийшов! Через 5 секунд діалог буде закрито';
+		setTimeout(() => {
+			ModalComponent.close();
+		}, 5000);
 	}
 
 	async function addRechennia() {
@@ -82,12 +89,12 @@
 	}
 </script>
 
-<Modal outer_close={false} bind:this={ModalComponent}>
+<Modal outer_close={false} bind:this={ModalComponent} on:modal_closed={() => releaseKazka(kazka)}>
 	{#if report === ''}
 		{#if type === 'present'}
 			<div>
 				<div class="timer">
-					<Timer countdown={180} on:notime={toggleWrite} />
+					<Timer countdown={180} on:notime={timeIsOut} />
 				</div>
 				<h4>{kazka.title}</h4>
 				<p>{lastRechennia(kazka.rechennia).content}</p>

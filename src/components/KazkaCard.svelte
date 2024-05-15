@@ -1,5 +1,5 @@
 <script>
-	import { truncateText, lastRechennia } from '$lib/utils';
+	import { truncateText, lastRechennia, takeKazka } from '$lib/utils';
 	import WriteKazkaDialog from './WriteKazkaDialog.svelte';
 	import { page } from '$app/stores';
 
@@ -26,7 +26,7 @@
 		</a>
 	</article>
 {:else if state == 'incompleted'}
-	<button class="custom-btn" on:click={() => WriteDialogComponent.toggleWrite()}>
+	<button class="custom-btn" on:click={() => {takeKazka(kazka); WriteDialogComponent.toggleWrite()}}>
 		<article class="incomp-article">
 			<div class="rech-conteiner">
 				<h4>{kazka.title}</h4>
