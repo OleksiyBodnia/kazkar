@@ -34,17 +34,15 @@
 	}
 
 	async function addRechennia() {
-
-		// if (new_rech === '') {
-		// 	report = bad_rech_report;
-		// 	return;
-		// }
-
 		if (!validateSentence(new_rech))
 		{
 			report = bad_rech_report;
 			return;
 		}
+
+		new_rech = correctSentence(new_rech); //correct sentence
+
+
 
 		const response = await fetch('/api/kazka/add-rechennia', {
 			method: 'POST',
