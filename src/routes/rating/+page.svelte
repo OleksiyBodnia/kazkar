@@ -14,9 +14,6 @@
 	// let worst_bar_multiplier = bars_scale / (data.worst_users[4].rech_count);
 	let distrb_bar_multiplier = bars_scale / findLargestAttribute(data.distribution);
 
-	let bar_multiplier = (fin_bar_multiplier < top_bar_multiplier) ? fin_bar_multiplier : top_bar_multiplier;
-	bar_multiplier = (bar_multiplier < distrb_bar_multiplier) ? bar_multiplier : distrb_bar_multiplier;
-
 </script>
 
 <div>
@@ -26,12 +23,12 @@
 			<div class="site-stat-bars">
 				<div class="finished-bar">
 					<label for="" >Завершених казок</label>
-					<div class="prog-finished-bar" style="width: {data.finished * bar_multiplier}px;"></div>
+					<div class="prog-finished-bar" style="width: {data.finished * fin_bar_multiplier}px;"></div>
 					<label for="">{data.finished}</label>
 				</div>
 				<div class="unfinished-bar">
 					<label for="">Незавершених казок</label>
-					<div class="prog-unfinished-bar" style="width: {data.unfinished * bar_multiplier}px;"></div>
+					<div class="prog-unfinished-bar" style="width: {data.unfinished * fin_bar_multiplier}px;"></div>
 					<label for="">{data.unfinished}</label>
 				</div>
 			</div>
@@ -65,7 +62,7 @@
 						{#each data.best_users as user}
 							<div class="user-bar">
 								<label for="">{user.name}</label>
-								<div class="user-prog-bar" style="width: {user.rech_count * bar_multiplier}px;"></div>
+								<div class="user-prog-bar" style="width: {user.rech_count * top_bar_multiplier}px;"></div>
 								<label for="">{user.rech_count}</label>
 							</div>
 						{/each}
@@ -82,7 +79,7 @@
 						{#each data.worst_users as user}
 							<div class="user-bar">
 								<label for="">{user.name}</label>
-								<div class="user-prog-bar" style="width: {user.rech_count * bar_multiplier}px;"></div>
+								<div class="user-prog-bar" style="width: {user.rech_count * top_bar_multiplier}px;"></div>
 								<label for="">{user.rech_count}</label>
 							</div>
 						{/each}
@@ -98,7 +95,7 @@
 				{#each Object.entries(data.distribution) as [key, value]}
 					<div class="kazka-distribution-bar">
 						<label for="" style="font-weight: 100;">{value}</label>
-						<div class="distribution-bar" style="width: 20px; height: {value * bar_multiplier}px;"><br /></div>
+						<div class="distribution-bar" style="width: 20px; height: {value * distrb_bar_multiplier}px;"><br /></div>
 						<label for="">{key}</label>
 					</div>
 				{/each}
@@ -155,12 +152,12 @@
 	}
 	.prog-finished-bar {
 		/* width: 176px; */
-		background-color: bisque;
+		background-color: var(--color-bar);
 		border-radius: 5px;
 	}
 	.prog-unfinished-bar {
 		/* width: 326px; */
-		background-color: rgb(180, 78, 78);
+		background-color: var(--color-bar);
 		border-radius: 5px;
 	}
 
@@ -190,7 +187,7 @@
 	}
 
 	.distribution-bar {
-		background-color: rgb(149, 222, 207);
+		background-color: var(--color-bar);
 		border-radius: 5px;
 	}
 
@@ -227,7 +224,7 @@
 	}
 	.user-prog-bar {
 		border-radius: 5px;
-		background-color: rgb(149, 222, 207);
+		background-color: var(--color-bar);
 	}
 
 	.top-controls {
