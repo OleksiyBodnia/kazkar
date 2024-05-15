@@ -90,57 +90,66 @@
 </script>
 
 <Modal outer_close={false} bind:this={ModalComponent} on:modal_closed={() => releaseKazka(kazka)}>
-	{#if report === ''}
+	
 		{#if type === 'present'}
 			<div>
 				<div class="timer">
 					<Timer countdown={180} on:notime={timeIsOut} />
 				</div>
-				<h4>{kazka.title}</h4>
-				<p>{lastRechennia(kazka.rechennia).content}</p>
-				<!-- svelte-ignore a11y-autofocus -->
-				<textarea bind:value={new_rech} placeholder="продовження..." autofocus></textarea>
-				<div class="rech-progress">
-					<progress max="10" value={kazka.rechennia.length}></progress>
-					<span>{kazka.rechennia.length}/10 речень</span>
-				</div>
+				{#if report === ''}
+					<h4>{kazka.title}</h4>
+					<p>{lastRechennia(kazka.rechennia).content}</p>
+					<!-- svelte-ignore a11y-autofocus -->
+					<textarea bind:value={new_rech} placeholder="продовження..." autofocus></textarea>
+					<div class="rech-progress">
+						<progress max="10" value={kazka.rechennia.length}></progress>
+						<span>{kazka.rechennia.length}/10 речень</span>
+					</div>
 
-				<div class="kazka-controls">
-					<button on:click={addRechennia}>Додати речення</button>
-					{#if kazka.rechennia.length >= 10}
-						<label>
-							<input type="checkbox" bind:checked={finish} />
-							завершити казку
-						</label>
+					<div class="kazka-controls">
+						<button on:click={addRechennia}>Додати речення</button>
+						{#if kazka.rechennia.length >= 10}
+							<label>
+								<input type="checkbox" bind:checked={finish} />
+								завершити казку
+							</label>
+						{/if}
+					</div>
+				{:else}
+					<p>{report}</p>
+					{#if report === bad_rech_report || report === bad_kazka_report}
+						<button
+							on:click={() => {
+								report = '';
+							}}>Дописати</button
+						>
 					{/if}
-				</div>
+				{/if}
 			</div>
 		{:else if type === 'new'}
 			<div>
-				<input
-					class="kazka-title"
-					type="text"
-					bind:value={title}
-					placeholder="Назва казки"
-					maxlength="40"
-				/>
-				<textarea bind:value={new_rech} placeholder="перше речення..." maxlength="1000"></textarea>
-				<button on:click={newKazka}>Розпочати казку</button>
+				{#if report === ''}
+					<input
+						class="kazka-title"
+						type="text"
+						bind:value={title}
+						placeholder="Назва казки"
+						maxlength="40"
+					/>
+					<textarea bind:value={new_rech} placeholder="перше речення..." maxlength="1000"></textarea>
+					<button on:click={newKazka}>Розпочати казку</button>
+				{:else}
+					<p>{report}</p>
+					{#if report === bad_rech_report || report === bad_kazka_report}
+						<button
+							on:click={() => {
+								report = '';
+							}}>Дописати</button
+						>
+					{/if}
+				{/if}
 			</div>
 		{/if}
-	{:else}
-		<div>
-			<!-- <h4>Дякуємо за участь!</h4> -->
-			<p>{report}</p>
-			{#if report === bad_rech_report || report === bad_kazka_report}
-				<button
-					on:click={() => {
-						report = '';
-					}}>Дописати</button
-				>
-			{/if}
-		</div>
-	{/if}
 </Modal>
 
 <AlertDialog bind:this={AlertDialogComponent} />
