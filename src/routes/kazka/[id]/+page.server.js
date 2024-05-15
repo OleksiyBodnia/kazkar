@@ -12,7 +12,7 @@ export async function load({ params, locals }) {
 	const stats = await db.getKazkaStats(id, session?.user.id);
 
 	const kazka = await db.getKazka(id);
-	// баг
+
 	const users = await Promise.all(
 		kazka.rechennia.map((rechennia) => db.getUser(rechennia.user_id))
 	);

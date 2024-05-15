@@ -25,13 +25,13 @@
 			}, 1000);
 		}
 	}
-	let selectedTheme = '';
+	let selectedTheme = 'default';
 
-  const setTheme = (theme) => {
-    selectedTheme = theme;
-    document.documentElement.style.setProperty('--color-black', theme);
-	// В цьому місці ви можете додати логіку для збереження обраної теми, наприклад, у локальне сховище.
-  };
+	const setTheme = (theme) => {
+		selectedTheme = theme;
+		document.documentElement.style.setProperty('--color-black', theme);
+		// В цьому місці ви можете додати логіку для збереження обраної теми, наприклад, у локальне сховище.
+	};
 
 </script>
 
@@ -44,7 +44,7 @@
 	 
 	<div class="theme-div">
 		<span>Акцентний колір:</span>
-		<div class="theme-btn defaul {selectedTheme === 'dark-red' ? 'selected' : ''}" on:click={() => setTheme('dark-red')}></div>
+		<div class="theme-btn defaul {selectedTheme === 'default' ? 'selected' : ''}" on:click={() => setTheme('default')}></div>
 		<div class="theme-btn blue-theme {selectedTheme === 'blue' ? 'selected' : ''}" on:click={() => setTheme('blue')}></div>
 		<div class="theme-btn green-theme {selectedTheme === 'green' ? 'selected' : ''}" on:click={() => setTheme('green')}></div>
 		<div class="theme-btn purple-theme {selectedTheme === 'purple' ? 'selected' : ''}" on:click={() => setTheme('purple')}></div>
@@ -100,50 +100,24 @@
 		background-color: #6f42c1;
 	}
 	
-  .blue {
-    --color-black: #007bff; 
-  }
+	.blue {
+		--color-black: #007bff; 
+	}
 
-  .green {
-    --color-black: #28a745; 
-  }
+	.green {
+		--color-black: #28a745; 
+	}
 
-  .purple {
-    --color-black: #6f42c1; 
-  }
+	.purple {
+		--color-black: #6f42c1; 
+	}
 
-  .dark-red {
-    --color-black: #010101; 
-  }
+	.default {
+		--color-black: #010101; 
+	}
   
 	input {
 		width: 200px;
-	}
-
-	.theme-toggle-div {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.profile-change-name-form{
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: 10px;
-		
-	}
-
-	.theme-btn-span {
-		border: 1px solid black;
-		width: 19px;
-		height: 19px;
-		background-color: white;
-		border-radius: 50%;
-		position: absolute;
-		top: 0;
-		left: 0;
-		transition: transform 0.3s ease, background-color 0.3s ease;
 	}
 
 	:root.dark {
