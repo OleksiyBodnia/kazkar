@@ -16,12 +16,6 @@
 
 <style>
 	p {
-		width: 600px;
 		text-align: start;
-	}
-	@media screen and (max-width: 767px){
-		p{
-			width: 240px;
-		}
 	}
 </style>
