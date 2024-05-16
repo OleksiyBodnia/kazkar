@@ -146,14 +146,12 @@ export async function addRechennia(kazka_id, rechennia_content, user_id, finish 
 		throw errorNewRechennia;
 	}
 
-	if (finish) {
-		const { data: updatedKazka, error: errorUpdatedKazka } = await supabase_public
-			.from('kazky')
-			.update({ is_completed: true })
-			.eq('id', kazka_id);
-		if (errorUpdatedKazka) {
-			throw errorUpdatedKazka;
-		}
+	const { data: updatedKazka, error: errorUpdatedKazka } = await supabase_public
+		.from('kazky')
+		.update({ is_completed: finish, last_user_id: user_id })
+		.eq('id', kazka_id);
+	if (errorUpdatedKazka) {
+		throw errorUpdatedKazka;
 	}
 }
 
@@ -161,7 +159,7 @@ export async function addRechennia(kazka_id, rechennia_content, user_id, finish 
 export async function newKazka(title, rechennia_content, user_id) {
 	const { data: newKazka, error: errorNewKazka } = await supabase_public
 		.from('kazky')
-		.upsert([{ title, is_completed: false }])
+		.upsert([{ title, is_completed: false, last_user_id: user_id }])
 		.select();
 	if (errorNewKazka) {
 		throw errorNewKazka;

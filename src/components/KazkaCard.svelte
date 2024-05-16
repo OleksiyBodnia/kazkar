@@ -3,19 +3,25 @@
 	import WriteKazkaDialog from './WriteKazkaDialog.svelte';
 	import { page } from '$app/stores';
 	import Modal from './Modal.svelte';
+	import { goto } from '$app/navigation';
 
 	export let kazka;
 	export let state;
 
 	let WriteDialogComponent;
 	let IsTakenModal;
+	let IsLastUserModal;
 
 	async function tryWriteKazka() {
-		if (await isKazkaTaken(kazka.id)) {
+		if (!$page.data.session) {
+			goto('/auth/signin');
+		} else if (kazka.last_user_id == $page.data.session.user.id) {
+			IsLastUserModal.toggle();
+		} else if (await isKazkaTaken(kazka.id)) {
 			IsTakenModal.toggle();
 		} else {
 			takeKazka(kazka);
-			WriteDialogComponent.toggleWrite()
+			WriteDialogComponent.toggleWrite();
 		}
 	}
 </script>
@@ -52,6 +58,11 @@
 			<p>Упс, хтось вже пише цю казку...</p>
 		</div>
 	</Modal>
+	<Modal bind:this={IsLastUserModal}>
+		<div class="kazka-taken-alert">
+			<p>Почекай, поки хтось інший додасть речення до цієї казки.</p>
+		</div>
+	</Modal>
 {/if}
 
 <style>
@@ -68,17 +79,16 @@
 	}
 
 	.comp-article {
-		width: 500px;	
+		width: 500px;
 		/* some padding should be here */
 		padding: 0px 10px 17px 10px;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 	}
-	
 
-	.incomp-article{
-		width: 500px;	
+	.incomp-article {
+		width: 500px;
 		/* some padding should be here */
 		padding: 0px 10px 10px 10px;
 		display: flex;
@@ -128,13 +138,14 @@
 		position: relative;
 		top: -9px;
 	}
-	@media screen and (max-width: 767px){
-        .comp-article, .incomp-article{
-            width: 340px;
-        }
-		.kazka-container{
+	@media screen and (max-width: 767px) {
+		.comp-article,
+		.incomp-article {
+			width: 340px;
+		}
+		.kazka-container {
 			height: 125px;
 			overflow: hidden;
 		}
-    }
+	}
 </style>

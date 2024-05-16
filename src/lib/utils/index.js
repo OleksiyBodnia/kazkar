@@ -62,6 +62,9 @@ export function tooltip(node, params) {
 }
 
 export async function releaseKazka(kazka) {
+	if (!kazka) {
+		return;
+	}
 	await fetch('/api/kazka/release-kazka', {
 		method: 'POST',
 		headers: {

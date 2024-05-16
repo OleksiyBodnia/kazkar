@@ -48,6 +48,15 @@
 		data.kazky = updated_kazky;
 	}
 
+	async function updateKazka(id) {
+		const updated_kazka = await fetch(`/api/kazka/get?id=${id}`).then((r) =>
+			r.json().then((data) => data.kazka)
+		);
+
+		const index = data.kazky.findIndex((k) => k.id === id);
+		data.kazky[index] = updated_kazka;
+	}
+
 	onMount(() => {
 		// call updateKazkas every 5 seconds
 		const interval = setInterval(updateKazkas, 5000);
