@@ -183,16 +183,18 @@ export function correctSentence(sentence) {
 }
 
 
-function validateSentence(sentence) {
+export function validateSentence(sentence) {
 	//empty string
 	if (!sentence.trim()) {
 		return false;
 	}
 
 	// check somethink like "_?!!₽?(")"
-	if (/^[^\w\s-]*$/.test(sentence)) {
+	const regexNoTextNoNumbers = /^[^\p{L}\p{N}]+$/u;
+	if (regexNoTextNoNumbers.test(sentence)) {
 		return false;
 	}
+
 
 	// split sentence by ., !, ?
 	const list = ['.', '?', '!'];
@@ -202,7 +204,6 @@ function validateSentence(sentence) {
 		return false;
 	}
 
-	console.log(sentence)
 	const ukrainianVowelRegex = "аеєиіїоуюя";
 	const ukrainianConsonantRegex = "бвгґджзклмнпрстфхцчш";
 	const allowedSigns = "-!?.,";
@@ -237,8 +238,6 @@ function validateSentence(sentence) {
 					if (line.length - (i+2) > 0 && allowedSigns.includes((line[i + 2]))) //limit
 						if (line.length - (i+3) > 0 && allowedSigns.includes((line[i + 3])))
 							return false;
-
-
 		}
 		return true;
 	}
