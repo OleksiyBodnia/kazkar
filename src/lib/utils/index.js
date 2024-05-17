@@ -183,7 +183,7 @@ export function correctSentence(sentence) {
 }
 
 
-export function validateSentence(sentence) {
+function validateSentence(sentence) {
 	//empty string
 	if (!sentence.trim()) {
 		return false;
@@ -202,12 +202,13 @@ export function validateSentence(sentence) {
 		return false;
 	}
 
-
+	console.log(sentence)
 	const ukrainianVowelRegex = "аеєиіїоуюя";
 	const ukrainianConsonantRegex = "бвгґджзклмнпрстфхцчш";
-	const allowedSigns = "-!?.";
+	const allowedSigns = "-!?.,";
 
 	function checkWord(line) {
+		line = line.toLowerCase()
 		//check is it number
 		const regex = /^\d+$/;
 		if (regex.test(line)) return true;
@@ -215,31 +216,32 @@ export function validateSentence(sentence) {
 		for (let i = 0; i < line.length; i++)
 		{
 			//no other symbols
-			if (!ukrainianVowelRegex.includes(line[i]) && ukrainianConsonantRegex.includes(line[i]) && allowedSigns.includes(line[i]) )
+			if (!ukrainianVowelRegex.includes(line[i]) && !ukrainianConsonantRegex.includes(line[i]) && !allowedSigns.includes(line[i]) )
 				return false;
+
 			//1) not >3 vowel in line
 			if (ukrainianVowelRegex.includes(line[i]))
-				if (line.length - (i+1) > 0 || ukrainianVowelRegex.includes((line[i + 1])))
-					if (line.length - (i+2) > 0 || ukrainianVowelRegex.includes((line[i + 2]))) //limit
-						if (line.length - (i+3) > 0 || ukrainianVowelRegex.includes((line[i + 3])))
+				if (line.length - (i+1) > 0 && ukrainianVowelRegex.includes((line[i + 1])))
+					if (line.length - (i+2) > 0 && ukrainianVowelRegex.includes((line[i + 2]))) //limit
+						if (line.length - (i+3) > 0 && ukrainianVowelRegex.includes((line[i + 3])))
 							return false;
 			//2) not >3 consonant in line
 			if (ukrainianConsonantRegex.includes(line[i]))
-				if (line.length - (i+1) > 0 || ukrainianConsonantRegex.includes((line[i + 1])))
-					if (line.length - (i+2) > 0 || ukrainianConsonantRegex.includes((line[i + 2]))) //limit
-						if (line.length - (i+3) > 0 || ukrainianConsonantRegex.includes((line[i + 3])))
+				if (line.length - (i+1) > 0 && ukrainianConsonantRegex.includes((line[i + 1])))
+					if (line.length - (i+2) > 0 && ukrainianConsonantRegex.includes((line[i + 2]))) //limit
+						if (line.length - (i+3) > 0 && ukrainianConsonantRegex.includes((line[i + 3])))
 							return false;
 			//3) not >3 sign in line
 			if (allowedSigns.includes(line[i]))
-				if (line.length - (i+1) > 0 || allowedSigns.includes((line[i + 1])))
-					if (line.length - (i+2) > 0 || allowedSigns.includes((line[i + 2]))) //limit
-						if (line.length - (i+3) > 0 || allowedSigns.includes((line[i + 3])))
+				if (line.length - (i+1) > 0 && allowedSigns.includes((line[i + 1])))
+					if (line.length - (i+2) > 0 && allowedSigns.includes((line[i + 2]))) //limit
+						if (line.length - (i+3) > 0 && allowedSigns.includes((line[i + 3])))
 							return false;
 
 
-			}
-		return true;
 		}
+		return true;
+	}
 
 
 
