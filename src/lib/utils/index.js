@@ -194,19 +194,59 @@ export function validateSentence(sentence) {
 		return false;
 	}
 
+	// split sentence by ., !, ?
+	const list = ['.', '?', '!'];
+	const splitPattern = new RegExp(`[${list.join('')}]`, 'g');
+	const parts = sentence.split(splitPattern).filter(part => part.trim() !== "");
+	if (parts.length > 1) {
+		return false;
+	}
 
-	// Regex UKR
-	const ukrainianVowelRegex = /[аеєиіїоуюя]/i;
-	const ukrainianConsonantRegex = /[бвгґджзклмнпрстфхцчш]/i;
 
-	const ukrainianWordRegex = new RegExp(`(?:${ukrainianVowelRegex.source}{1,3}.{0,3})+`, "i");
+	const ukrainianVowelRegex = "аеєиіїоуюя";
+	const ukrainianConsonantRegex = "бвгґджзклмнпрстфхцчш";
+	const allowedSigns = "-!?.";
+
+	function checkWord(line) {
+		//check is it number
+		const regex = /^\d+$/;
+		if (regex.test(line)) return true;
+
+		for (let i = 0; i < line.length; i++)
+		{
+			//no other symbols
+			if (!ukrainianVowelRegex.includes(line[i]) && ukrainianConsonantRegex.includes(line[i]) && allowedSigns.includes(line[i]) )
+				return false;
+			//1) not >3 vowel in line
+			if (ukrainianVowelRegex.includes(line[i]))
+				if (line.length - (i+1) > 0 || ukrainianVowelRegex.includes((line[i + 1])))
+					if (line.length - (i+2) > 0 || ukrainianVowelRegex.includes((line[i + 2]))) //limit
+						if (line.length - (i+3) > 0 || ukrainianVowelRegex.includes((line[i + 3])))
+							return false;
+			//2) not >3 consonant in line
+			if (ukrainianConsonantRegex.includes(line[i]))
+				if (line.length - (i+1) > 0 || ukrainianConsonantRegex.includes((line[i + 1])))
+					if (line.length - (i+2) > 0 || ukrainianConsonantRegex.includes((line[i + 2]))) //limit
+						if (line.length - (i+3) > 0 || ukrainianConsonantRegex.includes((line[i + 3])))
+							return false;
+			//3) not >3 sign in line
+			if (allowedSigns.includes(line[i]))
+				if (line.length - (i+1) > 0 || allowedSigns.includes((line[i + 1])))
+					if (line.length - (i+2) > 0 || allowedSigns.includes((line[i + 2]))) //limit
+						if (line.length - (i+3) > 0 || allowedSigns.includes((line[i + 3])))
+							return false;
+
+
+			}
+		return true;
+		}
 
 
 
 	const words = sentence.split(" ");
 	for (let word of words) {
 		if (word.trim() != "")
-			if (!(ukrainianWordRegex.test(word))) {
+			if (!(checkWord(word))) {
 				return false;
 			}
 	}
