@@ -7,6 +7,27 @@
 	let usernameField;
 	let userEmail = $page.data.session.user.email;
 
+	/*
+	COLORS Names&Meaning
+
+	--color-black: #212121; // font
+	--color-white: #ffffff; // button
+	--color-purple: #78009d;
+	--color-blue: #0087bc;
+	--color-default-text: black;
+	--color-accent: #27a8e4; // selected buttons
+	--color-bar: #FFEC9E; // reiting-page bars
+	*/
+
+	let themes = {
+		'default' : {
+			'background' : ""
+		},
+		'white' : {
+			'background' : ""
+		}
+	}
+
 	async function changeName() {
 		const response = await fetch('/api/user/change-name', {
 			method: 'POST',
@@ -29,6 +50,7 @@
 
 	const setTheme = (theme) => {
 		selectedTheme = theme;
+
 		document.documentElement.style.setProperty('--color-black', theme);
 		document.documentElement.style.setProperty('--color-white', theme);
 		// В цьому місці ви можете додати логіку для збереження обраної теми, наприклад, у локальне сховище.
@@ -45,10 +67,12 @@
 	 
 	<div class="theme-div">
 		<span>Акцентний колір:</span>
+<!--		<div class="theme-btn defaul {selectedTheme === 'default' ? 'selected' : ''}" on:click={() => setTheme('default')}></div>-->
+<!--		<div class="theme-btn blue-theme {selectedTheme === 'blue' ? 'selected' : ''}" on:click={() => setTheme('blue')}></div>-->
+<!--		<div class="theme-btn green-theme {selectedTheme === 'green' ? 'selected' : ''}" on:click={() => setTheme('green')}></div>-->
+<!--		<div class="theme-btn purple-theme {selectedTheme === 'purple' ? 'selected' : ''}" on:click={() => setTheme('purple')}></div>-->
 		<div class="theme-btn defaul {selectedTheme === 'default' ? 'selected' : ''}" on:click={() => setTheme('default')}></div>
-		<div class="theme-btn blue-theme {selectedTheme === 'blue' ? 'selected' : ''}" on:click={() => setTheme('blue')}></div>
-		<div class="theme-btn green-theme {selectedTheme === 'green' ? 'selected' : ''}" on:click={() => setTheme('green')}></div>
-		<div class="theme-btn purple-theme {selectedTheme === 'purple' ? 'selected' : ''}" on:click={() => setTheme('purple')}></div>
+		<div class="theme-btn purple-theme {selectedTheme === 'purple' ? 'selected' : ''}" on:click={() => setTheme('white')}></div>
 
 	</div>
 	
