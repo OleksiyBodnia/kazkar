@@ -117,7 +117,7 @@
 	.myaccount-tab {
 		width: 800px;
 		text-align: center;
-		border: 2px solid black;
+		border: 2px solid var(--color-border);
 		border-radius: 10px;
 		padding: 20px;
 		display: flex;

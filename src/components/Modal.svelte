@@ -59,7 +59,7 @@
 		border-radius: 20px;
 		max-width: 80%;
         margin: 10% auto;
-        background: white;
+        background: var(--color-white);
 		position: relative;
 	}
 

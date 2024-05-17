@@ -74,7 +74,7 @@
 		background-color: var(--color-white);
 		color: var(--color-black);
 		text-align: center;
-		border: 2px solid black;
+		border: 2px solid var(--color-border);
 		border-radius: 8px;
 		cursor: pointer;
 		padding: 2px 8px;
