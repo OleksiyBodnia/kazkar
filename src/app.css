@@ -10,15 +10,42 @@
 	/* color: #212121; */
 	background-color: var(--color-white);
 }
+/* THEMES */
 :root {
 	--color-black: #212121; /* font */
-
+	--color-header: white; /* header background */
 	--color-white: #ffffff; /* button */
-	--color-purple: #78009d;
-	--color-blue: #0087bc;
-	--color-default-text: black;
+	--color-purple: #78009d; /* hide-arrow-button */
 	--color-accent: #27a8e4; /* selected buttons */
 	--color-bar: #FFEC9E; /* reiting-page bars */
+
+}
+.default {
+	--color-black: #212121; /* font */
+	--color-header: white; /* header background */
+	--color-white: #ffffff; /* button, background */
+	--color-purple: #78009d;  /* hide-arrow-button */
+	--color-accent: #27a8e4; /* selected buttons */
+	--color-bar: #FFEC9E; /* reiting-page bars */
+}
+.light {
+	/*--color-black: #28a745;*/
+	--color-black: #000000; /* font */
+	--color-header: white; /* header background */
+	--color-white: green; /* button, background */
+	--color-purple: #000000;  /* hide-arrow-button */
+	--color-accent: #27a8e4; /* selected buttons */
+	--color-bar: #ffffff; /* reiting-page bars */
+}
+
+.darkk {
+/*	background-color: lightgrey;*/
+	--color-black: lightgrey; /* font */
+	--color-header: #d06524; /* header background */
+	--color-white: #161d29; /* button, background */
+	--color-purple: #000000;  /* hide-arrow-button */
+	--color-accent: white; /* selected buttons */
+	--color-bar: #ffffff; /* reiting-page bars */
 
 }
 

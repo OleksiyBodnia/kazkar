@@ -81,7 +81,7 @@
 		justify-content: space-between;
 		align-items: center;
 		padding: 1em;
-		background-color: white;
+		background-color: var(--color-header);
 	}
 
 	.title {

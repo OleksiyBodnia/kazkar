@@ -7,27 +7,6 @@
 	let usernameField;
 	let userEmail = $page.data.session.user.email;
 
-	/*
-	COLORS Names&Meaning
-
-	--color-black: #212121; // font
-	--color-white: #ffffff; // button
-	--color-purple: #78009d;
-	--color-blue: #0087bc;
-	--color-default-text: black;
-	--color-accent: #27a8e4; // selected buttons
-	--color-bar: #FFEC9E; // reiting-page bars
-	*/
-
-	let themes = {
-		'default' : {
-			'background' : ""
-		},
-		'white' : {
-			'background' : ""
-		}
-	}
-
 	async function changeName() {
 		const response = await fetch('/api/user/change-name', {
 			method: 'POST',
@@ -51,8 +30,11 @@
 	const setTheme = (theme) => {
 		selectedTheme = theme;
 
-		document.documentElement.style.setProperty('--color-black', theme);
-		document.documentElement.style.setProperty('--color-white', theme);
+		document.documentElement.classList = theme;
+		console.log('done' + theme)
+
+		// Unused: document.documentElement.style.setProperty('--color-black', theme);
+
 		// В цьому місці ви можете додати логіку для збереження обраної теми, наприклад, у локальне сховище.
 	};
 
@@ -72,7 +54,8 @@
 <!--		<div class="theme-btn green-theme {selectedTheme === 'green' ? 'selected' : ''}" on:click={() => setTheme('green')}></div>-->
 <!--		<div class="theme-btn purple-theme {selectedTheme === 'purple' ? 'selected' : ''}" on:click={() => setTheme('purple')}></div>-->
 		<div class="theme-btn defaul {selectedTheme === 'default' ? 'selected' : ''}" on:click={() => setTheme('default')}></div>
-		<div class="theme-btn purple-theme {selectedTheme === 'purple' ? 'selected' : ''}" on:click={() => setTheme('white')}></div>
+		<div class="theme-btn light-theme {selectedTheme === 'light' ? 'selected' : ''}" on:click={() => setTheme('light')}></div>
+		<div class="theme-btn dark-theme {selectedTheme === 'darkk' ? 'selected' : ''}" on:click={() => setTheme('darkk')}></div>
 
 	</div>
 	
@@ -113,10 +96,16 @@
 		transform: scale(1.2);
 	}
 	.defaul{
-		background-color: black;
+		background-color: lavenderblush;
 	}
 	.blue-theme{
 		background-color: #007bff;
+	}
+	.light-theme{
+		background-color: slategray;
+	}
+	.dark-theme{
+		background-color: black;
 	}
 	.green-theme{
 		background-color: #28a745;
@@ -124,24 +113,7 @@
 	.purple-theme{
 		background-color: #6f42c1;
 	}
-	
-	.blue {
-		--color-black: #007bff;
 
-	}
-
-	.green {
-		--color-black: #28a745;
-		--color-white: red;
-	}
-
-	.purple {
-		--color-black: #6f42c1; 
-	}
-
-	.default {
-		--color-black: #010101; 
-	}
   
 	input {
 		width: 200px;
