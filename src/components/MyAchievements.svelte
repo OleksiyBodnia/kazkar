@@ -13,30 +13,34 @@
                 <p>{achiev}</p>
             </div>
         {/each}  -->
-        {#if kazky.length >= 0}
+        {#if kazky.length >= 5}
             <div class="achiev-unit">
                 <div class="achiev-icon"></div>
-                <img src="/img/K_five.png"/>
+                      <img src="/img/K_five.png"  class="achiev-img" />
                 <p>{achievements[0]}</p>
             </div>
         {/if}
         {#if kazky.length > 9}
             <div class="achiev-unit">
                 <div class="achiev-icon"></div>
-                <img src="/img/K_ten.png"/>
+                     <img src="/img/K_ten.png"  class="achiev-img"/>
                 <p>{achievements[1]}</p>
             </div>
         {/if}
         {#if kazky.length > 99}
             <div class="achiev-unit">
-                <div class="achiev-icon"></div>
-                     <img src="/img/K_hundred.png"/>
+                <div class="achiev-icon"  ></div>
+                     <img src="/img/K_hundred.png" class="achiev-img"/>
                 <p>{achievements[2]}</p>
             </div>
         {/if}
-        <img src="/img/gL_five.png"/>
-        <img src="/img/gL_ten.png"/>
-        <img src="/img/gK_hundred.png"/>
+
+        <img class="achiev-img" src="/img/gK_five.png" title="Створіть 5 казок."/>
+        <img class="achiev-img" src="/img/gK_ten.png"  title="Створіть 10 казок."/>
+        <img class="achiev-img" src="/img/gK_hundred.png"  title="Створіть 100 казок."/>
+        <img class="achiev-img" src="/img/gL_five.png" title="Зберіть 5 лайкiв."/>
+        <img class="achiev-img" src="/img/gL_ten.png" title="Зберіть 10 лайкiв"/>
+        <img class="achiev-img" src="/img/gL_hundred.png" title="Зберіть 100 лайкiв"/>
     </div>
     
 </div>
@@ -77,5 +81,13 @@
         height: 50px;
         border-radius: 50%;
         background-color: brown;
+    }
+
+    .achiev-img {
+        width: 20%;
+        transition-duration: 0.3s;
+    }
+    .achiev-img:hover {
+        width: 22%;
     }
 </style>
