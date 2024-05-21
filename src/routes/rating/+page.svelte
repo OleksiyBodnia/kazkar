@@ -144,21 +144,23 @@
 
 	.finished-bar {
 		display: flex;
+		align-items: center;
 		gap: 12px;
 	}
 	.unfinished-bar {
 		display: flex;
+		align-items: center;
 		gap: 12px;
 	}
 	.prog-finished-bar {
-		/* width: 176px; */
 		background-color: var(--color-bar);
 		border-radius: 5px;
+		height: 22px;
 	}
 	.prog-unfinished-bar {
-		/* width: 326px; */
 		background-color: var(--color-bar);
 		border-radius: 5px;
+		height: 22px;
 	}
 
 	.kazky-distribution-with-title {
@@ -220,11 +222,13 @@
 	}
 	.user-bar {
 		display: flex;
+		align-items: center;
 		gap: 10px;
 	}
 	.user-prog-bar {
 		border-radius: 5px;
 		background-color: var(--color-bar);
+		height: 22px;
 	}
 
 	.top-controls {
