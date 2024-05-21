@@ -4,6 +4,7 @@
 	import { page } from '$app/stores';
 	import { lastRechennia, releaseKazka } from '$lib/utils';
 	import Timer from './Timer.svelte';
+	import { correctSentence, validateSentence } from '$lib/utils';
 
 	let ModalComponent;
 	let AlertDialogComponent;
@@ -15,8 +16,8 @@
 	let new_rech = '';
 	let report = '';
 	let finish = false;
-	let bad_rech_report = 'Ви не ввели речення. Ай ай ай!';
-	let bad_kazka_report = 'Ви не ввели назву казки або перше речення. Ай ай ай!';
+	let bad_rech_report = 'Ви ввели некорректне речення. Ай ай ай!';
+	let bad_kazka_report = 'Ви ввели некорректну назву казки або перше речення. Ай ай ай!';
 
 	export function toggleWrite() {
 		if ($page.data.session) {
@@ -33,10 +34,16 @@
 	}
 
 	async function addRechennia() {
-		if (new_rech === '') {
+		if (!validateSentence(new_rech))
+		{
 			report = bad_rech_report;
 			return;
 		}
+
+		new_rech = correctSentence(new_rech); //correct sentence
+
+
+
 		const response = await fetch('/api/kazka/add-rechennia', {
 			method: 'POST',
 			headers: {
@@ -64,10 +71,15 @@
 	}
 
 	async function newKazka() {
-		if (title === '' || new_rech === '') {
+
+		if (!(validateSentence(new_rech) || validateSentence(title)))
+		{
 			report = bad_kazka_report;
 			return;
 		}
+
+		new_rech = correctSentence(new_rech); //correct sentence
+
 		const response = await fetch('/api/kazka/new-kazka', {
 			method: 'POST',
 			headers: {

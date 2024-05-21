@@ -171,3 +171,90 @@ export function findLargestAttribute(obj) {
 export function getKazkyLikesTotal(kazky) {
 	return kazky.reduce((acc, kazka) => acc + kazka.stats.likes, 0);
 }
+
+export function correctSentence(sentence) {
+	// Upper Case for 1st letter
+	if (sentence.charAt(0) !== sentence.charAt(0).toUpperCase()) {
+		sentence = sentence.charAt(0).toUpperCase() + sentence.slice(1);
+	}
+
+	//check last symbol
+	const lastChar = sentence.charAt(sentence.length - 1);
+	if (!".!?".includes(lastChar)) {
+		sentence += '.';
+	}
+
+	return sentence;
+}
+
+export function validateSentence(sentence) {
+	//empty string
+	if (!sentence.trim()) {
+		return false;
+	}
+
+	// check somethink like "_?!!₽?(")"
+	const regexNoTextNoNumbers = /^[^\p{L}\p{N}]+$/u;
+	if (regexNoTextNoNumbers.test(sentence)) {
+		return false;
+	}
+
+
+	// split sentence by ., !, ?
+	const list = ['.', '?', '!'];
+	const splitPattern = new RegExp(`[${list.join('')}]`, 'g');
+	const parts = sentence.split(splitPattern).filter(part => part.trim() !== "");
+	if (parts.length > 1) {
+		return false;
+	}
+
+	const ukrainianVowelRegex = "аеєиіїоуюя";
+	const ukrainianConsonantRegex = "бвгґджзклмнпрстфхцчш";
+	const allowedSigns = "-!?.,";
+
+	function checkWord(line) {
+		line = line.toLowerCase()
+		//check is it number
+		const regex = /^\d+$/;
+		if (regex.test(line)) return true;
+
+		for (let i = 0; i < line.length; i++)
+		{
+			//no other symbols
+			if (!ukrainianVowelRegex.includes(line[i]) && !ukrainianConsonantRegex.includes(line[i]) && !allowedSigns.includes(line[i]) )
+				return false;
+
+			//1) not >3 vowel in line
+			if (ukrainianVowelRegex.includes(line[i]))
+				if (line.length - (i+1) > 0 && ukrainianVowelRegex.includes((line[i + 1])))
+					if (line.length - (i+2) > 0 && ukrainianVowelRegex.includes((line[i + 2]))) //limit
+						if (line.length - (i+3) > 0 && ukrainianVowelRegex.includes((line[i + 3])))
+							return false;
+			//2) not >3 consonant in line
+			if (ukrainianConsonantRegex.includes(line[i]))
+				if (line.length - (i+1) > 0 && ukrainianConsonantRegex.includes((line[i + 1])))
+					if (line.length - (i+2) > 0 && ukrainianConsonantRegex.includes((line[i + 2]))) //limit
+						if (line.length - (i+3) > 0 && ukrainianConsonantRegex.includes((line[i + 3])))
+							return false;
+			//3) not >3 sign in line
+			if (allowedSigns.includes(line[i]))
+				if (line.length - (i+1) > 0 && allowedSigns.includes((line[i + 1])))
+					if (line.length - (i+2) > 0 && allowedSigns.includes((line[i + 2]))) //limit
+						if (line.length - (i+3) > 0 && allowedSigns.includes((line[i + 3])))
+							return false;
+		}
+		return true;
+	}
+
+
+
+	const words = sentence.split(" ");
+	for (let word of words) {
+		if (word.trim() != "")
+			if (!(checkWord(word))) {
+				return false;
+			}
+	}
+
+	return true;
+}
