@@ -155,12 +155,12 @@
 	.prog-finished-bar {
 		background-color: var(--color-bar);
 		border-radius: 5px;
-		height: 22px;
+		height: 20px;
 	}
 	.prog-unfinished-bar {
 		background-color: var(--color-bar);
 		border-radius: 5px;
-		height: 22px;
+		height: 20px;
 	}
 
 	.kazky-distribution-with-title {
@@ -228,7 +228,7 @@
 	.user-prog-bar {
 		border-radius: 5px;
 		background-color: var(--color-bar);
-		height: 22px;
+		height: 20px;
 	}
 
 	.top-controls {
