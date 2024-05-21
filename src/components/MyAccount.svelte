@@ -48,7 +48,7 @@
 	<p>Та доданих уподобайок: <b>{data.user_stats.likes}</b></p>
 	 
 	<div class="theme-div">
-		<span>Акцентний колір:</span>
+		<span>Вибір теми:</span>
 <!--		<div class="theme-btn defaul {selectedTheme === 'default' ? 'selected' : ''}" on:click={() => setTheme('default')}></div>-->
 <!--		<div class="theme-btn blue-theme {selectedTheme === 'blue' ? 'selected' : ''}" on:click={() => setTheme('blue')}></div>-->
 <!--		<div class="theme-btn green-theme {selectedTheme === 'green' ? 'selected' : ''}" on:click={() => setTheme('green')}></div>-->

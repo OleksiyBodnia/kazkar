@@ -165,3 +165,7 @@ export function findLargestAttribute(obj) {
 	const largestKey = Object.keys(obj).reduce((a, b) => obj[a] > obj[b] ? a : b);
 	return obj[largestKey];
 }
+
+export function getKazkyLikesTotal(kazky) {
+	return kazky.reduce((acc, kazka) => acc + kazka.stats.likes, 0);
+}

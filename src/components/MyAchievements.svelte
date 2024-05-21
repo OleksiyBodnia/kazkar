@@ -1,71 +1,58 @@
 <script>
-    let achievements = ["Написано 1 казку!", "Написано 10 казок!", "Написано 100 казок!"]
+    export let data;
+    import { getKazkyLikesTotal } from '$lib/utils';
 
-    export let kazky;
+    let write_achievements = [
+        { name: "Написано 5 казок!", value: 5, path: "/img/K_five.png", pathg: "/img/gK_five.png"},
+        { name: "Написано 10 казок!", value: 10, path: "/img/K_ten.png", pathg: "/img/gK_ten.png"},
+        { name: "Написано 100 казок!", value:100, path: "/img/K_hundred.png", pathg: "/img/gK_hundred.png"}  
+    ]
+
+    let like_achievements = [
+        { name: "Зібрано 5 лайків!", value: 5, path: "/img/L_five.png", pathg: "/img/gL_five.png"},
+        { name: "Зібрано 10 лайків!", value: 10, path: "/img/L_ten.png", pathg: "/img/gL_ten.png"},
+        { name: "Зібрано 100 лайків!", value: 100, path: "/img/L_hundred.png", pathg: "/img/gL_hundred.png"}
+    ]
+
+    let likes_total = getKazkyLikesTotal(data.user_kazky);
+
 </script>
 
 <div class="personal-achiev-tab">
     <h3>Розблоковані досягнення</h3>
     <div class="achieves">
-        <!-- {#each achievements as achiev}
+        {#each write_achievements as achv}
             <div class="achiev-unit">
-                <div class="achiev-icon"></div>
-                <p>{achiev}</p>
+                {#if data.user_kazky.length >= achv.value}
+                    <img src={achv.path} alt="achievement-img" class="achiev-img" />
+                {:else}
+                    <img src={achv.pathg} alt="achievement-img" class="achiev-img" />
+                {/if}
+                <span>{achv.name}</span>
             </div>
-        {/each}  -->
-        {#if kazky.length >= 5}
-            <div class="achiev-unit">
-                <div class="achiev-icon"></div>
-                      <img src="/img/K_five.png"  class="achiev-img" />
-                <p>{achievements[0]}</p>
-            </div>
-        {/if}
-        {#if kazky.length > 9}
-            <div class="achiev-unit">
-                <div class="achiev-icon"></div>
-                     <img src="/img/K_ten.png"  class="achiev-img"/>
-                <p>{achievements[1]}</p>
-            </div>
-        {/if}
-        {#if kazky.length > 99}
-            <div class="achiev-unit">
-                <div class="achiev-icon"  ></div>
-                     <img src="/img/K_hundred.png" class="achiev-img"/>
-                <p>{achievements[2]}</p>
-            </div>
-        {/if}
+        {/each}
 
-        <img class="achiev-img" src="/img/gK_five.png" title="Створіть 5 казок."/>
-        <img class="achiev-img" src="/img/gK_ten.png"  title="Створіть 10 казок."/>
-        <img class="achiev-img" src="/img/gK_hundred.png"  title="Створіть 100 казок."/>
-        <img class="achiev-img" src="/img/gL_five.png" title="Зберіть 5 лайкiв."/>
-        <img class="achiev-img" src="/img/gL_ten.png" title="Зберіть 10 лайкiв"/>
-        <img class="achiev-img" src="/img/gL_hundred.png" title="Зберіть 100 лайкiв"/>
+        {#each like_achievements as achv}
+            <div class="achiev-unit">
+                {#if likes_total >= achv.value}
+                    <img src={achv.path} alt="achievement-img" class="achiev-img" />
+                {:else}
+                    <img src={achv.pathg} alt="achievement-img" class="achiev-img" />
+                {/if}
+                <span>{achv.name}</span>
+            </div>
+        {/each}
     </div>
-    
 </div>
 
 <style>
-    /* .personal-achiev-tab {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-        column-gap: 90px;
-        flex-wrap: wrap;
-        border: 2px solid black;
-        border-radius: 10px;
-        padding: 20px;
-        width: 800px;
-    } */
-
     .achieves {
-        margin-top: 20px;
+        margin-top: 30px;
         display: flex;
         align-items: center;
         justify-content: center;
-        row-gap: 20px;
-        column-gap: 90px;
+        row-gap: 40px;
+        column-gap: 80px;
         flex-wrap: wrap;
     }
 
@@ -74,20 +61,15 @@
         align-items: center;
         justify-content: center;
         flex-direction: column;
-    }
-
-    .achiev-icon {
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        background-color: brown;
+        width: 180px;
     }
 
     .achiev-img {
-        width: 20%;
+        width: 40%;
         transition-duration: 0.3s;
     }
+
     .achiev-img:hover {
-        width: 22%;
+        width: 45%;
     }
 </style>
