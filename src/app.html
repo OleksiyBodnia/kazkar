@@ -20,6 +20,11 @@
 	<meta name="description" property="og:description" content="Казкар — це проєкт створення казок на кшталт гри “Нісенітниця” на аркуші паперу, де кожна фраза загортається і він передається далі." />
 
 	%sveltekit.head%
+
+	<script>
+		const site_theme = window.localStorage.getItem('site_theme') || 'default';
+		document.documentElement.classList.add(site_theme);
+	</script>
 </head>
 
 <body data-sveltekit-preload-data="hover">

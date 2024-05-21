@@ -6,7 +6,8 @@
     export let data;
     let AlertDialogComponent;
 
-    let unique_users = data.users.filter((user, index, self) =>
+    let unique_users;
+    $: unique_users = data.users.filter((user, index, self) =>
         index === self.findIndex((u) => (
             u.name === user.name
         ))

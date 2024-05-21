@@ -81,18 +81,24 @@
 		justify-content: space-between;
 		align-items: center;
 		padding: 1em;
-		background-color: white;
+		background-color: var(--color-header);
+
 	}
 
 	.title {
 		font-size: 1.7rem;
 		font-weight: bold;
 		text-decoration: none;
+		background-color: var(--color-header);
 	}
 
+	nav {
+		background-color: var(--color-header);
+	}
 	nav a,
 	nav button {
 		margin-left: 1em;
+		background-color: var(--color-header);
 	}
 
 	nav button {
@@ -103,15 +109,13 @@
 		outline: inherit;
 	}
 	nav button:hover {
-		background-color: white;
-		color: var(--color-accent);
+		color: var(--color-accent-header);
 	}
 
 	.title:hover,
 	.header-link:hover,
 	.header-link:focus {
-		background-color: white;
-		color: var(--color-accent);
+		color: var(--color-accent-header);
 	}
 
 	@media screen and (max-width: 767px) {
@@ -131,7 +135,7 @@
 			left: 0;
 			width: 100%;
 			height: 1000vh;
-			background-color: white;
+			background-color: var(--color-header);
 			padding: 100px;
 			padding-top: 200px;
 			transform: translateX(100%);

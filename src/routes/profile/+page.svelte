@@ -52,7 +52,7 @@
 		</div>
 	{:else if active_item === items[2]}
 		<div in:fade={{ duration: 1000 }} class="myaccount-tab">
-			<MyAchievements kazky={data.user_kazky}/>
+			<MyAchievements {data}/>
 		</div>
 	{/if}
 </div>
@@ -117,7 +117,7 @@
 	.myaccount-tab {
 		width: 800px;
 		text-align: center;
-		border: 2px solid black;
+		border: 2px solid var(--color-border);
 		border-radius: 10px;
 		padding: 20px;
 		display: flex;

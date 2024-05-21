@@ -66,8 +66,8 @@
 		padding: 2em;
 		border-radius: 20px;
 		max-width: 80%;
-		margin: 10% auto;
-		background: white;
+        margin: 10% auto;
+        background: var(--color-white);
 		position: relative;
 	}
 

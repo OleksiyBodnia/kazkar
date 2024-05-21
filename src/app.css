@@ -8,16 +8,50 @@
 
 	color: var(--color-black);
 	/* color: #212121; */
-	/* background-color: #fbfbfb; */
+	background-color: var(--color-white);
 }
+/* THEMES */
 :root {
-	--color-black: #212121;
-	--color-white: #ffffff;
-	--color-purple: #78009d;
-	--color-blue: #0087bc;
-	--color-default-text: black;
-	--color-accent: #27a8e4;
-	--color-bar: rgb(149, 222, 207);
+	--color-black: #212121; /* font */
+	--color-header: white; /* header-background */
+	--color-white: #ffffff; /* button, background */
+	--color-purple: #78009d; /* hide-arrow-button */
+	--color-accent: #27a8e4; /* selected buttons */
+	--color-accent-header: #27a8e4; /* selected text on header */
+	--color-bar: #FFEC9E; /* reiting-page bars */
+	--color-border: #212121; /* color of borders */
+}
+.default {
+	--color-black: #212121; /* font */
+	--color-header: white; /* header-background */
+	--color-white: #ffffff; /* button, background */
+	--color-purple: #78009d; /* hide-arrow-button */
+	--color-accent: #27a8e4; /* selected buttons */
+	--color-accent-header: #27a8e4; /* selected text on header */
+	--color-bar: #FFEC9E; /* reiting-page bars */
+	--color-border: #212121; /* color of borders */
+}
+.light {
+	--color-black: #212121; /* font */
+	--color-header: #ffecde; /* header-background */
+	--color-white: #e2edf7; /* button, background */
+	--color-purple: #78009d; /* hide-arrow-button */
+	--color-accent: #27a8e4; /* selected buttons */
+	--color-accent-header: #27a8e4; /* selected text on header */
+	--color-bar: #FFEC9E; /* reiting-page bars */
+	--color-border: #212121; /* color of borders */
+}
+
+.darkk {
+/*	background-color: lightgrey;*/
+	--color-black: lightgrey; /* font */
+	--color-header: #d06524; /* header-background */
+	--color-white: #161d29; /* button, background */
+	--color-purple: #27a8e4;  /* hide-arrow-button */
+	--color-accent: #27a8e4; /* selected buttons */
+	--color-accent-header: yellow; /* selected text on header */
+	--color-bar: #ffffff; /* reiting-page bars */
+	--color-border: #817a7a; /* color of borders a little bit more light than color-black*/
 }
 
 body {
@@ -50,7 +84,7 @@ button{
 	background-color: var(--color-white);
 	color: var(--color-black);
 	text-align: center;
-	border: 2px solid black;
+	border: 2px solid var(--color-border);
 	border-radius: 8px;
 	cursor: pointer;
 	padding: 2px 8px;
@@ -66,7 +100,7 @@ button:hover,
 
 select {
 	background-color: var(--color-white);
-	border: 2px solid;
+	border: 2px solid var(--color-border);
 	border-radius: 8px;
 	cursor: pointer;
 	padding: 2px 8px;
