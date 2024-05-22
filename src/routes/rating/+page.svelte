@@ -107,7 +107,7 @@
 
 <style>
 	.rating-main-section {
-		margin-top: 9%;
+		margin-top: 4%;
 		display: flex;
 		align-items: center;
 		justify-content: center;

@@ -34,15 +34,12 @@
 	}
 
 	async function addRechennia() {
-		if (!validateSentence(new_rech))
-		{
+		if (!validateSentence(new_rech)) {
 			report = bad_rech_report;
 			return;
 		}
 
 		new_rech = correctSentence(new_rech); //correct sentence
-
-
 
 		const response = await fetch('/api/kazka/add-rechennia', {
 			method: 'POST',
@@ -71,9 +68,7 @@
 	}
 
 	async function newKazka() {
-
-		if (!(validateSentence(new_rech) || validateSentence(title)))
-		{
+		if (!(validateSentence(new_rech) || validateSentence(title))) {
 			report = bad_kazka_report;
 			return;
 		}
@@ -222,6 +217,43 @@
 		margin-bottom: 25px;
 		width: 300px;
 	}
+	/* Стилізація контейнера прогрес бару */
+	progress {
+		width: 100%;
+		height: 20px;
+		appearance: none; /* Прибираємо стандартні стилі браузера */
+	}
+
+	/* Стилізація для веб-кит браузерів (Chrome, Safari) */
+	progress::-webkit-progress-bar {
+		background-color: #e0e0e0;
+		border-radius: 10px;
+		border: 1px solid #ccc;
+	}
+
+	progress::-webkit-progress-value {
+		background-color: var(--color-accent);
+		border-radius: 10px;
+	}
+
+	/* Стилізація для Firefox */
+	progress::-moz-progress-bar {
+		background-color: var(--color-accent);
+		border-radius: 10px;
+	}
+
+	/* Стилізація для інших браузерів */
+	progress {
+		background-color: #e0e0e0;
+		border-radius: 10px;
+		border: 1px solid #ccc;
+	}
+
+	progress::-ms-fill {
+		background-color: var(--color-accent);
+		border-radius: 10px;
+	}
+
 	@media screen and (max-width: 767px) {
 		.kazka-title {
 			width: 200px;

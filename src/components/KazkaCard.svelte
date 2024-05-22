@@ -114,7 +114,7 @@
 	}
 
 	.kazka-container {
-		height: 130px;
+		height: 128px;
 		overflow: hidden;
 	}
 
