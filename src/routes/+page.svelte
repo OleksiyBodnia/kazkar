@@ -1,7 +1,7 @@
 <script>
 	/** @type {import('./$types').PageData} */
 	export let data;
-	import KazkaCard from '../components/KazkaCard.svelte';
+	import KazkaCard from '@components/KazkaCard.svelte';
 	import { fly } from 'svelte/transition';
 	import { onMount } from 'svelte';
 

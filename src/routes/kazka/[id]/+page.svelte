@@ -1,13 +1,13 @@
 <script>
 	/** @type {import('./$types').PageData} */
 	export let data;
-	import Sidebar from '../../../components/Sidebar.svelte';
+	import Sidebar from '@components/Sidebar.svelte';
+	import KazkaCard from '@components/KazkaCard.svelte';
+	import { page } from '$app/stores';
 	import { tooltip } from '$lib/utils/tooltip.js';
 	import { slide, scale } from 'svelte/transition';
 	import { tweened } from 'svelte/motion';
 	import { cubicOut } from 'svelte/easing';
-	import KazkaCard from '../../../components/KazkaCard.svelte';
-	import { page } from '$app/stores';
 
 	let SidebarComponent;
 
@@ -40,13 +40,13 @@
 						<span
 							use:tooltip={{ placement: 'left', theme: 'light-border' }}
 							title={'автор речення: ' + data.users[i].name}
-							style="color: var(--color-accent)"
-							>{rechennia.content + ' '}</span>
+							style="color: var(--color-accent)">{rechennia.content + ' '}</span
+						>
 					{:else}
 						<span
 							use:tooltip={{ placement: 'left', theme: 'light-border' }}
-							title={'автор речення: ' + data.users[i].name}
-							>{rechennia.content + ' '}</span>
+							title={'автор речення: ' + data.users[i].name}>{rechennia.content + ' '}</span
+						>
 					{/if}
 				{/each}
 			</p>
@@ -56,13 +56,13 @@
 						<span
 							use:tooltip={{ placement: 'top', theme: 'light-border' }}
 							title={'автор речення: ' + data.users[i].name}
-							style="color: var(--color-accent)"
-							>{rechennia.content + ' '}</span>
+							style="color: var(--color-accent)">{rechennia.content + ' '}</span
+						>
 					{:else}
 						<span
 							use:tooltip={{ placement: 'top', theme: 'light-border' }}
-							title={'автор речення: ' + data.users[i].name}
-							>{rechennia.content + ' '}</span>
+							title={'автор речення: ' + data.users[i].name}>{rechennia.content + ' '}</span
+						>
 					{/if}
 				{/each}
 			</p>
@@ -102,16 +102,16 @@
 		</svg>
 	</button>
 	<div class="delimeter"></div>
-	<div class="mobile-sidebar"><Sidebar {data}/></div>
+	<div class="mobile-sidebar"><Sidebar {data} /></div>
 	<div class="delimeter second-delimetr"></div>
 	<div class="offer">
 		<h3 style="text-align: left;">Читайте також</h3>
 		<div class="finished-samples">
-			{#each data.offer as kazka,i}
-				<div class="sample" in:scale={{ delay:  160*i, duration: 700, start: 0.7 }}>
-					<KazkaCard state={"completed"} {kazka} />
+			{#each data.offer as kazka, i}
+				<div class="sample" in:scale={{ delay: 160 * i, duration: 700, start: 0.7 }}>
+					<KazkaCard state={'completed'} {kazka} />
 				</div>
-		{/each}   
+			{/each}
 		</div>
 	</div>
 </div>
@@ -162,7 +162,6 @@
 		margin-bottom: 20px;
 	}
 
-
 	.show-sidebar-btn {
 		all: unset;
 		position: absolute;
@@ -197,45 +196,44 @@
 	.show-sidebar-btn-arrow2:hover {
 		stroke: var(--color-purple);
 	}
-	.second-delimetr{
+	.second-delimetr {
 		display: none;
 	}
-	.mobile-sidebar{
+	.mobile-sidebar {
 		display: none;
 	}
-	.tippy-mobile{
+	.tippy-mobile {
 		display: none;
 	}
-	@media screen and (max-width: 767px){
-		.sidebar-container, .show-sidebar-btn{
-		display: none;
+	@media screen and (max-width: 767px) {
+		.sidebar-container,
+		.show-sidebar-btn {
+			display: none;
 		}
-		.kazka-and-sidebar{
+		.kazka-and-sidebar {
 			justify-content: center;
 		}
-		.kazka-itself{
+		.kazka-itself {
 			max-width: 100%;
 		}
-		.individual-kazka-div{
+		.individual-kazka-div {
 			margin-top: 0;
 			padding-top: 0;
 		}
-		.height-correction{
+		.height-correction {
 			display: none;
 		}
-		.second-delimetr{
+		.second-delimetr {
 			display: block;
 		}
-		.mobile-sidebar{
+		.mobile-sidebar {
 			display: flex;
 		}
-		.tippy-pc{
+		.tippy-pc {
 			display: none;
 		}
-		.tippy-mobile{
+		.tippy-mobile {
 			display: block;
 		}
 	}
-	
-	
 </style>

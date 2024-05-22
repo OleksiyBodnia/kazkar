@@ -1,8 +1,8 @@
 <script>
 	/** @type {import('./$types').PageData} */
 	export let data;
-	import KazkaCard from '../../components/KazkaCard.svelte';
-	import ReadWriteTemplate from '../../components/ReadWriteTemplate.svelte';
+	import KazkaCard from '@components/KazkaCard.svelte';
+	import ReadWriteTemplate from '@components/ReadWriteTemplate.svelte';
 </script>
 
 <ReadWriteTemplate
