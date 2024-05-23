@@ -137,7 +137,7 @@
 			width: 355px;
 		}
 		.profile-page-div{
-			padding-tab: 0;
+			padding-top: 0;
 		}
 	}
 	@media screen and (min-width: 768px) and (max-width: 1024px){

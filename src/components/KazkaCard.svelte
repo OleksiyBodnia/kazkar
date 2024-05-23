@@ -3,7 +3,7 @@
 	import WriteKazkaDialog from './WriteKazkaDialog.svelte';
 	import { page } from '$app/stores';
 	import Modal from './Modal.svelte';
-	import { goto } from '$app/navigation';
+	import AlertDialog from './AlertDialog.svelte';
 
 	export let kazka;
 	export let state;
@@ -11,10 +11,11 @@
 	let WriteDialogComponent;
 	let IsTakenModal;
 	let IsLastUserModal;
+	let AlertDialogComponent;
 
 	async function tryWriteKazka() {
 		if (!$page.data.session) {
-			goto('/auth/signin');
+			AlertDialogComponent.toggleAlert();
 		} else if (kazka.last_user_id == $page.data.session.user.id) {
 			IsLastUserModal.toggle();
 		} else if (await isKazkaTaken(kazka.id)) {
@@ -63,6 +64,7 @@
 			<p>Почекай, поки хтось інший додасть речення до цієї казки.</p>
 		</div>
 	</Modal>
+	<AlertDialog bind:this={AlertDialogComponent} />
 {/if}
 
 <style>
@@ -80,7 +82,6 @@
 
 	.comp-article {
 		width: 500px;
-		/* some padding should be here */
 		padding: 0px 10px 17px 10px;
 		display: flex;
 		flex-direction: column;
@@ -89,7 +90,6 @@
 
 	.incomp-article {
 		width: 500px;
-		/* some padding should be here */
 		padding: 0px 10px 10px 10px;
 		display: flex;
 		flex-direction: column;
@@ -114,7 +114,7 @@
 	}
 
 	.kazka-container {
-		height: 130px;
+		height: 128px;
 		overflow: hidden;
 	}
 
