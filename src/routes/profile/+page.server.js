@@ -7,9 +7,9 @@ export const load = async (event) => {
 	if (!session) {
 		redirect(303, '/');
 	}
-	
-	let user_kazky = await getKazky({ state: 'completed', user_id: session?.user.id });
-	const user_stats = await getUserStats(session?.user.id);
+
+	let user_kazky = getKazky({ state: 'completed', user_id: session?.user.id });
+	const user_stats = getUserStats(session?.user.id);
 
 	return {
 		session,

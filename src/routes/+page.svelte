@@ -22,13 +22,19 @@
 		<div class="read-finished" in:fly={{ y: -120, duration: 1000, delay: 200 }}>
 			<h1>Читай завершені казки</h1>
 			<div class="finished-samples">
-				{#each data.kazky as kazka}
-					<div class="sample">
-						<KazkaCard state={'completed'} {kazka} />
-					</div>
-				{/each}
+				{#await data.kazky}
+					<p>Завантаження...</p>
+				{:then kazky}
+					{#each kazky as kazka}
+						<div class="sample" in:fly|global={{ y: -120, duration: 1000, delay: 0 }}>
+							<KazkaCard state={'completed'} {kazka} />
+						</div>
+					{/each}
+					<a href="/chytaty" class="main-page-link">Більше</a>
+				{:catch}
+					<p>Помилка завантаження казок</p>
+				{/await}
 			</div>
-			<a href="/chytaty" class="main-page-link">Більше</a>
 		</div>
 	</div>
 {/if}

@@ -34,15 +34,12 @@
 	}
 
 	async function addRechennia() {
-		if (!validateSentence(new_rech))
-		{
+		if (!validateSentence(new_rech)) {
 			report = bad_rech_report;
 			return;
 		}
 
 		new_rech = correctSentence(new_rech); //correct sentence
-
-
 
 		const response = await fetch('/api/kazka/add-rechennia', {
 			method: 'POST',
@@ -60,7 +57,6 @@
 		if (response.ok) {
 			kazka.rechennia.push({ content: new_rech, user_id: $page.data.session.user.id });
 			kazka.last_user_id = $page.data.session.user.id;
-			console.log(kazka);
 			new_rech = '';
 			const { message } = await response.json();
 			report = message;
@@ -71,9 +67,7 @@
 	}
 
 	async function newKazka() {
-
-		if (!(validateSentence(new_rech) || validateSentence(title)))
-		{
+		if (!(validateSentence(new_rech) || validateSentence(title))) {
 			report = bad_kazka_report;
 			return;
 		}

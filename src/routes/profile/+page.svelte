@@ -22,7 +22,7 @@
 <div class="profile-page-div">
 	<h1 class="profile-page-h">Профіль користувача</h1>
 	<div class="profile-username-photo">
-		<img src={`${user_photo}`} alt='username-photo' class="user-photo" />
+		<img src={`${user_photo}`} alt="username-photo" class="user-photo" />
 		<strong>{username}</strong>
 	</div>
 
@@ -34,7 +34,7 @@
 					on:keydown={(event) => {
 						if (event.key === 'Enter') tabChange(item);
 					}}
-					class={(item === active_item) ? 'tab-switch-active' : 'tab-switch-unactive'}
+					class={item === active_item ? 'tab-switch-active' : 'tab-switch-unactive'}
 				>
 					{item}
 				</button>
@@ -42,29 +42,36 @@
 		</ul>
 	</div>
 
-	{#if active_item === items[0]}
-		<div in:fade={{ duration: 1000 }} class="myaccount-tab">
-			<MyAccount {data} />
-		</div>
-	{:else if active_item === items[1]}
-		<div in:fade={{ duration: 1000 }} class="myaccount-tab">
-			<MyKazky kazky={data.user_kazky}/>
-		</div>
-	{:else if active_item === items[2]}
-		<div in:fade={{ duration: 1000 }} class="myaccount-tab">
-			<MyAchievements {data}/>
-		</div>
-	{/if}
+	{#await Promise.all([data.user_kazky, data.user_stats])}
+		Завантаження...
+	{:then [user_kazky, user_stats]}
+		{#if active_item === items[0]}
+			<div in:fade={{ duration: 1000 }} class="myaccount-tab">
+				<MyAccount {user_kazky} {user_stats} />
+			</div>
+		{:else if active_item === items[1]}
+			<div in:fade={{ duration: 1000 }} class="myaccount-tab">
+				<MyKazky kazky={user_kazky} />
+			</div>
+		{:else if active_item === items[2]}
+			<div in:fade={{ duration: 1000 }} class="myaccount-tab">
+				<MyAchievements {user_kazky} />
+			</div>
+		{/if}
+	{:catch}
+		Помилка завантаження казок :(
+	{/await}
 </div>
 
 <style>
-	.profile-username-photo{
+	.profile-username-photo {
 		display: flex;
-		align-items: center;justify-content: center;
+		align-items: center;
+		justify-content: center;
 		gap: 5px;
 		margin-bottom: 20px;
 	}
-	.user-photo{
+	.user-photo {
 		border-radius: 50%;
 		width: 60px;
 		height: 60px;
@@ -125,25 +132,24 @@
 		justify-content: center;
 		flex-direction: column;
 	}
-	@media screen and (max-width: 767px){
-		.profile-page-h{
+	@media screen and (max-width: 767px) {
+		.profile-page-h {
 			/* display: flex;
 			align-items: center;justify-content: center; */
 		}
-		ul{
+		ul {
 			gap: 0px;
 		}
-		.myaccount-tab{
+		.myaccount-tab {
 			width: 355px;
 		}
-		.profile-page-div{
+		.profile-page-div {
 			padding-tab: 0;
 		}
 	}
-	@media screen and (min-width: 768px) and (max-width: 1024px){
-		.myaccount-tab{
+	@media screen and (min-width: 768px) and (max-width: 1024px) {
+		.myaccount-tab {
 			width: 738px;
 		}
 	}
-	
 </style>
