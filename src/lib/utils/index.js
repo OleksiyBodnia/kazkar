@@ -209,7 +209,7 @@ export function validateSentence(sentence) {
 	}
 
 	const ukrainianVowelRegex = "аеєиіїоуюя";
-	const ukrainianConsonantRegex = "бвгґджзклмнпрстфхцчш";
+	const ukrainianConsonantRegex = "бвгґджзклмнпйрстьфхцчш";
 	const allowedSigns = "-!?.,";
 
 	function checkWord(line) {
