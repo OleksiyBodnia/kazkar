@@ -53,7 +53,6 @@
 		if (response.ok) {
 			kazka.rechennia.push({ content: new_rech, user_id: $page.data.session.user.id });
 			kazka.last_user_id = $page.data.session.user.id;
-			console.log(kazka);
 			new_rech = '';
 			const { message } = await response.json();
 			report = message;

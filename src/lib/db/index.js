@@ -304,6 +304,9 @@ export async function getKazkaStats(kazka_id, user_id = null) {
 		stats.entry = entry[0];
 	}
 
+	// add artificial delay 2s
+	// await new Promise((resolve) => setTimeout(resolve, 2000));
+
 	return stats;
 }
 

@@ -1,10 +1,10 @@
-import { getKazky } from '$lib/db';
+import { getKazky, getRandomKazka } from '$lib/db';
 const kazky_per_page = 4;
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load() {
 	return {
-		kazky: await getKazky({ state: 'incompleted', limit: kazky_per_page }),
+		kazky: getKazky({ state: 'incompleted', limit: kazky_per_page }),
 		kazky_per_page
 	};
 }
