@@ -7,8 +7,6 @@
 	import { correctSentence, validateSentence } from '$lib/utils';
 
 	let ModalComponent;
-	let AlertDialogComponent;
-
 	export let kazka;
 	export let type;
 
@@ -20,10 +18,8 @@
 	let bad_kazka_report = 'Ви ввели некорректну назву казки або перше речення. Ай ай ай!';
 
 	export function toggleWrite() {
-		if ($page.data.session) {
-			report = '';
-			ModalComponent.toggle();
-		} else AlertDialogComponent.toggleAlert();
+		report = '';
+		ModalComponent.toggle();
 	}
 
 	function timeIsOut() {
@@ -161,8 +157,6 @@
 	{/if}
 </Modal>
 
-<AlertDialog bind:this={AlertDialogComponent} />
-
 <style>
 	div {
 		width: 600px;
@@ -220,7 +214,7 @@
 	/* Стилізація контейнера прогрес бару */
 	progress {
 		width: 100%;
-		height: 20px;
+		height: 10px;
 		appearance: none; /* Прибираємо стандартні стилі браузера */
 	}
 
