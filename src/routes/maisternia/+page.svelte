@@ -43,9 +43,7 @@
 	let:kazka
 >
 	<button slot="rnd-kazka-btn" on:click={openRandomKazka}>Випадкова казка</button>
-	<button slot="new-kazka-btn" on:click={() => NewKazkaDialog.toggleWrite()}
-		>Розпочати нову казку</button
-	>
+	<button slot="new-kazka-btn" on:click={() => NewKazkaDialog.toggleWrite()}>Нова казка</button>
 
 	<KazkaCard state={'incompleted'} {kazka} />
 </ReadWriteTemplate>
