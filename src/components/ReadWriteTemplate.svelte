@@ -154,6 +154,7 @@
 
 	.page-description {
 		text-align: center;
+		width: 70%;
 	}
 
 	.finished-samples {
@@ -201,6 +202,9 @@
 		border-bottom: 1px solid var(--color-accent);
 	}
 	@media screen and (max-width: 767px) {
+		.page-description {
+			width: 100%;
+		}
 		.rigth-find-tools {
 			flex-direction: column;
 			gap: 15px;
@@ -226,6 +230,9 @@
 		}
 	}
 	@media screen and (min-width: 768px) and (max-width: 1023px) {
+		.page-description {
+			width: 80%;
+		}
 		.rigth-find-tools {
 			flex-direction: column;
 			gap: 15px;

@@ -8,9 +8,10 @@
 <ReadWriteTemplate
 	state={'completed'}
 	header={'Бібліотека завершених казок'}
-	description={'Тут ви можете знайти безліч завершених казок - читайте, досліджуйте, \
-					надихайтеся, смійтеся (крінж опис треба поміняти)'}
+	description={'Тут можна знайти безліч завершених казок - читай неймовірні, \
+		надзвичайні казки, а також не забудь поставити уподобайку! '}
 	{data}
+	random_kazka={data.random_kazka}
 	let:kazka
 >
 	<a slot="rnd-kazka-btn" href="/kazka/{data.random_kazka.id}">
