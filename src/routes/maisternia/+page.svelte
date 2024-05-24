@@ -35,7 +35,8 @@
 <ReadWriteTemplate
 	state={'incompleted'}
 	header={'Майстерня Казкаря'}
-	description={'Тут ви можете взяти участь у написанні казок! Правила, та та та і тому подібне'}
+	description={'Тут можна взяти участь у написанні казок! Хутчіш \
+		обирай одну з них і додавай нове речення, або ж, розпочни свою власну.'}
 	{data}
 	{random_kazka}
 	kazky_per_page={data.kazky_per_page}

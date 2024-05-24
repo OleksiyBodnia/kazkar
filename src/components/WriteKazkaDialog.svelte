@@ -112,7 +112,7 @@
 
 				<div class="kazka-controls">
 					<button on:click={addRechennia}>Додати речення</button>
-					{#if kazka.rechennia.length >= 10}
+					{#if kazka.rechennia.length >= 9}
 						<label>
 							<input type="checkbox" bind:checked={finish} />
 							завершити казку
