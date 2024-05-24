@@ -8,7 +8,7 @@ export async function load() {
 		limit: kazky_per_page
 	});
 
-	const random_kazka = getRandomKazka(true).then((res) => res[0]);
+	const random_kazka = await getRandomKazka(true).then((res) => res[0]);
 
 	return {
 		kazky,
