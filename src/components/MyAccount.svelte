@@ -1,11 +1,13 @@
 <script>
-	import { writable } from 'svelte/store';
-	export let data;
+	export let user_kazky;
+	export let user_stats;
+
 	import { signOut } from '@auth/sveltekit/client';
+	import { site_theme } from '$lib/stores/theme';
 	import { page } from '$app/stores';
 
 	let usernameField;
-	let userEmail = $page.data.session.user.email;
+	let userEmail = $page.data.session.user.email || 'невідомо';
 
 	async function changeName() {
 		const response = await fetch('/api/user/change-name', {
@@ -26,145 +28,97 @@
 		}
 	}
 
-//   function getCurrentTheme() {
-//     return localStorage.getItem('theme') || 'light';
-//   }
-//   const theme = writable(getCurrentTheme());
-
-//   function toggleTheme() {
-//     theme.update(currentTheme => {
-//       const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-//       localStorage.setItem('theme', newTheme); // Збереження нової теми в локальне сховище
-//       return newTheme;
-//     });
-//   }
-//   $: {
-//     const currentTheme = $theme;
-//     if (currentTheme === 'dark') {
-//       document.documentElement.classList.add('dark');
-//     } else {
-//       document.documentElement.classList.remove('dark');
-//     }
-//   }
-
-//   let isAnimating = false;
-// let isToggled = JSON.parse(localStorage.getItem('isToggled')) || false;
-
-// function toggleThemeAndAnimation() {
-//   if (!isAnimating) {
-//     isAnimating = true;
-//     toggleTheme();
-//     const themeSpan = document.querySelector('.theme-btn-span');
-//     const themeBtn = document.querySelector('.theme-btn');
-//     const btnWidth = themeBtn.offsetWidth;
-
-//     if (!isToggled) {
-//       themeSpan.style.backgroundColor = 'black';
-//       themeSpan.style.transform = `translateX(${btnWidth - 22}px)`;
-//       isToggled = true;
-//       localStorage.setItem('isToggled', JSON.stringify(true));
-//     } else {
-//       themeSpan.style.backgroundColor = 'white'
-//       themeSpan.style.transform = 'translateX(0)';
-//       isToggled = false;
-//       localStorage.setItem('isToggled', JSON.stringify(false));
-//     }
-
-//     themeSpan.addEventListener('transitionend', () => {
-//       isAnimating = false;
-//     });
-//   }
-// }
-
+	const setTheme = (theme) => {
+		site_theme.set(theme);
+	};
 </script>
 
 <div class="myaccount-tab">
 	<p>Пошта: <b>{userEmail}</b></p>
-	<p>Кількість казок, у яких брав участь: <b>{data.user_kazky.length}</b></p>
-	<p>Всього написано речень: <b>{data.user_kazky.reduce((total, kazka) => total + kazka.rechennia.length, 0)}</b></p>
-	<p>Прочитаних казок: <b>{data.user_stats.views}</b></p>
-	<p>Та доданих уподобайок: <b>{data.user_stats.likes}</b></p>
-	<!-- <div class="theme-toggle-div">
-		<p>Вибір кольру </p>
-		<button on:click={toggleThemeAndAnimation} class="theme-btn"><div class="theme-btn-span"></div></button>
-	</div> -->
-	<!-- Щось по типу теми -->
-	<p>Акцентний колір: 
-		<select>
-				<option value="Блакитний">
-					Блакитний
-				</option>
-		</select>
+	<p>Завершених казок, у яких брав участь: <b>{user_kazky.length}</b></p>
+	<p>Всього написаних речень: <b>{user_stats.rechennia}</b></p>
+	<p>Прочитаних казок: <b>{user_stats.views}</b></p>
+	<p>Та доданих уподобайок: <b>{user_stats.likes}</b></p>
+	<div class="theme-div">
+		<span>Вибір теми:</span>
+		<div
+			class="theme-btn defaul {$site_theme === 'default' ? 'selected' : ''}"
+			on:click={() => setTheme('default')}
+		></div>
+		<div
+			class="theme-btn light-theme {$site_theme === 'light' ? 'selected' : ''}"
+			on:click={() => setTheme('light')}
+		></div>
+		<div
+			class="theme-btn dark-theme {$site_theme === 'darkk' ? 'selected' : ''}"
+			on:click={() => setTheme('darkk')}
+		></div>
+	</div>
+	<p>
+		<button
+			on:click={() => {
+				changeName();
+			}}>Змінити ім'я</button
+		>
+		<input type="text" bind:this={usernameField} class="profile-change-name-input" />
 	</p>
 	<p>
-		<button on:click={() => { changeName(); }}>Змінити ім'я</button>
-		<input type="text" bind:this={usernameField} />
-	</p>
-	<p>
-		<button on:click={() => { signOut(); }}>Вийти з акаунту</button>
+		<button
+			on:click={() => {
+				signOut();
+			}}>Вийти з акаунту</button
+		>
 	</p>
 </div>
 
 <style>
-	input {
-		width: 200px;
+	.profile-change-name-input {
+		border-radius: 4px;
+		padding: 2px;
+		padding-left: 5px;
+		padding-right: 5px;
 	}
 
-	.theme-toggle-div {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.theme-btn {
-		width: 50px;
-		height: 22px;
-		margin-left: 10px;
-		position: relative;
-		border-radius: 11px;
-		overflow: hidden;
-		background-color: rgb(130, 130, 130);
-	}
-
-	.theme-btn:hover{
-		background-color: inherit;
-		background-image: inherit;
-		color: inherit;
-	}
-
-	.profile-change-name-form{
+	.theme-div {
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		gap: 10px;
-		
 	}
 
-	.theme-btn-span {
-		border: 1px solid black;
-		width: 19px;
-		height: 19px;
-		background-color: white;
+	.theme-btn {
+		width: 20px;
+		height: 20px;
 		border-radius: 50%;
-		position: absolute;
-		top: 0;
-		left: 0;
-		transition: transform 0.3s ease, background-color 0.3s ease;
+
+		transition:
+			width 0.3s ease,
+			height 0.3s ease;
 	}
 
-	.myaccount-tab {
-		width: 800px;
-		text-align: center;
-		border: 2px solid black;
-		border-radius: 10px;
-		padding: 20px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		flex-direction: column;
+	.theme-btn:hover {
+		cursor: pointer;
 	}
 
-	:root.dark {
-		--color-black: rgb(47, 39, 119);
+	.selected {
+		transform: scale(1.2);
+		box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.3);
+	}
+
+	.defaul {
+		background-color: lavenderblush;
+	}
+
+	.light-theme {
+		background-color: slategray;
+	}
+
+	.dark-theme {
+		background-color: black;
+		box-shadow: rgba(100, 100, 111, 0.2) 0px 3px 5px;
+	}
+
+	input {
+		width: 200px;
 	}
 </style>

@@ -1,9 +1,13 @@
 <script>
-	//import { getRandomKazka } from '$lib/db/';
 	import { scale } from 'svelte/transition';
 	import { onMount } from 'svelte';
 
 	export let data;
+	let kazky;
+	data.kazky.then((k) => (kazky = k));
+	export let random_kazka;
+	export let kazky_per_page;
+	export let state;
 	export let header = 'Заголовок';
 	export let description = 'Опис сторінки';
 
@@ -21,8 +25,10 @@
 	function whenFilterSelected() {}
 
 	async function getMoreKazky() {
+		more_kazky_button.textContent = 'Завантаження...';
+
 		const new_kazky = await fetch(
-			`/api/get-kazky?state=incompleted&page=${++page}&kazky_per_page=${data.kazky_per_page ?? 4}`,
+			`/api/get-kazky?state=${state}&page=${++page}&kazky_per_page=${kazky_per_page ?? 4}`,
 			{
 				method: 'GET',
 				headers: {
@@ -33,9 +39,11 @@
 			.then((res) => res.json())
 			.then((res) => res.kazky);
 
-		data.kazky = [...data.kazky, ...new_kazky];
+		kazky = [...kazky, ...new_kazky];
 
-		if (new_kazky.length === 0 || new_kazky.length < data.kazky_per_page) {
+		more_kazky_button.textContent = 'Завантажити ще';
+
+		if (new_kazky.length === 0 || new_kazky.length < kazky_per_page) {
 			//console.log('Більше казок немає');
 
 			more_kazky_button.style.display = 'none';
@@ -44,7 +52,47 @@
 		}
 	}
 
-	async function search(event) {	
+	async function updateKazkas() {
+		// skip update if user is not on the tab
+		if (document.visibilityState !== 'visible') return;
+
+		// kazky with id and last update timestamp ('id', 'updated_at')
+		const kazky_updates = await fetch(`/api/get-kazky-updates?state=${state}`).then((r) =>
+			r.json().then((data) => data.kazky)
+		);
+
+		let updated_kazky = [];
+
+		// compare local data.kazky with kazky_updates
+		// if kazka is updated, fetch it from server
+		for (const kazka of kazky) {
+			const updated_kazka = kazky_updates.find((k) => k.id === kazka.id);
+			if (updated_kazka) {
+				if (updated_kazka.updated_at !== kazka.updated_at) {
+					updated_kazky.push(
+						await fetch(`/api/kazka/get?id=${kazka.id}`).then((r) =>
+							r.json().then((data) => data.kazka)
+						)
+					);
+				} else {
+					updated_kazky.push(kazka);
+				}
+			}
+		}
+
+		kazky = updated_kazky;
+
+		// console.log('kazkas updated at ' + new Date().toLocaleTimeString());
+	}
+
+	onMount(() => {
+		// call updateKazkas every 5 seconds
+		const interval = setInterval(updateKazkas, 5000);
+		return () => clearInterval(interval);
+		// updateKazkas();
+	});
+
+	async function search(event) {
 		if (event.key === 'Enter') {
 			if (event.target.value == '') {
 				console.log('Пустий пошуковий запит');
@@ -61,7 +109,7 @@
 				},
 				body: JSON.stringify({
 					is_completed: true,
-					query: search_query,
+					query: search_query
 				})
 			});
 
@@ -83,10 +131,12 @@
 
 	<div class="find-tools">
 		<div class="left-find-tools">
-			<label
-				>Пошук
-				<input type="text" on:keydown={search}/>
-			</label>
+			{#if state === 'completed'}
+				<label
+					>Пошук
+					<input type="text" on:keydown={search} />
+				</label>
+			{/if}
 			<label
 				>Фільтр
 				<select bind:value={filter_selected} on:change={whenFilterSelected}>
@@ -98,23 +148,30 @@
 				</select>
 			</label>
 		</div>
-		<div class="right-find-tools">
-			<slot name="rnd-kazka-btn" />
+		<div class="left-find-tools">
+			{#if random_kazka}
+				<slot name="rnd-kazka-btn" />
+			{/if}
 			<slot name="new-kazka-btn" />
 		</div>
 	</div>
 
-	<div class="finished-samples">
-		{#each data.kazky as kazka, i}
-			{#if grid_visible}
-				<div class="sample" in:scale={{ delay: 160 * i, duration: 700, start: 0.7 }}>
-					<slot {kazka} />
-				</div>
-			{/if}
-		{/each}
-	</div>
-
-	<button on:click={getMoreKazky} bind:this={more_kazky_button}>Завантажити ще</button>
+	{#await data.kazky}
+		<p>Завантаження...</p>
+	{:then}
+		<div class="finished-samples">
+			{#each kazky as kazka, i}
+				{#if grid_visible}
+					<div class="sample" in:scale={{ delay: 160 * i, duration: 700, start: 0.7 }}>
+						<slot {kazka} />
+					</div>
+				{/if}
+			{/each}
+		</div>
+		<button on:click={getMoreKazky} bind:this={more_kazky_button}>Завантажити ще</button>
+	{:catch error}
+		<p style="color: red">{error.message}</p>
+	{/await}
 </div>
 
 <style>
@@ -127,6 +184,7 @@
 
 	.page-description {
 		text-align: center;
+		width: 70%;
 	}
 
 	.finished-samples {
@@ -172,6 +230,52 @@
 	}
 
 	input:focus {
-		border-bottom: 2px solid black;
+		border-bottom: 1px solid var(--color-accent);
+	}
+	@media screen and (max-width: 767px) {
+		.page-description {
+			width: 100%;
+		}
+		.rigth-find-tools {
+			flex-direction: column;
+			gap: 15px;
+			align-items: start;
+			margin-right: 50px;
+		}
+		.find-tools {
+			padding: 0;
+		}
+		.finished-samples {
+			margin: 0;
+		}
+		.left-find-tools {
+			flex-direction: column;
+			gap: 15px;
+			align-items: end;
+		}
+		input {
+			width: 150px;
+		}
+		.page-div {
+			padding: 0;
+		}
+	}
+	@media screen and (min-width: 768px) and (max-width: 1023px) {
+		.page-description {
+			width: 80%;
+		}
+		.rigth-find-tools {
+			flex-direction: column;
+			gap: 15px;
+			align-items: start;
+		}
+		.left-find-tools {
+			flex-direction: column;
+			gap: 15px;
+			align-items: end;
+		}
+		input {
+			width: 150px;
+		}
 	}
 </style>

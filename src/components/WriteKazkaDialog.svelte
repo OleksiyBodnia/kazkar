@@ -2,13 +2,11 @@
 	import Modal from './Modal.svelte';
 	import AlertDialog from './AlertDialog.svelte';
 	import { page } from '$app/stores';
-	import { lastRechennia } from '$lib/utils';
+	import { lastRechennia, releaseKazka } from '$lib/utils';
 	import Timer from './Timer.svelte';
-	import { fade } from 'svelte/transition';
+	import { correctSentence, validateSentence } from '$lib/utils';
 
 	let ModalComponent;
-	let AlertDialogComponent;
-
 	export let kazka;
 	export let type;
 
@@ -16,19 +14,29 @@
 	let new_rech = '';
 	let report = '';
 	let finish = false;
+	let bad_rech_report = 'Ви ввели некорректне речення. Ай ай ай!';
+	let bad_kazka_report = 'Ви ввели некорректну назву казки або перше речення. Ай ай ай!';
 
 	export function toggleWrite() {
-		if ($page.data.session) {
-			report = '';
-			ModalComponent.toggle();
-		} else AlertDialogComponent.toggleAlert();
+		report = '';
+		ModalComponent.toggle();
+	}
+
+	function timeIsOut() {
+		report = 'Час вийшов! Через 5 секунд діалог буде закрито';
+		setTimeout(() => {
+			ModalComponent.close();
+		}, 5000);
 	}
 
 	async function addRechennia() {
-		if (new_rech === '') {
-			report = 'Ви не ввели речення. Ай ай ай!';
+		if (!validateSentence(new_rech)) {
+			report = bad_rech_report;
 			return;
 		}
+
+		new_rech = correctSentence(new_rech); //correct sentence
+
 		const response = await fetch('/api/kazka/add-rechennia', {
 			method: 'POST',
 			headers: {
@@ -43,6 +51,8 @@
 		});
 
 		if (response.ok) {
+			kazka.rechennia.push({ content: new_rech, user_id: $page.data.session.user.id });
+			kazka.last_user_id = $page.data.session.user.id;
 			new_rech = '';
 			const { message } = await response.json();
 			report = message;
@@ -53,10 +63,13 @@
 	}
 
 	async function newKazka() {
-		if (title === '' || new_rech === '') {
-			report = 'Ви не ввели назву або перше речення. Ай ай ай!';
+		if (!(validateSentence(new_rech) || validateSentence(title))) {
+			report = bad_kazka_report;
 			return;
 		}
+
+		new_rech = correctSentence(new_rech); //correct sentence
+
 		const response = await fetch('/api/kazka/new-kazka', {
 			method: 'POST',
 			headers: {
@@ -81,15 +94,16 @@
 	}
 </script>
 
-<Modal outer_close={false} bind:this={ModalComponent}>
-	{#if report === ''}
-		{#if type === 'present'}
-			<div>
-				<div class="timer">
-					<Timer countdown={180} on:notime={toggleWrite} />
-				</div>
+<Modal outer_close={false} bind:this={ModalComponent} on:modal_closed={() => releaseKazka(kazka)}>
+	{#if type === 'present'}
+		<div>
+			<div class="timer">
+				<Timer countdown={180} on:notime={timeIsOut} />
+			</div>
+			{#if report === ''}
 				<h4>{kazka.title}</h4>
 				<p>{lastRechennia(kazka.rechennia).content}</p>
+				<!-- svelte-ignore a11y-autofocus -->
 				<textarea bind:value={new_rech} placeholder="продовження..." autofocus></textarea>
 				<div class="rech-progress">
 					<progress max="10" value={kazka.rechennia.length}></progress>
@@ -98,30 +112,49 @@
 
 				<div class="kazka-controls">
 					<button on:click={addRechennia}>Додати речення</button>
-					{#if kazka.rechennia.length >= 10}
+					{#if kazka.rechennia.length >= 9}
 						<label>
 							<input type="checkbox" bind:checked={finish} />
 							завершити казку
 						</label>
 					{/if}
 				</div>
-			</div>
-		{:else if type === 'new'}
-			<div>
-				<input class="kazka-title" type="text" bind:value={title} placeholder="Назва казки" />
-				<textarea bind:value={new_rech} placeholder="перше речення..."></textarea>
-				<button on:click={newKazka}>Розпочати казку</button>
-			</div>
-		{/if}
-	{:else}
+			{:else}
+				<p>{report}</p>
+				{#if report === bad_rech_report || report === bad_kazka_report}
+					<button
+						on:click={() => {
+							report = '';
+						}}>Дописати</button
+					>
+				{/if}
+			{/if}
+		</div>
+	{:else if type === 'new'}
 		<div>
-			<!-- <h4>Дякуємо за участь!</h4> -->
-			<p>{report}</p>
+			{#if report === ''}
+				<input
+					class="kazka-title"
+					type="text"
+					bind:value={title}
+					placeholder="Назва казки"
+					maxlength="40"
+				/>
+				<textarea bind:value={new_rech} placeholder="перше речення..." maxlength="1000"></textarea>
+				<button on:click={newKazka}>Розпочати казку</button>
+			{:else}
+				<p>{report}</p>
+				{#if report === bad_rech_report || report === bad_kazka_report}
+					<button
+						on:click={() => {
+							report = '';
+						}}>Дописати</button
+					>
+				{/if}
+			{/if}
 		</div>
 	{/if}
 </Modal>
-
-<AlertDialog bind:this={AlertDialogComponent} />
 
 <style>
 	div {
@@ -137,6 +170,7 @@
 		position: absolute;
 		display: flex;
 		left: 2em;
+		top: 20px;
 		align-items: left;
 		flex-direction: row;
 	}
@@ -174,6 +208,49 @@
 		font-weight: bold;
 		text-align: center;
 		margin-bottom: 25px;
+		width: 300px;
+	}
+	/* Стилізація контейнера прогрес бару */
+	progress {
+		width: 100%;
+		height: 10px;
+		appearance: none; /* Прибираємо стандартні стилі браузера */
+	}
+
+	/* Стилізація для веб-кит браузерів (Chrome, Safari) */
+	progress::-webkit-progress-bar {
+		background-color: #e0e0e0;
+		border-radius: 10px;
+		border: 1px solid #ccc;
+	}
+
+	progress::-webkit-progress-value {
+		background-color: var(--color-accent);
+		border-radius: 10px;
+	}
+
+	/* Стилізація для Firefox */
+	progress::-moz-progress-bar {
+		background-color: var(--color-accent);
+		border-radius: 10px;
+	}
+
+	/* Стилізація для інших браузерів */
+	progress {
+		background-color: #e0e0e0;
+		border-radius: 10px;
+		border: 1px solid #ccc;
+	}
+
+	progress::-ms-fill {
+		background-color: var(--color-accent);
+		border-radius: 10px;
+	}
+
+	@media screen and (max-width: 767px) {
+		.kazka-title {
+			width: 200px;
+		}
 	}
 
 	progress {
@@ -190,5 +267,22 @@
 		flex-direction: row;
 		justify-content: center;
 		gap: 30px;
+	}
+	@media screen and (max-width: 767px) {
+		div {
+			width: 240px;
+		}
+		button {
+			margin-top: 14px;
+		}
+		.kazka-controls {
+			flex-direction: column;
+			gap: 12px;
+		}
+	}
+	@media screen and (min-width: 768px) and (max-width: 1023px) {
+		div {
+			width: 550px;
+		}
 	}
 </style>

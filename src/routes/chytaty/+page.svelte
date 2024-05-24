@@ -1,20 +1,20 @@
 <script>
 	/** @type {import('./$types').PageData} */
 	export let data;
-	import KazkaCard from '../../components/KazkaCard.svelte';
-	import ReadWriteTemplate from '../../components/ReadWriteTemplate.svelte';
-
-	let rnd_kazka = Math.floor(Math.random() * data.kazky.length);
+	import KazkaCard from '@components/KazkaCard.svelte';
+	import ReadWriteTemplate from '@components/ReadWriteTemplate.svelte';
 </script>
 
 <ReadWriteTemplate
+	state={'completed'}
 	header={'Бібліотека завершених казок'}
-	description={'Тут ви можете знайти безліч завершених казок - читайте, досліджуйте, \
-					надихайтеся, смійтеся (крінж опис треба поміняти)'}
+	description={'Тут можна знайти безліч завершених казок - читай неймовірні, \
+		надзвичайні казки, а також не забудь поставити уподобайку! '}
 	{data}
+	random_kazka={data.random_kazka}
 	let:kazka
 >
-	<a slot="rnd-kazka-btn" href="/kazka/{data.kazky[rnd_kazka]?.id || 1}">
+	<a slot="rnd-kazka-btn" href="/kazka/{data.random_kazka.id}">
 		<button>Випадкова казка</button>
 	</a>
 

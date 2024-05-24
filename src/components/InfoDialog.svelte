@@ -16,7 +16,6 @@
 
 <style>
 	p {
-		width: 600px;
 		text-align: start;
 	}
 </style>

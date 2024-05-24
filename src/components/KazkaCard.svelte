@@ -1,12 +1,30 @@
 <script>
-	import { truncateText, lastRechennia } from '$lib/utils';
+	import { lastRechennia, isKazkaTaken, takeKazka } from '$lib/utils';
 	import WriteKazkaDialog from './WriteKazkaDialog.svelte';
 	import { page } from '$app/stores';
+	import Modal from './Modal.svelte';
+	import AlertDialog from './AlertDialog.svelte';
 
 	export let kazka;
 	export let state;
 
 	let WriteDialogComponent;
+	let IsTakenModal;
+	let IsLastUserModal;
+	let AlertDialogComponent;
+
+	async function tryWriteKazka() {
+		if (!$page.data.session) {
+			AlertDialogComponent.toggleAlert();
+		} else if (kazka.last_user_id == $page.data.session.user.id) {
+			IsLastUserModal.toggle();
+		} else if (await isKazkaTaken(kazka.id)) {
+			IsTakenModal.toggle();
+		} else {
+			takeKazka(kazka);
+			WriteDialogComponent.toggleWrite();
+		}
+	}
 </script>
 
 {#if state == 'completed'}
@@ -15,8 +33,8 @@
 			<div class="kazka-container">
 				<h4>{kazka.title}</h4>
 				{#each kazka.rechennia as rechennia}
-					{#if $page.data.session.user.id == rechennia.user_id}
-						<span style="color: var(--color-user);">{rechennia.content} </span>
+					{#if $page.data.session && $page.data.session.user.id == rechennia.user_id}
+						<span style="color: var(--color-accent);">{rechennia.content} </span>
 					{:else}
 						<span>{rechennia.content} </span>
 					{/if}
@@ -26,7 +44,7 @@
 		</a>
 	</article>
 {:else if state == 'incompleted'}
-	<button class="custom-btn" on:click={() => WriteDialogComponent.toggleWrite()}>
+	<button class="custom-btn" on:click={tryWriteKazka}>
 		<article class="incomp-article">
 			<div class="rech-conteiner">
 				<h4>{kazka.title}</h4>
@@ -36,6 +54,17 @@
 		</article>
 	</button>
 	<WriteKazkaDialog bind:this={WriteDialogComponent} type={'present'} {kazka} />
+	<Modal bind:this={IsTakenModal}>
+		<div class="kazka-taken-alert">
+			<p>Упс, хтось вже пише цю казку...</p>
+		</div>
+	</Modal>
+	<Modal bind:this={IsLastUserModal}>
+		<div class="kazka-taken-alert">
+			<p>Почекай, поки хтось інший додасть речення до цієї казки.</p>
+		</div>
+	</Modal>
+	<AlertDialog bind:this={AlertDialogComponent} />
 {/if}
 
 <style>
@@ -52,17 +81,15 @@
 	}
 
 	.comp-article {
-		width: 500px;	
-		/* some padding should be here */
+		width: 500px;
 		padding: 0px 10px 17px 10px;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 	}
 
-	.incomp-article{
-		width: 500px;	
-		/* some padding should be here */
+	.incomp-article {
+		width: 500px;
 		padding: 0px 10px 10px 10px;
 		display: flex;
 		flex-direction: column;
@@ -87,7 +114,7 @@
 	}
 
 	.kazka-container {
-		height: 130px;
+		height: 128px;
 		overflow: hidden;
 	}
 
@@ -110,5 +137,15 @@
 		text-align: right;
 		position: relative;
 		top: -9px;
+	}
+	@media screen and (max-width: 767px) {
+		.comp-article,
+		.incomp-article {
+			width: 340px;
+		}
+		.kazka-container {
+			height: 125px;
+			overflow: hidden;
+		}
 	}
 </style>

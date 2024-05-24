@@ -11,6 +11,7 @@
 	let items = ['Мій акаунт', 'Мої казки', 'Особисті досягнення'];
 	let active_item = items[0];
 	let previous_item = items[0];
+	let user_photo = $page.data.session.user.image;
 
 	function tabChange(item) {
 		previous_item = active_item;
@@ -19,7 +20,11 @@
 </script>
 
 <div class="profile-page-div">
-	<h1>Профіль користувача <strong>{username}</strong></h1>
+	<h1 class="profile-page-h">Профіль користувача</h1>
+	<div class="profile-username-photo">
+		<img src={`${user_photo}`} alt="username-photo" class="user-photo" />
+		<strong>{username}</strong>
+	</div>
 
 	<div class="tabs">
 		<ul>
@@ -29,35 +34,50 @@
 					on:keydown={(event) => {
 						if (event.key === 'Enter') tabChange(item);
 					}}
+					class={item === active_item ? 'tab-switch-active' : 'tab-switch-unactive'}
 				>
-					<div class:active={item === active_item}>{item}</div>
+					{item}
 				</button>
 			{/each}
 		</ul>
 	</div>
 
-	{#if active_item === items[0]}
-		<div in:fade={{ x: -200, duration: 700 }}>
-			<MyAccount {data} />
-		</div>
-	{:else if active_item === items[1]}
-		<div in:fade={{ x: 200, duration: 700 }}>
-			<MyKazky kazky={data.user_kazky}/>
-		</div>
-		<!-- {:else if active_item === items[1] && previous_item === items[2]}
-		<div in:fly={{ x: -200, duration: 700 }}>
-			<MyKazky />
-		</div> -->
-	{:else if active_item === items[2]}
-		<div in:fade={{ x: 200, duration: 700 }}>
-			<MyAchievements kazky={data.user_kazky}/>
-		</div>
-	{/if}
+	{#await Promise.all([data.user_kazky, data.user_stats])}
+		Завантаження...
+	{:then [user_kazky, user_stats]}
+		{#if active_item === items[0]}
+			<div in:fade={{ duration: 1000 }} class="myaccount-tab">
+				<MyAccount {user_kazky} {user_stats} />
+			</div>
+		{:else if active_item === items[1]}
+			<div in:fade={{ duration: 1000 }} class="myaccount-tab">
+				<MyKazky kazky={user_kazky} />
+			</div>
+		{:else if active_item === items[2]}
+			<div in:fade={{ duration: 1000 }} class="myaccount-tab">
+				<MyAchievements {user_kazky} />
+			</div>
+		{/if}
+	{:catch}
+		Помилка завантаження казок :(
+	{/await}
 </div>
 
 <style>
+	.profile-username-photo {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 5px;
+		margin-bottom: 20px;
+	}
+	.user-photo {
+		border-radius: 50%;
+		width: 60px;
+		height: 60px;
+	}
 	.profile-page-div {
-		padding: 40px;
+		padding: 20px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -81,25 +101,55 @@
 		list-style-type: none;
 	}
 
-	button {
-		margin: 0 16px;
+	.tab-switch-active {
+		all: unset;
 		font-size: 18px;
-		color: #555;
 		cursor: pointer;
+		border-bottom: var(--color-accent) 2px solid;
+		color: var(--color-accent);
+		text-align: center;
+		margin: 0 16px;
+	}
+	.tab-switch-unactive {
+		all: unset;
+		font-size: 18px;
+		cursor: pointer;
+		text-align: center;
+		margin: 0 16px;
+	}
+	.tab-switch-unactive:hover {
+		color: var(--color-accent);
 	}
 
-	button:hover {
-		background-image: linear-gradient(120deg, #78009d 34%, #0087bc 100%);
-		background-clip: text;
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
+	.myaccount-tab {
+		width: 800px;
+		text-align: center;
+		border: 2px solid var(--color-border);
+		border-radius: 10px;
+		padding: 20px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
 	}
-
-	.active {
-		background-image: linear-gradient(120deg, #78009d 34%, #0087bc 100%);
-		background-clip: text;
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		/* border-bottom: 2px solid #78009d; */
+	@media screen and (max-width: 767px) {
+		.profile-page-h {
+			/* display: flex;
+			align-items: center;justify-content: center; */
+		}
+		ul {
+			gap: 0px;
+		}
+		.myaccount-tab {
+			width: 355px;
+		}
+		.profile-page-div {
+			padding-top: 0;
+		}
+	}
+	@media screen and (min-width: 768px) and (max-width: 1024px) {
+		.myaccount-tab {
+			width: 738px;
+		}
 	}
 </style>

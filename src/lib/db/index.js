@@ -146,14 +146,12 @@ export async function addRechennia(kazka_id, rechennia_content, user_id, finish 
 		throw errorNewRechennia;
 	}
 
-	if (finish) {
-		const { data: updatedKazka, error: errorUpdatedKazka } = await supabase_public
-			.from('kazky')
-			.update({ is_completed: true })
-			.eq('id', kazka_id);
-		if (errorUpdatedKazka) {
-			throw errorUpdatedKazka;
-		}
+	const { data: updatedKazka, error: errorUpdatedKazka } = await supabase_public
+		.from('kazky')
+		.update({ is_completed: finish, last_user_id: user_id })
+		.eq('id', kazka_id);
+	if (errorUpdatedKazka) {
+		throw errorUpdatedKazka;
 	}
 }
 
@@ -161,7 +159,7 @@ export async function addRechennia(kazka_id, rechennia_content, user_id, finish 
 export async function newKazka(title, rechennia_content, user_id) {
 	const { data: newKazka, error: errorNewKazka } = await supabase_public
 		.from('kazky')
-		.upsert([{ title, is_completed: false }])
+		.upsert([{ title, is_completed: false, last_user_id: user_id }])
 		.select();
 	if (errorNewKazka) {
 		throw errorNewKazka;
@@ -242,7 +240,10 @@ export async function getTopUsers(amount = 10, top = true) {
 // { 1: 10, 2: 20, 3: 30, 4: 40, 5: 50 }
 // де ключ - кількість речень, значення - кількість казок з такою кількістю речень
 export async function getKazkyDistribution() {
-	const { data: kazky, error } = await supabase_public.from('kazky').select('*');
+	const { data: kazky, error } = await supabase_public
+		.from('kazky')
+		.select('*')
+		.eq('is_completed', true);
 	if (error) {
 		throw error;
 	}
@@ -302,14 +303,20 @@ export async function getKazkaStats(kazka_id, user_id = null) {
 		}
 		stats.entry = entry[0];
 	}
-	
+
+	// add artificial delay 2s
+	// await new Promise((resolve) => setTimeout(resolve, 2000));
+
 	return stats;
 }
 
 export async function addView(user_id, kazka_id) {
 	const { data: view, error } = await supabase_public
 		.from('views_likes')
-		.upsert({ user_id: user_id, kazka_id: kazka_id, view: true }, { onConflict: 'user_id, kazka_id' })
+		.upsert(
+			{ user_id: user_id, kazka_id: kazka_id, view: true },
+			{ onConflict: 'user_id, kazka_id' }
+		)
 		.select();
 	if (error) {
 		throw error;
@@ -317,7 +324,6 @@ export async function addView(user_id, kazka_id) {
 }
 
 export async function Like(user_id, kazka_id, like) {
-
 	const { error } = await supabase_public
 		.from('views_likes')
 		.update({ like: like })
@@ -351,7 +357,37 @@ export async function getUserStats(user_id) {
 	}
 	stats.likes = likes;
 
+	const { count: rechennia, error: rechennia_error } = await supabase_public
+		.from('rechennia')
+		.select('*', { count: 'exact', head: true })
+		.eq('user_id', user_id);
+	if (rechennia_error) {
+		throw rechennia_error;
+	}
+	stats.rechennia = rechennia;
+
 	return stats;
+}
+
+// get kazky 'updated_at' column
+export async function getKazkyUpdates(state = 'all') {
+	let query = supabase_public.from('kazky').select('id, updated_at');
+
+	if (state === 'completed') {
+		query = query.filter('is_completed', 'eq', true);
+	}
+
+	if (state === 'incompleted') {
+		query = query.filter('is_completed', 'eq', false);
+	}
+
+	const { data: kazky, error } = await query;
+
+	if (error) {
+		throw error;
+	}
+
+	return kazky;
 }
 
 export async function searchKazky(is_completed, query) {
@@ -363,6 +399,6 @@ export async function searchKazky(is_completed, query) {
 	if (error) {
 		throw error;
 	}
-	
+
 	return kazky;
 }

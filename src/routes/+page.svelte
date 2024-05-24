@@ -1,10 +1,12 @@
 <script>
 	/** @type {import('./$types').PageData} */
 	export let data;
-	import KazkaCard from '../components/KazkaCard.svelte';
+	import KazkaCard from '@components/KazkaCard.svelte';
 	import { fly } from 'svelte/transition';
 	import { onMount } from 'svelte';
+
 	let content_visible = false;
+
 	onMount(() => {
 		content_visible = true;
 	});
@@ -20,13 +22,19 @@
 		<div class="read-finished" in:fly={{ y: -120, duration: 1000, delay: 200 }}>
 			<h1>Читай завершені казки</h1>
 			<div class="finished-samples">
-				{#each data.kazky as kazka}
-					<div class="sample">
-						<KazkaCard state={'completed'} {kazka} />
-					</div>
-				{/each}
+				{#await data.kazky}
+					<p>Завантаження...</p>
+				{:then kazky}
+					{#each kazky as kazka}
+						<div class="sample" in:fly|global={{ y: -120, duration: 1000, delay: 0 }}>
+							<KazkaCard state={'completed'} {kazka} />
+						</div>
+					{/each}
+					<a href="/chytaty" class="main-page-link">Більше</a>
+				{:catch}
+					<p>Помилка завантаження казок</p>
+				{/await}
 			</div>
-			<a href="/chytaty" class="main-page-link">Більше</a>
 		</div>
 	</div>
 {/if}
@@ -45,10 +53,6 @@
 		text-align: center;
 	}
 
-	.write-encourage button {
-		font-size: 1.5em;
-	}
-
 	.read-finished {
 		margin-top: 40px;
 		display: flex;
@@ -59,10 +63,6 @@
 
 	.finished-samples {
 		width: 80%;
-		/* display: grid;
-        grid-template-columns: auto auto;
-        /* grid-gap: 20px; */
-
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -77,18 +77,19 @@
 	}
 
 	.main-page-link {
-		background-color: white;
+		background-color: var(--color-white);
+		color: var(--color-black);
 		text-align: center;
-		border: 2px solid;
+		border: 2px solid var(--color-border);
 		border-radius: 8px;
 		cursor: pointer;
 		padding: 2px 8px;
 	}
 
 	.main-page-link:hover {
-		background-image: linear-gradient(120deg, #78009d 34%, #0087bc 100%);
-		background-clip: text;
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
+		background-color: var(--color-accent);
+		color: white;
+		border: 2px solid var(--color-accent);
+		cursor: pointer;
 	}
 </style>
