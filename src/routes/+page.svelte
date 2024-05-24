@@ -30,11 +30,11 @@
 							<KazkaCard state={'completed'} {kazka} />
 						</div>
 					{/each}
-					<a href="/chytaty" class="main-page-link">Більше</a>
 				{:catch}
 					<p>Помилка завантаження казок</p>
 				{/await}
 			</div>
+			<a href="/chytaty" class="main-page-link">Більше</a>
 		</div>
 	</div>
 {/if}

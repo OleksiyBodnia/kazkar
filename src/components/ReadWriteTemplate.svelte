@@ -11,23 +11,26 @@
 	export let header = 'Заголовок';
 	export let description = 'Опис сторінки';
 
-	let filter_selected;
-	let filters = ['Найновіші', 'Найстаріші', 'Популярні', 'Непопулярні'];
+	let sorting_selected = 'Нові';
+	let sortings = ['Нові', 'Старі'];
+	let sorting;
 	let page = 1;
 	let more_kazky_button;
+	let isNewKazkasLoading = false;
 
 	let grid_visible = false;
 	onMount(() => {
 		grid_visible = true;
 	});
 
-	function whenFilterSelected() {}
+	$: sorting = sorting_selected === 'Нові' ? 'asc' : 'desc';
 
-	async function getMoreKazky() {
-		more_kazky_button.textContent = 'Завантаження...';
+	async function whenSortingSet() {
+		isNewKazkasLoading = true;
+		page = 1;
 
 		const new_kazky = await fetch(
-			`/api/get-kazky?state=${state}&page=${++page}&kazky_per_page=${kazky_per_page ?? 4}`,
+			`/api/get-kazky?state=${state}&kazky_per_page=${kazky_per_page ?? 4}&sorting=${sorting}`,
 			{
 				method: 'GET',
 				headers: {
@@ -38,22 +41,49 @@
 			.then((res) => res.json())
 			.then((res) => res.kazky);
 
+		kazky = new_kazky;
+
+		isNewKazkasLoading = false;
+	}
+
+	async function getMoreKazky() {
+		more_kazky_button.textContent = 'Завантаження...';
+
+		const new_kazky = await fetch(
+			`/api/get-kazky?state=${state}&page=${++page}&kazky_per_page=${kazky_per_page ?? 4}&sorting=${sorting}`,
+			{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			}
+		)
+			.then((res) => res.json())
+			.then((res) => res.kazky);
+
+		// console.log(new_kazky);
+
 		kazky = [...kazky, ...new_kazky];
 
 		more_kazky_button.textContent = 'Завантажити ще';
+
+		// log new_kazky.length and kazky_per_page
+		// console.log('new_kazky.length:', new_kazky.length);
+		// console.log('kazky_per_page:', kazky_per_page);
 
 		if (new_kazky.length === 0 || new_kazky.length < kazky_per_page) {
 			//console.log('Більше казок немає');
 
 			more_kazky_button.style.display = 'none';
-
-			return;
 		}
 	}
 
 	async function updateKazkas() {
 		// skip update if user is not on the tab
 		if (document.visibilityState !== 'visible') return;
+
+		// skip if there is another request in progress
+		if (isNewKazkasLoading) return;
 
 		// kazky with id and last update timestamp ('id', 'updated_at')
 		const kazky_updates = await fetch(`/api/get-kazky-updates?state=${state}`).then((r) =>
@@ -88,7 +118,6 @@
 		// call updateKazkas every 5 seconds
 		const interval = setInterval(updateKazkas, 5000);
 		return () => clearInterval(interval);
-		// updateKazkas();
 	});
 </script>
 
@@ -99,20 +128,13 @@
 	</div>
 
 	<div class="find-tools">
-		<div class="rigth-find-tools">
-			{#if state === 'completed'}
-				<label
-					>Пошук
-					<input type="text" />
-				</label>
-			{/if}
-
+		<div class="right-find-tools">
 			<label
-				>Фільтр
-				<select bind:value={filter_selected} on:change={whenFilterSelected}>
-					{#each filters as filter}
-						<option value={filter}>
-							{filter}
+				>Спочатку
+				<select bind:value={sorting_selected} on:change={whenSortingSet}>
+					{#each sortings as sort}
+						<option value={sort}>
+							{sort}
 						</option>
 					{/each}
 				</select>
@@ -129,16 +151,20 @@
 	{#await data.kazky}
 		<p>Завантаження...</p>
 	{:then}
-		<div class="finished-samples">
-			{#each kazky as kazka, i}
-				{#if grid_visible}
-					<div class="sample" in:scale={{ delay: 160 * i, duration: 700, start: 0.7 }}>
-						<slot {kazka} />
-					</div>
-				{/if}
-			{/each}
-		</div>
-		<button on:click={getMoreKazky} bind:this={more_kazky_button}>Завантажити ще</button>
+		{#if !isNewKazkasLoading}
+			<div class="finished-samples">
+				{#each kazky as kazka, i}
+					{#if grid_visible}
+						<div class="sample" in:scale={{ delay: 160 * i, duration: 700, start: 0.7 }}>
+							<slot {kazka} />
+						</div>
+					{/if}
+				{/each}
+			</div>
+			<button on:click={getMoreKazky} bind:this={more_kazky_button}>Завантажити ще</button>
+		{:else}
+			<p>Завантаження...</p>
+		{/if}
 	{:catch error}
 		<p style="color: red">{error.message}</p>
 	{/await}
@@ -178,7 +204,7 @@
 		justify-content: space-between;
 	}
 
-	.rigth-find-tools {
+	.right-find-tools {
 		display: flex;
 		align-items: center;
 		gap: 40px;
@@ -190,22 +216,11 @@
 		gap: 25px;
 	}
 
-	/* на майбутнє: треба гатрно силізувати input, поки не шарю як */
-	input {
-		border: none;
-		border-bottom: 1px solid black;
-		background-color: transparent;
-		outline: none;
-	}
-
-	input:focus {
-		border-bottom: 1px solid var(--color-accent);
-	}
 	@media screen and (max-width: 767px) {
 		.page-description {
 			width: 100%;
 		}
-		.rigth-find-tools {
+		.right-find-tools {
 			flex-direction: column;
 			gap: 15px;
 			align-items: start;
@@ -222,9 +237,6 @@
 			gap: 15px;
 			align-items: end;
 		}
-		input {
-			width: 150px;
-		}
 		.page-div {
 			padding: 0;
 		}
@@ -233,7 +245,7 @@
 		.page-description {
 			width: 80%;
 		}
-		.rigth-find-tools {
+		.right-find-tools {
 			flex-direction: column;
 			gap: 15px;
 			align-items: start;
@@ -242,9 +254,6 @@
 			flex-direction: column;
 			gap: 15px;
 			align-items: end;
-		}
-		input {
-			width: 150px;
 		}
 	}
 </style>

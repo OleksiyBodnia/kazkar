@@ -12,6 +12,7 @@
 		надзвичайні казки, а також не забудь поставити уподобайку! '}
 	{data}
 	random_kazka={data.random_kazka}
+	kazky_per_page={data.kazky_per_page}
 	let:kazka
 >
 	<a slot="rnd-kazka-btn" href="/kazka/{data.random_kazka.id}">
