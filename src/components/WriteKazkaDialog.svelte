@@ -7,6 +7,7 @@
 	import { correctSentence, validateSentence } from '$lib/utils';
 
 	let ModalComponent;
+	let AlertDialogComponent;
 	export let kazka;
 	export let type;
 
@@ -18,8 +19,10 @@
 	let bad_kazka_report = 'Ви ввели некорректну назву казки або перше речення. Ай ай ай!';
 
 	export function toggleWrite() {
-		report = '';
-		ModalComponent.toggle();
+		if ($page.data.session) {
+			report = '';
+			ModalComponent.toggle();
+		} else AlertDialogComponent.toggleAlert();
 	}
 
 	function timeIsOut() {
@@ -155,6 +158,8 @@
 		</div>
 	{/if}
 </Modal>
+
+<AlertDialog bind:this={AlertDialogComponent} />
 
 <style>
 	div {

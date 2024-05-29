@@ -3,11 +3,10 @@ import { SupabaseAdapter } from '@auth/supabase-adapter';
 import { env } from '$env/dynamic/private';
 import GitHub from '@auth/sveltekit/providers/github';
 import Google from '@auth/sveltekit/providers/google';
-import Facebook from "@auth/sveltekit/providers/facebook";
 
 export const { handle, signIn, signOut } = SvelteKitAuth(async (event) => {
 	const authOptions = {
-		providers: [Google, GitHub, Facebook],
+		providers: [Google, GitHub],
 		callbacks: {
 			session({ session, user }) {
 				session.user.id = user.id;
