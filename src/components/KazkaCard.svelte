@@ -8,6 +8,8 @@
 	export let kazka;
 	export let state;
 
+	let last_rech = lastRechennia(kazka.rechennia);
+
 	let WriteDialogComponent;
 	let IsTakenModal;
 	let IsLastUserModal;
@@ -34,7 +36,7 @@
 				<h4>{kazka.title}</h4>
 				{#each kazka.rechennia as rechennia}
 					{#if $page.data.session && $page.data.session.user.id == rechennia.user_id}
-						<span style="color: var(--color-accent);">{rechennia.content} </span>
+						<span style="color: var(--color-accent);">{rechennia.content}</span>
 					{:else}
 						<span>{rechennia.content} </span>
 					{/if}
@@ -48,7 +50,11 @@
 		<article class="incomp-article">
 			<div class="rech-conteiner">
 				<h4>{kazka.title}</h4>
-				<span>{lastRechennia(kazka.rechennia).content}</span>
+				{#if $page.data.session && $page.data.session.user.id == last_rech.user_id}
+					<span style="color: var(--color-accent);">{last_rech.content}</span>
+				{:else}
+					<span>{last_rech.content}</span>
+				{/if}
 			</div>
 			<div class="kazka-count">{kazka.rechennia.length}/10</div>
 		</article>

@@ -198,7 +198,7 @@
 	}
 
 	.show-sidebar-btn-arrow2 {
-		stroke: black;
+		stroke: var(--color-black);
 	}
 
 	.show-sidebar-btn-arrow2:hover {
