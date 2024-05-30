@@ -23,7 +23,7 @@
 		grid_visible = true;
 	});
 
-	$: sorting = sorting_selected === 'Нові' ? 'asc' : 'desc';
+	$: sorting = sorting_selected === 'Нові' ? 'desc' : 'asc';
 
 	async function whenSortingSet() {
 		isNewKazkasLoading = true;

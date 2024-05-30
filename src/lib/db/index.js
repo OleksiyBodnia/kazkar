@@ -14,7 +14,7 @@ export const supabase_next_auth = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, 
 export async function getKazky({
 	state = 'all',
 	limit = 20,
-	sort = 'asc',
+	sort = 'desc',
 	offset = 0,
 	user_id = null
 }) {
