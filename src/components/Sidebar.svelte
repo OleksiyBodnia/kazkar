@@ -95,7 +95,7 @@
 		justify-content: center;
 		flex-direction: column;
 		padding: 2px 20px;
-		border: 2px solid black;
+		border: 2px solid var(--color-black);
 		border-radius: 20px;
 
 		overflow: hidden;
