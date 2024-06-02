@@ -13,7 +13,7 @@
 
 	let sorting_selected = 'Нові';
 	let sortings = ['Нові', 'Старі'];
-	let sorting;
+	let sorting = 'desc';
 	let page = 1;
 	let more_kazky_button;
 	let isNewKazkasLoading = false;
@@ -23,9 +23,9 @@
 		grid_visible = true;
 	});
 
-	$: sorting = sorting_selected === 'Нові' ? 'desc' : 'asc';
-
 	async function whenSortingSet() {
+		sorting = sorting_selected === 'Нові' ? 'desc' : 'asc';
+
 		isNewKazkasLoading = true;
 		page = 1;
 
